@@ -1,11 +1,30 @@
 #include "philo.h"
 
-void	safe_free(char **ptr)
+void	atoiv(int a_len, char const *argv[], int *set)
 {
-	if (*ptr)
-		free(*ptr);
-	*ptr = NULL;
+	int	i;
+
+	i = 0;
+	while (i < a_len)
+	{
+		set[i] = ft_atoi(argv[i]);
+		i++;
+	}
 }
+
+void	disp_args(int arg_len, int *set)
+{
+	static char	*disp[] = (char *[]){S_NUM, S_DIE, S_EAT, S_REST, S_CYCLE, NULL};
+	int			i;
+
+	i = 0;
+	while (i < arg_len)
+	{
+		printf("[%i][%s]\n", set[i], disp[i]);
+		i++;
+	}
+}
+
 
 // char	*to_valid_arg(char *arg)
 // {
@@ -38,28 +57,3 @@ void	safe_free(char **ptr)
 // 	}
 // 	return (true);
 // }
-
-void	atoiv(int arg_num, char const *argv[], int *set)
-{
-	int	i;
-
-	i = 0;
-	while (i < arg_num)
-	{
-		set[i] = ft_atoi(argv[i]);
-		i++;
-	}
-}
-
-void	disp_args(int arg_len, int *set)
-{
-	static char	*disp[] = (char *[]){NUM, DIE, EAT, REST, CYCLE, NULL};
-	int			i;
-
-	i = 0;
-	while (i < arg_len)
-	{
-		printf("[%i][%s]\n", set[i], disp[i]);
-		i++;
-	}
-}

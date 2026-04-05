@@ -2,14 +2,15 @@
 
 int	main(int argc, char const *argv[])
 {
-	int	set[5];
-	int	arg_num;
+	int	context[5];
+	int	a_len;
 
-	arg_num = argc - 1;
-	if (arg_num != 4)
+	a_len = argc - 1;
+	if (a_len != 4)
 		return (1);
-	atoiv(arg_num, argv + 1, set);
-	disp_args(arg_num, set);
-	prepare_sim(arg_num, set);
+	atoiv(a_len, argv + 1, context);
+	disp_args(a_len, context);
+	if (prepare_sim(context) != OKAY)
+		return (1);
 	// run_simulation();
 }
