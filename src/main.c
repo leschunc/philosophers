@@ -1,7 +1,4 @@
-#include <pthread.h>
-#include <stdio.h>
-#include <sys/time.h>
-#include <unistd.h>
+#include "philo.h"
 
 pthread_mutex_t	turn;
 
@@ -36,6 +33,5 @@ int	main(int argc, char const *argv[])
 	(void)argc;
 	(void)argv;
 	init();
-	// sleep(1);
 	return (0);
 }
