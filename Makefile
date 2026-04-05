@@ -1,25 +1,27 @@
-NAME		= philo
-CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -Iinc/
-VFLAGS		= --tool=helgrind 
+NAME        = philo
+CC          = cc
+CFLAGS      = -Wall -Werror -Wextra -Iinc -Ilibft
+LDFLAGS     = -Llibft -lft
+VFLAGS      = --tool=helgrind 
 
-O_DIR		= obj/
-S_DIR		= src/
-SRC_F		= main.c
-SRCS		= $(addprefix $(S_DIR), $(SRC_F))
-OBJS		= $(addprefix $(O_DIR), $(SRC_F:.c=.o))
+SRC_DIR     = src
+OBJ_DIR     = obj
+SRCS        = $(SRC_DIR)/main.c
+OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-    
-$(O_DIR)%.o: $(S_DIR)%.c
-	@mkdir -p $(O_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -rf $(O_DIR)
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	rm -f $(NAME)
