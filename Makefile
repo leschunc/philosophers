@@ -3,6 +3,7 @@ CC          = cc
 CFLAGS      = -Wall -Werror -Wextra -Iinc -Ilibft
 LDFLAGS     = -Llibft -lft
 VFLAGS      = --tool=helgrind 
+MAKE		+= --no-print-directory
 
 # Directories
 SRC_DIR     = src
@@ -19,33 +20,33 @@ all: $(NAME)
 # 1. Compile libft by calling its own Makefile
 # 2. Link the objects with libft.a
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
 # Ensure libft is built
 $(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
 
 clean:
-	rm $(LIBFT)
-	rm -rf $(OBJ_DIR)
+	@rm $(LIBFT)
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	rm -f $(NAME)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME)
 
 re: fclean all
 
 # Helpers
 r: all
-	./$(NAME)
+	@./$(NAME)
 
 v: all
-	valgrind $(VFLAGS) ./$(NAME)
+	@valgrind $(VFLAGS) ./$(NAME)
 
 .PHONY: all clean fclean re r v
