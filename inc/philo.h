@@ -6,3 +6,5 @@
 #include "libft.h"
 
 #define EMPTY_ARG '\0'
+#define SET_SIZE argc - 1
+#define SILENC3(a, b, c) (void)(a), (void)(b), (void)(c)
