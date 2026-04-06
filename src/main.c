@@ -2,15 +2,18 @@
 
 int	main(int argc, char const *argv[])
 {
-	int	context[5];
-	int	a_len;
+	t_context	c;
+	int			set[5];
 
-	a_len = argc - 1;
-	if (a_len != 4)
-		return (1);
-	atoiv(a_len, argv + 1, context);
-	disp_args(a_len, context);
-	if (prepare_sim(context) != OKAY)
-		return (1);
+	if (argc != 5 && argc != 6)
+		return (ERR);
+	c.arr_len = argc - 1;
+	c.argv = argv;
+	c.set = set;
+	atoiv(c);
+	// disp_args(c);
+	if (prepare_sim(c) != OK)
+		return (OK);
 	// run_simulation();
+	return (ERR);
 }

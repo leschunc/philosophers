@@ -1,26 +1,26 @@
 #include "philo.h"
 
-void	atoiv(int a_len, char const *argv[], int *set)
+void	atoiv(t_context c)
 {
 	int	i;
 
 	i = 0;
-	while (i < a_len)
+	while (i < c.arr_len)
 	{
-		set[i] = ft_atoi(argv[i]);
+		c.set[i] = ft_atoi(c.argv[i + 1]);
 		i++;
 	}
 }
 
-void	disp_args(int arg_len, int *set)
+void	disp_args(t_context c)
 {
 	static char	*disp[] = (char *[]){S_NUM, S_DIE, S_EAT, S_REST, S_CYCLE, NULL};
 	int			i;
 
 	i = 0;
-	while (i < arg_len)
+	while (i < c.arr_len)
 	{
-		printf("[%i][%s]\n", set[i], disp[i]);
+		printf("[%i]\t[%s]\n", c.set[i], disp[i]);
 		i++;
 	}
 }
@@ -38,12 +38,12 @@ void	disp_args(int arg_len, int *set)
 // 	return (trimmed);
 // }
 
-// bool	is_valid_argv(int argc, char *argv[])
+// bool	is_valid_argv(int arr_len, char *argv[])
 // {
 // 	int		i;
 // 	char	*converted;
 
-// 	if (argc != 5 && argc != 6)
+// 	if (arr_len != 5 && arr_len != 6)
 // 		return (NULL);
 // 	i = 0;
 // 	while (argv[i])
