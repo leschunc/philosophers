@@ -11,7 +11,11 @@ int	main(int argc, char const *argv[])
 	c.argv = argv;
 	c.set = set;
 	atoiv(c);
-	// disp_args(c);
+	if (c.set[NUM] == 1)
+	{
+		// kill_thisguy();
+		return (ERR);
+	}
 	if (prepare_sim(c) != OK)
 		return (OK);
 	// run_simulation();

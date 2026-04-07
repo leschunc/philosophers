@@ -5,6 +5,7 @@
 # include <pthread.h>
 # include <stdbool.h>
 # include <stdio.h>
+# include <string.h>
 # include <sys/time.h>
 # include <unistd.h>
 
@@ -17,6 +18,9 @@
 # define S_EAT "time_to_eat"
 # define S_REST "time_to_sleep"
 # define S_CYCLE "number_of_times_each_philosopher_must_eat"
+
+//  remove later
+# define CLOCK_ARR_SIZE 40
 
 enum				e_attr
 {
@@ -38,6 +42,16 @@ typedef struct s_context
 	int				ite;
 }					t_context;
 
+typedef struct s_mind
+{
+	int				whoami;
+	int				*set;
+	// int				arr_len;
+	// int				mode;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+}					t_mind;
+
 /* parse */
 void				atoiv(t_context c);
 void				disp_args(t_context c);
@@ -50,6 +64,9 @@ bool				init_philos(t_context c);
 /* philos */
 
 /* monitor */
+
+/* clock */
+void				usec_wait(long wait);
 
 /* utils */
 void				safe_free(char **ptr);

@@ -13,7 +13,7 @@ LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
 # Files
-SRCS		= $(addprefix $(SRC_DIR)/, main.c parse.c init.c philos.c monitor.c utils.c)
+SRCS		= $(addprefix $(SRC_DIR)/, main.c parse.c init.c philos.c monitor.c clock.c utils.c)
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
@@ -38,7 +38,7 @@ clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+# 	@$(MAKE) -C $(LIBFT_DIR) fclean
 	@rm -f $(NAME)
 
 re: fclean all
