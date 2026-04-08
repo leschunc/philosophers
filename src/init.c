@@ -14,57 +14,55 @@ bool	init_forks(t_context c)
 	return (true);
 }
 
-void	grab_right(t_context c)
+bool	init_inspec(t_context c)
 {
-	printf("%d grab right fork: %d\n", c.ite, c.ite);
-	pthread_mutex_lock(&c.fork[c.ite]);
+	int	i;
+
+	i = 0;
+	while (i < c.set[NUM])
+	{
+		if (pthread_mutex_init(c.inspec + i, NULL) != OK)
+			return (false);
+		i++;
+	}
+	return (true);
 }
 
-void	free_right(t_context c)
+void	grab(t_mind m)
 {
-	printf("%d free right fork: %d\n", c.ite, c.ite);
-	pthread_mutex_unlock(&c.fork[c.ite]);
+	// struct timeval	now;
+
+	pthread_mutex_lock(m.r_fork);
+	// gettimeofday(&now, NULL);
+	// printf("%d %ld got right fork\n", m.whoami, now.tv_usec);
+	pthread_mutex_lock(m.l_fork);
+	// gettimeofday(&now, NULL);
+	// printf("%d %ld got left fork\n", m.whoami, now.tv_usec);
 }
 
-void	grab_left(t_context c)
+void	drop(t_mind m)
 {
-	if (c.ite == 0)
-	{
-		printf("%d grab left fork: %d\n", c.ite, c.set[NUM - 1]);
-		pthread_mutex_lock(&c.fork[c.set[NUM - 1]]);
-	}
-	else
-	{
-		printf("%d grab left fork: %d\n", c.ite, c.ite - 1);
-		pthread_mutex_lock(&c.fork[c.ite - 1]);
-	}
+	// put this inside of mind
+	// printf("%d free right fork: %p\n", m.whoami, m.r_fork);
+	// printf("%d free left fork: %p\n", m.whoami, m.l_fork);
+	// printf("releasing both\n\n");
+	pthread_mutex_unlock(m.r_fork);
+	pthread_mutex_unlock(m.l_fork);
 }
 
-void	free_left(t_context c)
+void	*daily(void *ref)
 {
-	if (c.ite == 0)
-	{
-		printf("%d grab left fork: %d\n", c.ite, c.set[NUM - 1]);
-		pthread_mutex_unlock(&c.fork[c.set[NUM - 1]]);
-	}
-	else
-	{
-		printf("%d grab left fork: %d\n", c.ite, c.ite - 1);
-		pthread_mutex_unlock(&c.fork[c.ite - 1]);
-	}
-}
+	t_mind	m;
 
-void	*dont(void *ref)
-{
-	t_context	c;
-
-	c = *(t_context *)ref;
-	grab_right(c);
-	// grab_left(c);
-	printf("hi\n");
-	// free_left(c);
-	free_right(c);
-	sleep(1);
+	m = *(t_mind *)ref;
+	while (1)
+	{
+		// if (m.whoami % 2 == 0)
+		// 	usec_wait(500);
+		grab(m);
+		drop(m);
+		usec_wait(500);
+	}
 	return (NULL);
 }
 
@@ -77,6 +75,7 @@ bool	init_philos(t_context c)
 	while (i < c.set[NUM])
 	{
 		mind[i].whoami = i;
+		// mind[i].
 		mind[i].r_fork = &c.fork[i];
 		if (i == 0)
 			mind[i].l_fork = &c.fork[c.set[NUM] - 1];
@@ -84,22 +83,22 @@ bool	init_philos(t_context c)
 			mind[i].l_fork = &c.fork[i - 1];
 		i++;
 	}
-
-	// i = 0;
-	// while (i < c.set[NUM])
-	// {
-	// 	// printf("to init [%d]\n", i);
-	// 	if (pthread_create(c.philo + i, NULL, dont, &c) != OK)
-	// 		return (false);
-	// 	i++;
-	// }
-	// i = 0;
-	// while (i < c.set[NUM])
-	// {
-	// 	if (pthread_join(*(c.philo + i), NULL) != OK)
-	// 		return (false);
-	// 	i++;
-	// }
+	i = 0;
+	while (i < c.set[NUM])
+	{
+		// printf("to init [%d]\n", i);
+		if (pthread_create(c.philo + i, NULL, daily, mind + i) != OK)
+			return (false);
+		i++;
+	}
+	i = 0;
+	while (i < c.set[NUM])
+	{
+		if (pthread_join(*(c.philo + i), NULL) != OK)
+			return (false);
+		// printf("here too\n");
+		i++;
+	}
 	return (true);
 }
 
@@ -110,24 +109,34 @@ void	destroy_mutx(pthread_mutex_t *fork, int *info)
 	i = 0;
 	while (i < info[NUM])
 	{
-		pthread_mutex_destroy(fork + i);
+		if (pthread_mutex_destroy(fork + i) == EBUSY)
+			// this is not gonna happen
+			printf("EBUSY\n");
+		// printf("aqui\n");
 		i++;
 	}
 }
 
 bool	prepare_sim(t_context c)
 {
-	pthread_mutex_t	fork[c.set[NUM]];
 	pthread_t		philo[c.set[NUM]];
+	pthread_mutex_t	fork[c.set[NUM]];
+	pthread_mutex_t	inspec[c.set[NUM]];
 
 	// memset(fork, 0, sizeof(pthread_mutex_t) * c.set[NUM]);
 	// memset(philo, 0, sizeof(pthread_t) * c.set[NUM]);
-	c.fork = fork;
 	c.philo = philo;
+	c.fork = fork;
+	c.inspec = inspec;
+	// c.meals = meals;
+	// memset(inspec, 0, sizeof(pthread_mutex_t) * c.set[NUM]);
 	if (init_forks(c) == false)
+		return (false);
+	if (init_inspec(c) == false)
 		return (false);
 	if (init_philos(c) == false)
 		return (false);
+	// memset0 mutx and then destroy all that are nonzero
 	destroy_mutx(fork, c.set);
 	return (true);
 }

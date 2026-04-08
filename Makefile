@@ -4,7 +4,6 @@ CFLAGS		= -Wall -Werror -Wextra -Iinc -Ilibft
 LDFLAGS		= -Llibft -lft
 VFLAGS		= --tool=helgrind 
 MAKE		+= --no-print-directory
-ARGS		= 10 200 50 50
 
 # Directories
 SRC_DIR		= src
@@ -34,7 +33,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 clean:
-	@rm $(LIBFT)
+# 	@rm $(LIBFT)
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
@@ -44,10 +43,15 @@ fclean: clean
 re: fclean all
 
 # Helpers
+ARGS		= 5 1 1 1
+EXTRA		= --free-is-write=yes --track-lockorders=no --history-level=approx --check-stack-refs=yes --delta-stacktrace=yes -s
+VFLAGS		+= $(EXTRA)
 r: all
 	@./$(NAME) $(ARGS)
 
+# LOG			= > log 2> errlog
+
 v: all
-	@valgrind $(VFLAGS) ./$(NAME) $(ARGS)
+	@valgrind $(VFLAGS) ./$(NAME) $(ARGS) $(LOG)
 
 .PHONY: all clean fclean re r v

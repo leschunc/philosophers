@@ -11,11 +11,12 @@ int	main(int argc, char const *argv[])
 	c.argv = argv;
 	c.set = set;
 	atoiv(c);
-	if (c.set[NUM] == 1)
-	{
-		// kill_thisguy();
-		return (ERR);
-	}
+	// if (c.set[NUM] == 1)
+	// {
+	// 	// dont protect explicitly
+	// 	// kill_thisguy();
+	// 	return (ERR);
+	// }
 	if (prepare_sim(c) != OK)
 		return (OK);
 	// run_simulation();
