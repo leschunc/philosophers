@@ -12,6 +12,7 @@ void	usec_wait(long wait)
 		gettimeofday(&now, NULL);
 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
 			break ;
+		// usleep(10);
 	}
 	// printf("%ld\n", now.tv_sec * 1000000 + now.tv_usec - init);
 }

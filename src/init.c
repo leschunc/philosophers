@@ -32,22 +32,37 @@ void	grab(t_mind m)
 {
 	// struct timeval	now;
 
-	pthread_mutex_lock(m.r_fork);
-	// gettimeofday(&now, NULL);
-	// printf("%d %ld got right fork\n", m.whoami, now.tv_usec);
-	pthread_mutex_lock(m.l_fork);
-	// gettimeofday(&now, NULL);
-	// printf("%d %ld got left fork\n", m.whoami, now.tv_usec);
+	if (m.whoami % 2 == 0)
+	{
+		pthread_mutex_lock(m.l_fork);
+		// gettimeofday(&now, NULL);
+		// printf("%ld got left fork\n", now.tv_usec);
+		pthread_mutex_lock(m.r_fork);
+		// gettimeofday(&now, NULL);
+		// printf("%ld got right fork\n", now.tv_usec);
+	}
+	else
+	{
+		pthread_mutex_lock(m.r_fork);
+		// gettimeofday(&now, NULL);
+		// printf("%ld got right fork\n", now.tv_usec);
+		pthread_mutex_lock(m.l_fork);
+		// gettimeofday(&now, NULL);
+		// printf("%ld got left fork\n", now.tv_usec);
+	}
 }
 
 void	drop(t_mind m)
 {
 	// put this inside of mind
+	// struct timeval	now;
 	// printf("%d free right fork: %p\n", m.whoami, m.r_fork);
 	// printf("%d free left fork: %p\n", m.whoami, m.l_fork);
 	// printf("releasing both\n\n");
 	pthread_mutex_unlock(m.r_fork);
 	pthread_mutex_unlock(m.l_fork);
+	// gettimeofday(&now, NULL);
+	// printf("%ld got left fork\n", now.tv_usec);
 }
 
 void	*daily(void *ref)
@@ -57,11 +72,13 @@ void	*daily(void *ref)
 	m = *(t_mind *)ref;
 	while (1)
 	{
-		// if (m.whoami % 2 == 0)
-		// 	usec_wait(500);
 		grab(m);
+		printf("%d\n", m.whoami);
 		drop(m);
-		usec_wait(500);
+		// usleep seems better
+		// usec_wait(1000);
+		// 1000 maybe
+		usleep(999);
 	}
 	return (NULL);
 }

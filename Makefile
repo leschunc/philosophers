@@ -1,6 +1,6 @@
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -Iinc -Ilibft
+CFLAGS		= -Wall -Werror -Wextra -fsanitize=thread -Iinc -Ilibft
 LDFLAGS		= -Llibft -lft
 VFLAGS		= --tool=helgrind 
 MAKE		+= --no-print-directory
