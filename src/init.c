@@ -31,7 +31,6 @@ bool	init_inspec(t_context c)
 void	grab(t_mind m)
 {
 	// struct timeval	now;
-
 	if (m.whoami % 2 == 0)
 	{
 		pthread_mutex_lock(m.l_fork);
@@ -67,14 +66,32 @@ void	drop(t_mind m)
 
 void	*daily(void *ref)
 {
-	t_mind	m;
+	t_mind	*m;
 
-	m = *(t_mind *)ref;
-	while (1)
+	m = (t_mind *)ref;
+	m->meals = 0;
+	if (1)
 	{
-		grab(m);
-		printf("%d\n", m.whoami);
-		drop(m);
+		grab(*m);
+		printf("%d\n", m->whoami);
+		drop(*m);
+		// pthread_mutex_lock(m->inspec);
+		if (m->set[CYCLE])
+		{
+			printf("%d\n", m->whoami);
+			if (m->meals == m->set[CYCLE])
+			{
+				printf("%d\n", m->whoami);
+				// return (pthread_mutex_unlock(m->inspec), NULL);
+				printf("was also here\n");
+				return (NULL);
+
+			}
+			printf("%d\n", m->whoami);
+			// m->meals = m->meals + 1;
+		}
+		printf("aaa %d\n", m->whoami);
+		// pthread_mutex_unlock(m->inspec);
 		// usleep seems better
 		// usec_wait(1000);
 		// 1000 maybe
@@ -92,8 +109,9 @@ bool	init_philos(t_context c)
 	while (i < c.set[NUM])
 	{
 		mind[i].whoami = i;
-		// mind[i].
-		mind[i].r_fork = &c.fork[i];
+		mind[i].inspec = c.inspec + i;
+		mind[i].r_fork = c.fork + i;
+		mind[i].meals = 0;
 		if (i == 0)
 			mind[i].l_fork = &c.fork[c.set[NUM] - 1];
 		else
@@ -103,7 +121,6 @@ bool	init_philos(t_context c)
 	i = 0;
 	while (i < c.set[NUM])
 	{
-		// printf("to init [%d]\n", i);
 		if (pthread_create(c.philo + i, NULL, daily, mind + i) != OK)
 			return (false);
 		i++;
@@ -119,7 +136,7 @@ bool	init_philos(t_context c)
 	return (true);
 }
 
-void	destroy_mutx(pthread_mutex_t *fork, int *info)
+void	destroy_mutx(mut_t *fork, mut_t *inspec, int *info)
 {
 	int	i;
 
@@ -129,24 +146,37 @@ void	destroy_mutx(pthread_mutex_t *fork, int *info)
 		if (pthread_mutex_destroy(fork + i) == EBUSY)
 			// this is not gonna happen
 			printf("EBUSY\n");
-		// printf("aqui\n");
+		i++;
+	}
+	i = 0;
+	if (info[CYCLE] == 0)
+	{
+		printf("will return (here\n");
+		return ;
+	}
+	while (i < info[CYCLE])
+	{
+		if (pthread_mutex_destroy(inspec + i) == EBUSY)
+			// this is not gonna happen
+			printf("EBUSY\n");
 		i++;
 	}
 }
 
 bool	prepare_sim(t_context c)
 {
-	pthread_t		philo[c.set[NUM]];
-	pthread_mutex_t	fork[c.set[NUM]];
-	pthread_mutex_t	inspec[c.set[NUM]];
+	pthread_t	philo[c.set[NUM]];
+	mut_t		fork[c.set[NUM]];
+	mut_t		inspec[c.set[NUM]];
 
-	// memset(fork, 0, sizeof(pthread_mutex_t) * c.set[NUM]);
+	// what if its zero
+	// memset(fork, 0, sizeof(mut_t) * c.set[NUM]);
 	// memset(philo, 0, sizeof(pthread_t) * c.set[NUM]);
 	c.philo = philo;
 	c.fork = fork;
 	c.inspec = inspec;
 	// c.meals = meals;
-	// memset(inspec, 0, sizeof(pthread_mutex_t) * c.set[NUM]);
+	// memset(inspec, 0, sizeof(mut_t) * c.set[NUM]);
 	if (init_forks(c) == false)
 		return (false);
 	if (init_inspec(c) == false)
@@ -154,6 +184,6 @@ bool	prepare_sim(t_context c)
 	if (init_philos(c) == false)
 		return (false);
 	// memset0 mutx and then destroy all that are nonzero
-	destroy_mutx(fork, c.set);
+	destroy_mutx(fork, inspec, c.set);
 	return (true);
 }

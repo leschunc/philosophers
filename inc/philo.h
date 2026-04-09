@@ -27,7 +27,7 @@
 # define S_REST "time_to_sleep"
 # define S_CYCLE "number_of_times_each_philosopher_must_eat"
 
-enum				e_attr
+enum					e_attr
 {
 	NUM,
 	DIE,
@@ -36,48 +36,50 @@ enum				e_attr
 	CYCLE
 };
 
+typedef pthread_mutex_t	mut_t;
+
 typedef struct s_context
 {
 	// int				mode;
-	int				*set;
-	pthread_t		*philo;
-	pthread_mutex_t	*fork;
-	pthread_mutex_t	*inspec;
-	int				arr_len;
-	char const		**argv;
-	int				ite;
-}					t_context;
+	int					*set;
+	pthread_t			*philo;
+	mut_t				*fork;
+	mut_t				*inspec;
+	int					arr_len;
+	char const			**argv;
+	int					ite;
+}						t_context;
 
 typedef struct s_mind
 {
-	int				whoami;
-	int				*set;
-	long			meals;
-	pthread_mutex_t	*inspec;
+	int					whoami;
+	int					*set;
+	long				meals;
+	mut_t				*inspec;
 	// int				arr_len;
 	// int				mode;
 
-	pthread_mutex_t	*r_fork;
-	pthread_mutex_t	*l_fork;
-}					t_mind;
+	mut_t				*r_fork;
+	mut_t				*l_fork;
+}						t_mind;
 
 /* parse */
-void				atoiv(t_context c);
-void				disp_args(t_context c);
+void					atoiv(t_context c);
+void					disp_args(t_context c);
 
 /* init */
-bool				prepare_sim(t_context c);
-bool				init_forks(t_context c);
-bool				init_philos(t_context c);
+bool					prepare_sim(t_context c);
+bool					init_forks(t_context c);
+bool					init_philos(t_context c);
 
 /* philos */
 
 /* monitor */
 
 /* clock */
-void				usec_wait(long wait);
+void					usec_wait(long wait);
 
 /* utils */
-void				safe_free(char **ptr);
+void					safe_free(char **ptr);
 
 #endif

@@ -3,7 +3,7 @@
 int	main(int argc, char const *argv[])
 {
 	t_context	c;
-	int			set[5];
+	static int	set[5];
 
 	if (argc != 5 && argc != 6)
 		return (ERR);
