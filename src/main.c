@@ -17,7 +17,7 @@ int	main(int argc, char const *argv[])
 	// 	// kill_thisguy();
 	// 	return (ERR);
 	// }
-	if (sim_init(c) != OK)
+	if (init(c) != OK)
 		return (OK);
 	// run_simulation();
 	return (ERR);

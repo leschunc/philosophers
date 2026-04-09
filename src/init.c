@@ -1,6 +1,6 @@
 #include "philo.h"
 
-bool	fork_init(t_context c)
+bool	init_fork(t_context c)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ void	give_free_will(t_context c)
 	}
 }
 
-bool	philo_init(t_context c)
+bool	init_philo(t_context c)
 {
 	int		i;
 	t_mind	mind[c.set[NUM]];
@@ -103,7 +103,7 @@ void	destroy_mutx(mut_t *fork, mut_t *inspec, long *info)
 	printf("finished correctly, i guess\n");
 }
 
-bool	sim_init(t_context c)
+bool	init(t_context c)
 {
 	pthread_t	philo[c.set[NUM]];
 	mut_t		fork[c.set[NUM]];
@@ -117,11 +117,11 @@ bool	sim_init(t_context c)
 	c.inspec = inspec;
 	// c.meals = meals;
 	// memset(inspec, 0, sizeof(mut_t) * c.set[NUM]);
-	if (fork_init(c) == false)
+	if (init_fork(c) == false)
 		return (false);
 	if (inspec_init(c) == false)
 		return (false);
-	if (philo_init(c) == false)
+	if (init_philo(c) == false)
 		return (false);
 	// memset0 mutx and then destroy all that are nonzero
 	destroy_mutx(fork, inspec, c.set);

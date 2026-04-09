@@ -69,9 +69,9 @@ void					atoiv(t_context c);
 void					disp_args(t_context c);
 
 /* init */
-bool					sim_init(t_context c);
-bool					fork_init(t_context c);
-bool					philo_init(t_context c);
+bool					init(t_context c);
+bool					init_fork(t_context c);
+bool					init_philo(t_context c);
 
 /* philos */
 void					grab(t_mind m);
