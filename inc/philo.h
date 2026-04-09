@@ -44,7 +44,7 @@ typedef struct s_mind
 	long				*set;
 	long				meals;
 	mut_t				*inspec;
-	// int				arr_len;
+	suseconds_t			start_time;
 	// int				mode;
 
 	mut_t				*r_fork;
@@ -55,6 +55,7 @@ typedef struct s_context
 {
 	// int				mode;
 	long				*set;
+	suseconds_t			start_time;
 	pthread_t			*philo;
 	t_mind				*mind;
 	mut_t				*fork;
@@ -71,7 +72,7 @@ void					disp_args(t_context c);
 /* init */
 bool					init(t_context c);
 bool					init_fork(t_context c);
-bool					init_philo(t_context c);
+bool					init_sim(t_context c);
 
 /* philos */
 void					grab(t_mind m);
@@ -81,7 +82,8 @@ void					*daily(void *ref);
 /* monitor */
 
 /* clock */
-void					usec_wait(long wait);
+void					fast_ahh_wait(long wait);
+suseconds_t				get_time(void);
 
 /* utils */
 void					safe_free(char **ptr);

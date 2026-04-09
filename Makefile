@@ -1,7 +1,6 @@
 NAME		= philo
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -Iinc -Ilibft
-# CFLAGS		+= -fsanitize=thread
 LDFLAGS		= -Llibft -lft
 MAKE		+= --no-print-directory
 
@@ -43,8 +42,9 @@ fclean: clean
 re: fclean all
 
 # Helpers
-ARGS		= 20 1 1 1 100
+ARGS		= 200 1 1 1 20
 VFLAGS		= --tool=helgrind -s
+# CFLAGS		+= -fsanitize=thread
 # VFLAGS		+= --free-is-write=yes --track-lockorders=no --history-level=approx
 # VFLAGS		+=--check-stack-refs=yes --delta-stacktrace=yes
 r: all

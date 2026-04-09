@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	usec_wait(long wait)
+void	fast_ahh_wait(long wait)
 {
 	struct timeval	now;
 	long			init;
@@ -12,7 +12,19 @@ void	usec_wait(long wait)
 		gettimeofday(&now, NULL);
 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
 			break ;
-		// usleep(10);
+		// magic number for luck
+		// usleep(set[NUM] / 3);
 	}
-	// printf("%ld\n", now.tv_sec * 1000000 + now.tv_usec - init);
 }
+
+suseconds_t	get_time(void)
+{
+	struct timeval	now;
+	suseconds_t		u_time;
+
+	gettimeofday(&now, NULL);
+	u_time = now.tv_sec * 1000000;
+	u_time += now.tv_usec;
+	return (u_time);
+}
+

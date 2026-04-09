@@ -46,16 +46,23 @@ void	give_free_will(t_context c)
 			c.mind[i].l_fork = &c.fork[i - 1];
 		i++;
 	}
+	i = 0;
+	c.start_time = get_time();
+	while (i < c.set[NUM])
+	{
+		c.mind[i].start_time = c.start_time;
+		i++;
+	}
 }
 
-bool	init_philo(t_context c)
+bool	init_sim(t_context c)
 {
 	int		i;
 	t_mind	mind[c.set[NUM]];
 
 	c.mind = mind;
-	give_free_will(c);
 	i = 0;
+	give_free_will(c);
 	while (i < c.set[NUM])
 	{
 		if (pthread_create(c.philo + i, NULL, daily, mind + i) != OK)
@@ -81,26 +88,21 @@ void	destroy_mutx(mut_t *fork, mut_t *inspec, long *info)
 	{
 		if (pthread_mutex_destroy(fork + i) == EBUSY)
 			// this is not gonna happen
-			printf("EBUSY fork\n");
+			ft_putstr_fd("EBUSY\n", 2);
 		i++;
 	}
 	i = 0;
-	printf("%ld cyc\n", info[CYCLE]);
 	if (info[CYCLE] == 0)
-	{
-		printf("will return (here)\n");
 		return ;
-	}
 	while (i < info[NUM])
 	{
 		// pthread_mutex_unlock(inspec + i);
 		if (pthread_mutex_destroy(inspec + i) == EBUSY)
 			// this is not gonna happen
-			printf("EBUSY inspec\n");
+			ft_putstr_fd("EBUSY\n", 2);
 		i++;
 	}
-	printf("%ld cyc\n", info[CYCLE]);
-	printf("finished correctly, i guess\n");
+	ft_putstr_fd("SEEMS FINE\n", 2);
 }
 
 bool	init(t_context c)
@@ -121,7 +123,7 @@ bool	init(t_context c)
 		return (false);
 	if (inspec_init(c) == false)
 		return (false);
-	if (init_philo(c) == false)
+	if (init_sim(c) == false)
 		return (false);
 	// memset0 mutx and then destroy all that are nonzero
 	destroy_mutx(fork, inspec, c.set);

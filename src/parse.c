@@ -21,7 +21,7 @@ void	disp_args(t_context c)
 	i = 0;
 	while (i < c.arr_len)
 	{
-		printf("[%ld]\t[%s]\n", c.set[i], disp[i]);
+		ft_printf("[%ld]\t[%s]\n", c.set[i], disp[i]);
 		i++;
 	}
 }
