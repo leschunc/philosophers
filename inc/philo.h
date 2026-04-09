@@ -38,22 +38,10 @@ enum					e_attr
 
 typedef pthread_mutex_t	mut_t;
 
-typedef struct s_context
-{
-	// int				mode;
-	int					*set;
-	pthread_t			*philo;
-	mut_t				*fork;
-	mut_t				*inspec;
-	int					arr_len;
-	char const			**argv;
-	int					ite;
-}						t_context;
-
 typedef struct s_mind
 {
 	int					whoami;
-	int					*set;
+	long				*set;
 	long				meals;
 	mut_t				*inspec;
 	// int				arr_len;
@@ -63,16 +51,32 @@ typedef struct s_mind
 	mut_t				*l_fork;
 }						t_mind;
 
+typedef struct s_context
+{
+	// int				mode;
+	long				*set;
+	pthread_t			*philo;
+	t_mind				*mind;
+	mut_t				*fork;
+	mut_t				*inspec;
+	int					arr_len;
+	char const			**argv;
+	int					ite;
+}						t_context;
+
 /* parse */
 void					atoiv(t_context c);
 void					disp_args(t_context c);
 
 /* init */
-bool					prepare_sim(t_context c);
-bool					init_forks(t_context c);
-bool					init_philos(t_context c);
+bool					sim_init(t_context c);
+bool					fork_init(t_context c);
+bool					philo_init(t_context c);
 
 /* philos */
+void					grab(t_mind m);
+void					drop(t_mind m);
+void					*daily(void *ref);
 
 /* monitor */
 

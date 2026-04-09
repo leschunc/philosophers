@@ -14,17 +14,17 @@ void	atoiv(t_context c)
 
 void	disp_args(t_context c)
 {
-	static char	*disp[] = (char *[]){S_NUM, S_DIE, S_EAT, S_REST, S_CYCLE, NULL};
+	static char	*disp[] = (char *[]){S_NUM, S_DIE, S_EAT, S_REST, S_CYCLE,
+			NULL};
 	int			i;
 
 	i = 0;
 	while (i < c.arr_len)
 	{
-		printf("[%i]\t[%s]\n", c.set[i], disp[i]);
+		printf("[%ld]\t[%s]\n", c.set[i], disp[i]);
 		i++;
 	}
 }
-
 
 // char	*to_valid_arg(char *arg)
 // {

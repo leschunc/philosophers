@@ -3,7 +3,7 @@
 int	main(int argc, char const *argv[])
 {
 	t_context	c;
-	static int	set[5];
+	static long	set[5];
 
 	if (argc != 5 && argc != 6)
 		return (ERR);
@@ -17,7 +17,7 @@ int	main(int argc, char const *argv[])
 	// 	// kill_thisguy();
 	// 	return (ERR);
 	// }
-	if (prepare_sim(c) != OK)
+	if (sim_init(c) != OK)
 		return (OK);
 	// run_simulation();
 	return (ERR);

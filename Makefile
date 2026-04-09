@@ -1,8 +1,8 @@
 NAME		= philo
 CC			= cc
-CFLAGS		= -Wall -Werror -Wextra -fsanitize=thread -Iinc -Ilibft
+CFLAGS		= -Wall -Werror -Wextra -Iinc -Ilibft
+# CFLAGS		+= -fsanitize=thread
 LDFLAGS		= -Llibft -lft
-VFLAGS		= --tool=helgrind 
 MAKE		+= --no-print-directory
 
 # Directories
@@ -43,9 +43,10 @@ fclean: clean
 re: fclean all
 
 # Helpers
-ARGS		= 5 1 1 1
-EXTRA		= --free-is-write=yes --track-lockorders=no --history-level=approx --check-stack-refs=yes --delta-stacktrace=yes -s
-VFLAGS		+= $(EXTRA)
+ARGS		= 20 1 1 1 100
+VFLAGS		= --tool=helgrind -s
+# VFLAGS		+= --free-is-write=yes --track-lockorders=no --history-level=approx
+# VFLAGS		+=--check-stack-refs=yes --delta-stacktrace=yes
 r: all
 	@./$(NAME) $(ARGS)
 

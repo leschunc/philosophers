@@ -1,6 +1,6 @@
 #include "philo.h"
 
-bool	init_forks(t_context c)
+bool	fork_init(t_context c)
 {
 	int	i;
 
@@ -14,7 +14,7 @@ bool	init_forks(t_context c)
 	return (true);
 }
 
-bool	init_inspec(t_context c)
+bool	inspec_init(t_context c)
 {
 	int	i;
 
@@ -28,96 +28,33 @@ bool	init_inspec(t_context c)
 	return (true);
 }
 
-void	grab(t_mind m)
+void	give_free_will(t_context c)
 {
-	// struct timeval	now;
-	if (m.whoami % 2 == 0)
-	{
-		pthread_mutex_lock(m.l_fork);
-		// gettimeofday(&now, NULL);
-		// printf("%ld got left fork\n", now.tv_usec);
-		pthread_mutex_lock(m.r_fork);
-		// gettimeofday(&now, NULL);
-		// printf("%ld got right fork\n", now.tv_usec);
-	}
-	else
-	{
-		pthread_mutex_lock(m.r_fork);
-		// gettimeofday(&now, NULL);
-		// printf("%ld got right fork\n", now.tv_usec);
-		pthread_mutex_lock(m.l_fork);
-		// gettimeofday(&now, NULL);
-		// printf("%ld got left fork\n", now.tv_usec);
-	}
-}
-
-void	drop(t_mind m)
-{
-	// put this inside of mind
-	// struct timeval	now;
-	// printf("%d free right fork: %p\n", m.whoami, m.r_fork);
-	// printf("%d free left fork: %p\n", m.whoami, m.l_fork);
-	// printf("releasing both\n\n");
-	pthread_mutex_unlock(m.r_fork);
-	pthread_mutex_unlock(m.l_fork);
-	// gettimeofday(&now, NULL);
-	// printf("%ld got left fork\n", now.tv_usec);
-}
-
-void	*daily(void *ref)
-{
-	t_mind	*m;
-
-	m = (t_mind *)ref;
-	m->meals = 0;
-	if (1)
-	{
-		grab(*m);
-		printf("%d\n", m->whoami);
-		drop(*m);
-		// pthread_mutex_lock(m->inspec);
-		if (m->set[CYCLE])
-		{
-			printf("%d\n", m->whoami);
-			if (m->meals == m->set[CYCLE])
-			{
-				printf("%d\n", m->whoami);
-				// return (pthread_mutex_unlock(m->inspec), NULL);
-				printf("was also here\n");
-				return (NULL);
-
-			}
-			printf("%d\n", m->whoami);
-			// m->meals = m->meals + 1;
-		}
-		printf("aaa %d\n", m->whoami);
-		// pthread_mutex_unlock(m->inspec);
-		// usleep seems better
-		// usec_wait(1000);
-		// 1000 maybe
-		usleep(999);
-	}
-	return (NULL);
-}
-
-bool	init_philos(t_context c)
-{
-	int		i;
-	t_mind	mind[c.set[NUM]];
+	int	i;
 
 	i = 0;
 	while (i < c.set[NUM])
 	{
-		mind[i].whoami = i;
-		mind[i].inspec = c.inspec + i;
-		mind[i].r_fork = c.fork + i;
-		mind[i].meals = 0;
+		c.mind[i].whoami = i;
+		c.mind[i].inspec = c.inspec + i;
+		c.mind[i].r_fork = c.fork + i;
+		c.mind[i].meals = 0;
+		c.mind[i].set = c.set;
 		if (i == 0)
-			mind[i].l_fork = &c.fork[c.set[NUM] - 1];
+			c.mind[i].l_fork = &c.fork[c.set[NUM] - 1];
 		else
-			mind[i].l_fork = &c.fork[i - 1];
+			c.mind[i].l_fork = &c.fork[i - 1];
 		i++;
 	}
+}
+
+bool	philo_init(t_context c)
+{
+	int		i;
+	t_mind	mind[c.set[NUM]];
+
+	c.mind = mind;
+	give_free_will(c);
 	i = 0;
 	while (i < c.set[NUM])
 	{
@@ -128,15 +65,14 @@ bool	init_philos(t_context c)
 	i = 0;
 	while (i < c.set[NUM])
 	{
-		if (pthread_join(*(c.philo + i), NULL) != OK)
+		if (pthread_join(c.philo[i], NULL) != OK)
 			return (false);
-		// printf("here too\n");
 		i++;
 	}
 	return (true);
 }
 
-void	destroy_mutx(mut_t *fork, mut_t *inspec, int *info)
+void	destroy_mutx(mut_t *fork, mut_t *inspec, long *info)
 {
 	int	i;
 
@@ -145,25 +81,29 @@ void	destroy_mutx(mut_t *fork, mut_t *inspec, int *info)
 	{
 		if (pthread_mutex_destroy(fork + i) == EBUSY)
 			// this is not gonna happen
-			printf("EBUSY\n");
+			printf("EBUSY fork\n");
 		i++;
 	}
 	i = 0;
+	printf("%ld cyc\n", info[CYCLE]);
 	if (info[CYCLE] == 0)
 	{
-		printf("will return (here\n");
+		printf("will return (here)\n");
 		return ;
 	}
-	while (i < info[CYCLE])
+	while (i < info[NUM])
 	{
+		// pthread_mutex_unlock(inspec + i);
 		if (pthread_mutex_destroy(inspec + i) == EBUSY)
 			// this is not gonna happen
-			printf("EBUSY\n");
+			printf("EBUSY inspec\n");
 		i++;
 	}
+	printf("%ld cyc\n", info[CYCLE]);
+	printf("finished correctly, i guess\n");
 }
 
-bool	prepare_sim(t_context c)
+bool	sim_init(t_context c)
 {
 	pthread_t	philo[c.set[NUM]];
 	mut_t		fork[c.set[NUM]];
@@ -177,11 +117,11 @@ bool	prepare_sim(t_context c)
 	c.inspec = inspec;
 	// c.meals = meals;
 	// memset(inspec, 0, sizeof(mut_t) * c.set[NUM]);
-	if (init_forks(c) == false)
+	if (fork_init(c) == false)
 		return (false);
-	if (init_inspec(c) == false)
+	if (inspec_init(c) == false)
 		return (false);
-	if (init_philos(c) == false)
+	if (philo_init(c) == false)
 		return (false);
 	// memset0 mutx and then destroy all that are nonzero
 	destroy_mutx(fork, inspec, c.set);
