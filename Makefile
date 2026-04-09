@@ -42,7 +42,7 @@ fclean: clean
 re: fclean all
 
 # Helpers
-ARGS		= 200 1 1 1
+ARGS		= 200 1 100 100 10
 VFLAGS		= --tool=helgrind -s
 # CFLAGS		+= -fsanitize=thread
 # VFLAGS		+= --free-is-write=yes --track-lockorders=no --history-level=approx
