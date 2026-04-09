@@ -1,28 +1,28 @@
 #include "philo.h"
 
-static inline suseconds_t	get_usec_fast(void)
+static inline suseconds_t	fast_ms(suseconds_t start)
 {
 	struct timeval	now;
-	suseconds_t		u_time;
 
 	gettimeofday(&now, NULL);
-	u_time = now.tv_sec * 1000000;
-	u_time += now.tv_usec;
-	return (u_time);
+	return ((now.tv_sec * 1000000 + now.tv_usec - start) / 1000);
 }
 
 void	grab(t_mind m)
 {
-	// struct timeval	now;
 	if (m.whoami % 2 == 0)
 	{
 		pthread_mutex_lock(m.l_fork);
+		printf("[%ld]\t[%d]\t[%ld]\tR\n", fast_ms(m.start), m.whoami, m.meals);
 		pthread_mutex_lock(m.r_fork);
+		printf("[%ld]\t[%d]\t[%ld]\tL\n", fast_ms(m.start), m.whoami, m.meals);
 	}
 	else
 	{
 		pthread_mutex_lock(m.r_fork);
+		printf("[%ld]\t[%d]\t[%ld]\tR\n", fast_ms(m.start), m.whoami, m.meals);
 		pthread_mutex_lock(m.l_fork);
+		printf("[%ld]\t[%d]\t[%ld]\tL\n", fast_ms(m.start), m.whoami, m.meals);
 	}
 }
 
@@ -43,17 +43,15 @@ void	*daily(void *ref)
 		grab(*m);
 		drop(*m);
 		pthread_mutex_lock(m->inspec);
-		if (m->set[CYCLE])
-		{
-			if (m->meals == m->set[CYCLE])
-				return (pthread_mutex_unlock(m->inspec), NULL);
-			(m->meals)++;
-		}
+		if (m->set[CYCLE] !=0 && m->meals == m->set[CYCLE])
+			return (pthread_mutex_unlock(m->inspec), NULL);
+		(m->meals)++;
 		pthread_mutex_unlock(m->inspec);
 		// usleep seems better
-		// usec_wait(1000);
 		// 1000 maybe
-		fast_ahh_wait(m->set[NUM]);
+		// this defo looks more precise and safe
+		usleep(100);
+		// fast_wait(100);
 	}
 	return (NULL);
 }

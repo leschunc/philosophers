@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	fast_ahh_wait(long wait)
+void	fast_wait(long wait)
 {
 	struct timeval	now;
 	long			init;
@@ -17,14 +17,18 @@ void	fast_ahh_wait(long wait)
 	}
 }
 
-suseconds_t	get_time(void)
+suseconds_t	get_time(suseconds_t start)
 {
 	struct timeval	now;
-	suseconds_t		u_time;
 
 	gettimeofday(&now, NULL);
-	u_time = now.tv_sec * 1000000;
-	u_time += now.tv_usec;
-	return (u_time);
+	return ((now.tv_sec * 1000000 + now.tv_usec - start) / 1000);
 }
 
+suseconds_t	get_start(void)
+{
+	struct timeval	now;
+
+	gettimeofday(&now, NULL);
+	return (now.tv_sec * 1000000 + now.tv_usec);
+}

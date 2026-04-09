@@ -47,10 +47,10 @@ void	give_free_will(t_context c)
 		i++;
 	}
 	i = 0;
-	c.start_time = get_time();
+	c.start = get_start();
 	while (i < c.set[NUM])
 	{
-		c.mind[i].start_time = c.start_time;
+		c.mind[i].start = c.start;
 		i++;
 	}
 }
