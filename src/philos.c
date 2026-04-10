@@ -26,24 +26,52 @@ static inline void	hi_res_wait(long wait)
 	}
 }
 
-void	grab(t_mind m)
+bool	set_last_meal(t_mind *m)
 {
-	if (m.whoami % 2 == 0)
+	suseconds_t	now;
+
+	pthread_mutex_lock(m->inspec);
+	now = fast_ms(m->start);
+	if (now - m->last_meal > m->set[DIE])
 	{
-		pthread_mutex_lock(m.l_fork);
-		printf("%03d\t%05ld\t%ld\tL\n", m.whoami, fast_ms(m.start), m.meals);
-		pthread_mutex_lock(m.r_fork);
-		printf("%03d\t%05ld\t%ld\tR\n", m.whoami, fast_ms(m.start), m.meals);
-		usleep(m.set[EAT] * 1000);
+		printf("i died\n");
+		return (pthread_mutex_unlock(m->inspec), false);
+	}
+	m->last_meal = now;
+	m->meals++;
+	if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
+	{
+		printf("i finished\n");
+		return (pthread_mutex_unlock(m->inspec), false);
+	}
+	pthread_mutex_unlock(m->inspec);
+	return (true);
+}
+
+bool	grab(t_mind *m)
+{
+	if (m->whoami % 2 != 0)
+	{
+		pthread_mutex_lock(m->l_fork);
+		printf("%03d\t%05ld\t%ld\tL\n", m->whoami, fast_ms(m->start), m->meals);
+		pthread_mutex_lock(m->r_fork);
+		printf("%03d\t%05ld\t%ld\tR\n", m->whoami, fast_ms(m->start), m->meals);
+		if (set_last_meal(m) == false)
+			return (printf("%d died or finished\n", m->whoami), false);
+		usleep(m->set[EAT] * 1000);
 	}
 	else
 	{
-		pthread_mutex_lock(m.r_fork);
-		printf("%03d\t%05ld\t%ld\tR\n", m.whoami, fast_ms(m.start), m.meals);
-		pthread_mutex_lock(m.l_fork);
-		printf("%03d\t%05ld\t%ld\tL\n", m.whoami, fast_ms(m.start), m.meals);
-		usleep(m.set[EAT] * 1000);
+		usleep(100);
+		pthread_mutex_lock(m->r_fork);
+		printf("%03d\t%05ld\t%ld\tR\n", m->whoami, fast_ms(m->start), m->meals);
+		pthread_mutex_lock(m->l_fork);
+		printf("%03d\t%05ld\t%ld\tL\n", m->whoami, fast_ms(m->start), m->meals);
+		if (set_last_meal(m) == false)
+			return (printf("%d died\n", m->whoami), false);
+		usleep(m->set[EAT] * 1000);
 	}
+	return (true);
 }
 
 void	drop(t_mind m)
@@ -60,18 +88,18 @@ void	*daily(void *ref)
 	m->meals = 0;
 	while (1)
 	{
-		grab(*m);
+		if (grab(m) == false)
+			return (drop(*m), (void *)false);
 		drop(*m);
-		pthread_mutex_lock(m->inspec);
-		if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
-			return (pthread_mutex_unlock(m->inspec), NULL);
-		(m->meals)++;
-		pthread_mutex_unlock(m->inspec);
+		// pthread_mutex_lock(m->inspec);
 		// usleep seems better
 		// 1000 maybe
 		// this defo looks more precise and safe
-		usleep(m->set[REST] * 1000);
+		if (m->whoami % 2)
+			usleep(m->set[REST] * 1000);
+		else
+			usleep(m->set[REST] * 1000 + 100);
 		// fast_wait(100);
 	}
-	return (NULL);
+	return ((void *)false);
 }

@@ -42,17 +42,32 @@ fclean: clean
 re: fclean all
 
 # Helpers
-ARGS		= 200 1 100 100 10
-VFLAGS		= --tool=helgrind -s
+
 # CFLAGS		+= -fsanitize=thread
-# VFLAGS		+= --free-is-write=yes --track-lockorders=no --history-level=approx
-# VFLAGS		+=--check-stack-refs=yes --delta-stacktrace=yes
+# VFLAG		= --tool=helgrind -s
+# VFLAG		= --tool=drd
+# VFLAG		+= --free-is-write=yes --track-lockorders=no --history-level=approx
+# VFLAG		+=--check-stack-refs=yes --delta-stacktrace=yes
+
+# Test 
+# Test 
+# Test 
+
+A	= 1 800 200 200 # The philosopher should not eat and should die.
+B	= 5 800 200 200 # No philosopher should die.
+C	= 5 800 200 200 7 # No philosopher should die 
+#	and the simulation should stop when every philosopher
+#	has eaten at least 7 times.
+D	= 4 410 200 200 # No philosopher should die.
+E	= 4 310 200 100 # One philosopher should die.
+
 r: all
-	@./$(NAME) $(ARGS)
+	@./$(NAME) $(B)
+# 	@./$(NAME) $(B)
 
 # LOG			= > log 2> errlog
 
 v: all
-	@valgrind $(VFLAGS) ./$(NAME) $(ARGS) $(LOG)
+	valgrind $(VFLAG) ./$(NAME) $(A) $(LOG)
 
 .PHONY: all clean fclean re r v

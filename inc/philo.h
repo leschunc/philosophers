@@ -46,7 +46,7 @@ typedef struct s_mind
 	mut_t				*inspec;
 	suseconds_t			start;
 	// int				mode;
-
+	long				last_meal;
 	mut_t				*r_fork;
 	mut_t				*l_fork;
 }						t_mind;
@@ -71,11 +71,11 @@ void					disp_args(t_context c);
 
 /* init */
 bool					init(t_context c);
-bool					init_fork(t_context c);
-bool					init_sim(t_context c);
+bool					init_fork(t_context *c);
+bool					init_sim(t_context c);	
 
 /* philos */
-void					grab(t_mind m);
+bool					grab(t_mind *m);
 void					drop(t_mind m);
 void					*daily(void *ref);
 

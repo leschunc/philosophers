@@ -1,13 +1,13 @@
 #include "philo.h"
 
-bool	init_fork(t_context c)
+bool	init_fork(t_context *c)
 {
 	int	i;
 
 	i = 0;
-	while (i < c.set[NUM])
+	while (i < c->set[NUM])
 	{
-		if (pthread_mutex_init(c.fork + i, NULL) != OK)
+		if (pthread_mutex_init(c->fork + i, NULL) != OK)
 			return (false);
 		i++;
 	}
@@ -39,6 +39,7 @@ void	give_free_will(t_context c)
 		c.mind[i].inspec = c.inspec + i;
 		c.mind[i].r_fork = c.fork + i;
 		c.mind[i].meals = 0;
+		c.mind[i].last_meal = 0;
 		c.mind[i].set = c.set;
 		if (i == 0)
 			c.mind[i].l_fork = &c.fork[c.set[NUM] - 1];
@@ -119,7 +120,7 @@ bool	init(t_context c)
 	c.inspec = inspec;
 	// c.meals = meals;
 	// memset(inspec, 0, sizeof(mut_t) * c.set[NUM]);
-	if (init_fork(c) == false)
+	if (init_fork(&c) == false)
 		return (false);
 	if (inspec_init(c) == false)
 		return (false);
