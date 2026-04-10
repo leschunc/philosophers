@@ -30,21 +30,21 @@ bool	set_last_meal(t_mind *m)
 {
 	suseconds_t	now;
 
-	pthread_mutex_lock(m->inspec);
 	now = fast_ms(m->start);
 	if (now - m->last_meal > m->set[DIE])
 	{
 		printf("i died\n");
-		return (pthread_mutex_unlock(m->inspec), false);
+		return (false);
 	}
+	pthread_mutex_lock(m->inspec);
 	m->last_meal = now;
 	m->meals++;
+	pthread_mutex_unlock(m->inspec);
 	if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
 	{
 		printf("i finished\n");
-		return (pthread_mutex_unlock(m->inspec), false);
+		return (false);
 	}
-	pthread_mutex_unlock(m->inspec);
 	return (true);
 }
 

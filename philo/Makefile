@@ -60,9 +60,10 @@ C	= 5 800 200 200 7 # No philosopher should die
 #	has eaten at least 7 times.
 D	= 4 410 200 200 # No philosopher should die.
 E	= 4 310 200 100 # One philosopher should die.
+F	= 199 600 200 200
 
 r: all
-	@./$(NAME) $(B)
+	@./$(NAME) $(F)
 # 	@./$(NAME) $(B)
 
 # LOG			= > log 2> errlog
