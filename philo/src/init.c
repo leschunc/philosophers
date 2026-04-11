@@ -122,21 +122,15 @@ bool	init(t_context *c)
 	t_mut		fork[S_SIZE];
 	t_mut		inspec[S_SIZE];
 
-	// what if its zero
-	// memset(fork, 0, sizeof(t_mut) * c->set[NUM]);
-	// memset(philo, 0, sizeof(pthread_t) * c->set[NUM]);
 	c->philo = philo;
 	c->fork = fork;
 	c->inspec = inspec;
-	// c->meals = meals;
-	// memset(inspec, 0, sizeof(t_mut) * c->set[NUM]);
 	if (init_fork(c) == false)
 		return (false);
 	if (inspec_init(c) == false)
 		return (false);
 	if (init_sim(c) == false)
 		return (false);
-	// memset0 mutx and then destroy all that are nonzero
 	destroy_mutx(fork, inspec, c->set);
 	return (true);
 }

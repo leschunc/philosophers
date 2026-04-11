@@ -85,14 +85,16 @@ bool					init_monitor(t_context *c);
 /* philos */
 bool					grab(t_mind *m);
 void					*daily(void *ref);
+bool					i_am_dead(t_mind *m);
 
 /* monitor */
 void					*fate(void *ref);
 
 /* clock */
-void					fast_wait(long wait);
+bool					am_i_dead_wait(t_mind *m, long wait);
 suseconds_t				get_time(suseconds_t start);
 suseconds_t				get_start(void);
+suseconds_t				get_time(suseconds_t start);
 
 /* utils */
 void					safe_free(char **ptr);

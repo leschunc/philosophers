@@ -64,7 +64,7 @@ E	= 4 310 200 100 # One philosopher should die.
 MAX = 4000 1000 1 1
 MAX1 = 3999 1000 1 1
 
-TEST	= 200 1000 1 1 2
+TEST	= 3 410 200 200
 INPUT	= $(TEST)
 
 r: all

@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	fast_wait(long wait)
+bool	am_i_dead_wait(t_mind *m, long wait)
 {
 	struct timeval	now;
 	long			init;
@@ -12,9 +12,11 @@ void	fast_wait(long wait)
 		gettimeofday(&now, NULL);
 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
 			break ;
-		// magic number for luck
-		// usleep(set[NUM] / 3);
+		if (i_am_dead(m))
+			return (true);
+		usleep(1000);
 	}
+	return (false);
 }
 
 suseconds_t	get_time(suseconds_t start)
