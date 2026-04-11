@@ -35,9 +35,9 @@ bool	set_last_meal(t_mind *m)
 	if (m->last_meal == -1)
 	{
 		pthread_mutex_unlock(m->inspec);
-		printf("i was killed by monitor\n");
+		// printf("i was killed by monitor\n");
 		exit(EXIT_FAILURE);
-		return (false);
+		// return (false);
 	}
 	m->last_meal = now;
 	m->meals++;
@@ -55,11 +55,15 @@ bool	grab(t_mind *m)
 	if (m->whoami % 2 != 0)
 	{
 		pthread_mutex_lock(m->l_fork);
-		printf("%03d\t%05ld\t%ld\tL\n", m->whoami, fast_ms(m->start), m->meals);
+		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
 		pthread_mutex_lock(m->r_fork);
-		printf("%03d\t%05ld\t%ld\tR\n", m->whoami, fast_ms(m->start), m->meals);
+		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
 		if (set_last_meal(m) == false)
-			return (printf("%d died or finished\n", m->whoami), false);
+		{
+			printf("%d died or finished\n", m->whoami);
+			return (false);
+		}
+		printf("%05ld %03d is eating\n", fast_ms(m->start), m->whoami);
 		usleep(m->set[EAT] * 1000);
 	}
 	else
@@ -68,11 +72,15 @@ bool	grab(t_mind *m)
 		pthread_mutex_lock(m->r_fork);
 		if (m->set[NUM] == 1)
 			return (pthread_mutex_unlock(m->r_fork), exit(1), NULL);
-		printf("%03d\t%05ld\t%ld\tR\n", m->whoami, fast_ms(m->start), m->meals);
+		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
 		pthread_mutex_lock(m->l_fork);
-		printf("%03d\t%05ld\t%ld\tL\n", m->whoami, fast_ms(m->start), m->meals);
+		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
 		if (set_last_meal(m) == false)
-			return (printf("%d died\n", m->whoami), false);
+		{
+			printf("%d died or finished\n", m->whoami);
+			return (false);
+		}
+		printf("%05ld %03d is eating\n", fast_ms(m->start), m->whoami);
 		usleep(m->set[EAT] * 1000);
 	}
 	return (true);
@@ -92,6 +100,7 @@ void	*daily(void *ref)
 	m->meals = 0;
 	while (1)
 	{
+		printf("%05ld %03d is thinking\n", fast_ms(m->start), m->whoami);
 		if (grab(m) == false)
 			return (drop(*m), (void *)false);
 		drop(*m);
@@ -99,6 +108,7 @@ void	*daily(void *ref)
 		// usleep seems better
 		// 1000 maybe
 		// this defo looks more precise and safe
+		printf("%05ld %03d is sleeping\n", fast_ms(m->start), m->whoami);
 		if (m->whoami % 2)
 			usleep(m->set[REST] * 1000);
 		else

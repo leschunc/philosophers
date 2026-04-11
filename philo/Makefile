@@ -54,7 +54,7 @@ CFLAGS		+= -fsanitize=thread
 # Test 
 
 A	= 1 800 200 200 # The philosopher should not eat and should die.
-B	= 5 800 200 200 # No philosopher should die.
+B	= 200 800 200 200 # No philosopher should die.
 C	= 5 800 200 200 7 # No philosopher should die 
 #	and the simulation should stop when every philosopher
 #	has eaten at least 7 times.
@@ -63,7 +63,7 @@ E	= 4 310 200 100 # One philosopher should die.
 # F	= 5 800 200 200
 
 r: all
-	@./$(NAME) $(A)
+	@./$(NAME) $(B)
 # 	@./$(NAME) $(B)
 
 # LOG			= > log 2> errlog
