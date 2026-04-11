@@ -7,7 +7,6 @@ void	turn_minds_off(t_context *c)
 	i = 0;
 	while (i < c->set[NUM])
 	{
-
 		pthread_mutex_lock(c->inspec + i);
 		c->mind[i].last_meal = -1;
 		pthread_mutex_unlock(c->inspec + i);

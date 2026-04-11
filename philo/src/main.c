@@ -11,15 +11,7 @@ int	main(int argc, char const *argv[])
 	c.argv = argv;
 	c.set = set;
 	atoiv(&c);
-	// if (c.set[NUM] == 1)
-	// {
-	// 	// dont protect explicitly
-	// 	// kill_thisguy();
-	// 	return (ERR);
-	// }
-	// test();
-	if (init(&c) != OK)
+	if (init(&c) == true)
 		return (OK);
-	// run_simulation();
 	return (ERR);
 }

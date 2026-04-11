@@ -20,6 +20,7 @@
 # define EMPTY '\0'
 # define ERR 1
 # define OK 0
+# define S_SIZE 4000
 // # define NOT_OK !
 // # define S_NUM "number_of_philosophers"
 // # define S_DIE "time_to_die"

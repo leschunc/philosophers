@@ -10,6 +10,11 @@ void	atoiv(t_context *c)
 		c->set[i] = ft_atoi(c->argv[i + 1]);
 		i++;
 	}
+	if (c->set[NUM] > 4000)
+	{
+		printf("CAPTCHA: name all %ld philosophers to use this many resources\n", c->set[NUM]);
+		exit (ERR);
+	}
 	// set set[arrlen] = 0?
 }
 
