@@ -59,7 +59,7 @@ void	give_free_will(t_context *c)
 bool	init_sim(t_context *c)
 {
 	int		i;
-	t_mind	mind[c->set[NUM]];
+	t_mind	mind[200];
 
 	c->mind = mind;
 	i = 0;
@@ -82,7 +82,7 @@ bool	init_sim(t_context *c)
 	return (true);
 }
 
-void	destroy_mutx(mut_t *fork, mut_t *inspec, long *info)
+void	destroy_mutx(t_mut *fork, t_mut *inspec, long *info)
 {
 	int	i;
 
@@ -105,7 +105,6 @@ void	destroy_mutx(mut_t *fork, mut_t *inspec, long *info)
 			ft_putstr_fd("EBUSY\n", 2);
 		i++;
 	}
-	ft_putstr_fd("SEEMS FINE\n", 2);
 }
 
 bool	init_monitor(t_context *c)
@@ -119,18 +118,18 @@ bool	init_monitor(t_context *c)
 
 bool	init(t_context *c)
 {
-	pthread_t	philo[c->set[NUM]];
-	mut_t		fork[c->set[NUM]];
-	mut_t		inspec[c->set[NUM]];
+	pthread_t	philo[200];
+	t_mut		fork[200];
+	t_mut		inspec[200];
 
 	// what if its zero
-	// memset(fork, 0, sizeof(mut_t) * c->set[NUM]);
+	// memset(fork, 0, sizeof(t_mut) * c->set[NUM]);
 	// memset(philo, 0, sizeof(pthread_t) * c->set[NUM]);
 	c->philo = philo;
 	c->fork = fork;
 	c->inspec = inspec;
 	// c->meals = meals;
-	// memset(inspec, 0, sizeof(mut_t) * c->set[NUM]);
+	// memset(inspec, 0, sizeof(t_mut) * c->set[NUM]);
 	if (init_fork(c) == false)
 		return (false);
 	if (inspec_init(c) == false)

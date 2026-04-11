@@ -21,11 +21,17 @@
 # define ERR 1
 # define OK 0
 // # define NOT_OK !
-# define S_NUM "number_of_philosophers"
-# define S_DIE "time_to_die"
-# define S_EAT "time_to_eat"
-# define S_REST "time_to_sleep"
-# define S_CYCLE "number_of_times_each_philosopher_must_eat"
+// # define S_NUM "number_of_philosophers"
+// # define S_DIE "time_to_die"
+// # define S_EAT "time_to_eat"
+// # define S_REST "time_to_sleep"
+// # define S_CYCLE "number_of_times_each_philosopher_must_eat"
+
+# define FORK "%5ld\t%3d\thas taken a fork\n"
+# define EATS "%5ld\t%3d\tis eating\n"
+# define NAPS "%5ld\t%3d\tis sleeping\n"
+# define THNK "%5ld\t%3d\tis thinking\n"
+# define DIED "%5ld\t%3d\thas died\n"
 
 enum					e_attr
 {
@@ -36,19 +42,19 @@ enum					e_attr
 	CYCLE
 };
 
-typedef pthread_mutex_t	mut_t;
+typedef pthread_mutex_t	t_mut;
 
 typedef struct s_mind
 {
 	int					whoami;
 	long				*set;
 	long				meals;
-	mut_t				*inspec;
+	t_mut				*inspec;
 	suseconds_t			start;
 	// int				mode;
 	long				last_meal;
-	mut_t				*r_fork;
-	mut_t				*l_fork;
+	t_mut				*r_fork;
+	t_mut				*l_fork;
 }						t_mind;
 
 typedef struct s_context
@@ -58,8 +64,8 @@ typedef struct s_context
 	suseconds_t			start;
 	pthread_t			*philo;
 	t_mind				*mind;
-	mut_t				*fork;
-	mut_t				*inspec;
+	t_mut				*fork;
+	t_mut				*inspec;
 	int					arr_len;
 	char const			**argv;
 	int					ite;
@@ -77,7 +83,6 @@ bool					init_monitor(t_context *c);
 
 /* philos */
 bool					grab(t_mind *m);
-void					drop(t_mind m);
 void					*daily(void *ref);
 
 /* monitor */

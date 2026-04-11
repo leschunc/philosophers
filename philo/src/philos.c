@@ -43,53 +43,51 @@ bool	set_last_meal(t_mind *m)
 	m->meals++;
 	pthread_mutex_unlock(m->inspec);
 	if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
-	{
-		printf("i finished\n");
 		return (false);
-	}
 	return (true);
+}
+
+
+void	eat_lr(t_mind *m)
+{
+	pthread_mutex_lock(m->l_fork);
+	printf(FORK, fast_ms(m->start), m->whoami);
+	pthread_mutex_lock(m->r_fork);
+	printf(FORK, fast_ms(m->start), m->whoami);
+	pthread_mutex_unlock(m->l_fork);
+	pthread_mutex_unlock(m->r_fork);
+}
+
+void	eat_rl(t_mind *m)
+{
+	pthread_mutex_lock(m->r_fork);
+	printf(FORK, fast_ms(m->start), m->whoami);
+	pthread_mutex_lock(m->l_fork);
+	printf(FORK, fast_ms(m->start), m->whoami);
+	pthread_mutex_unlock(m->r_fork);
+	pthread_mutex_unlock(m->l_fork);
 }
 
 bool	grab(t_mind *m)
 {
 	if (m->whoami % 2 != 0)
 	{
-		pthread_mutex_lock(m->l_fork);
-		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
-		pthread_mutex_lock(m->r_fork);
-		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
+		eat_lr(m);
+		printf(EATS, fast_ms(m->start), m->whoami);
 		if (set_last_meal(m) == false)
-		{
-			printf("%d died or finished\n", m->whoami);
 			return (false);
-		}
-		printf("%05ld %03d is eating\n", fast_ms(m->start), m->whoami);
 		usleep(m->set[EAT] * 1000);
 	}
 	else
 	{
 		usleep(100);
-		pthread_mutex_lock(m->r_fork);
-		if (m->set[NUM] == 1)
-			return (pthread_mutex_unlock(m->r_fork), exit(1), NULL);
-		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
-		pthread_mutex_lock(m->l_fork);
-		printf("%05ld %03d has taken a fork\n", fast_ms(m->start), m->whoami);
+		eat_rl(m);
+		printf(EATS, fast_ms(m->start), m->whoami);
 		if (set_last_meal(m) == false)
-		{
-			printf("%d died or finished\n", m->whoami);
 			return (false);
-		}
-		printf("%05ld %03d is eating\n", fast_ms(m->start), m->whoami);
 		usleep(m->set[EAT] * 1000);
 	}
 	return (true);
-}
-
-void	drop(t_mind m)
-{
-	pthread_mutex_unlock(m.r_fork);
-	pthread_mutex_unlock(m.l_fork);
 }
 
 void	*daily(void *ref)
@@ -100,15 +98,14 @@ void	*daily(void *ref)
 	m->meals = 0;
 	while (1)
 	{
-		printf("%05ld %03d is thinking\n", fast_ms(m->start), m->whoami);
+		printf(THNK, fast_ms(m->start), m->whoami);
 		if (grab(m) == false)
-			return (drop(*m), (void *)false);
-		drop(*m);
+			return ((void *)false);
 		// pthread_mutex_lock(m->inspec);
 		// usleep seems better
 		// 1000 maybe
 		// this defo looks more precise and safe
-		printf("%05ld %03d is sleeping\n", fast_ms(m->start), m->whoami);
+		printf(THNK, fast_ms(m->start), m->whoami);
 		if (m->whoami % 2)
 			usleep(m->set[REST] * 1000);
 		else

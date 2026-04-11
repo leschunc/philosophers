@@ -61,9 +61,11 @@ C	= 5 800 200 200 7 # No philosopher should die
 D	= 4 410 200 200 # No philosopher should die.
 E	= 4 310 200 100 # One philosopher should die.
 # F	= 5 800 200 200
+TEST	= 5 200 60 100 5
+INPUT	= $(C)
 
 r: all
-	@./$(NAME) $(E)
+	@./$(NAME) $(INPUT)
 # 	@./$(NAME) $(B)
 
 s:
@@ -72,6 +74,6 @@ s:
 # LOG			= > log 2> errlog
 
 v: all
-	valgrind $(VFLAG) ./$(NAME) $(A) $(LOG)
+	valgrind $(VFLAG) ./$(NAME) $(INPUT) $(LOG)
 
 .PHONY: all clean fclean re r v
