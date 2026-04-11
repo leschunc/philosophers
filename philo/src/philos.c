@@ -8,23 +8,23 @@ static inline suseconds_t	fast_ms(suseconds_t start)
 	return ((now.tv_sec * 1000000 + now.tv_usec - start) / 1000);
 }
 
-static inline void	hi_res_wait(long wait)
-{
-	struct timeval	now;
-	long			init;
+// static inline void	hi_res_wait(long wait)
+// {
+// 	struct timeval	now;
+// 	long			init;
 
-	gettimeofday(&now, NULL);
-	init = now.tv_sec * 1000000 + now.tv_usec;
-	while (1)
-	{
-		gettimeofday(&now, NULL);
-		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
-			break ;
-		usleep(wait / 3);
-		// magic number for luck
-		// usleep(set[NUM] / 3);
-	}
-}
+// 	gettimeofday(&now, NULL);
+// 	init = now.tv_sec * 1000000 + now.tv_usec;
+// 	while (1)
+// 	{
+// 		gettimeofday(&now, NULL);
+// 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
+// 			break ;
+// 		usleep(wait / 3);
+// 		// magic number for luck
+// 		// usleep(set[NUM] / 3);
+// 	}
+// }
 
 bool	set_last_meal(t_mind *m)
 {

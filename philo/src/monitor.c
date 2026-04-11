@@ -18,7 +18,7 @@ void	*fate(void *ref)
 			{
 				if (c->mind[i].last_meal != -1)
 				{
-					printf("monitor: philo died [%d]\n", i);
+					printf("%05ld %03d had died\n", get_time(c->mind[1].start), c->mind[1].whoami);
 					c->mind[i].last_meal = -1;
 					if (c->set[NUM] == 1)
 					{
@@ -30,7 +30,7 @@ void	*fate(void *ref)
 			pthread_mutex_unlock(c->inspec + i);
 			// printf("now %ld lm %ld dif %ld TDIE %ld\n", now,
 			// 	c->mind[i].last_meal, now - c->mind[i].last_meal, c->set[DIE]);
-			usleep(20000);
+			usleep(1000);
 			// usleep(50);
 			i++;
 		}
