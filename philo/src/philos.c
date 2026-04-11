@@ -31,12 +31,14 @@ bool	set_last_meal(t_mind *m)
 	suseconds_t	now;
 
 	now = fast_ms(m->start);
-	if (now - m->last_meal > m->set[DIE])
+	pthread_mutex_lock(m->inspec);
+	if (m->last_meal == -1)
 	{
-		printf("i died\n");
+		pthread_mutex_unlock(m->inspec);
+		printf("i was killed by monitor\n");
+		exit(EXIT_FAILURE);
 		return (false);
 	}
-	pthread_mutex_lock(m->inspec);
 	m->last_meal = now;
 	m->meals++;
 	pthread_mutex_unlock(m->inspec);
@@ -64,6 +66,8 @@ bool	grab(t_mind *m)
 	{
 		usleep(100);
 		pthread_mutex_lock(m->r_fork);
+		if (m->set[NUM] == 1)
+			return (pthread_mutex_unlock(m->r_fork), exit(1), NULL);
 		printf("%03d\t%05ld\t%ld\tR\n", m->whoami, fast_ms(m->start), m->meals);
 		pthread_mutex_lock(m->l_fork);
 		printf("%03d\t%05ld\t%ld\tL\n", m->whoami, fast_ms(m->start), m->meals);

@@ -28,30 +28,30 @@ bool	inspec_init(t_context c)
 	return (true);
 }
 
-void	give_free_will(t_context c)
+void	give_free_will(t_context *c)
 {
 	int	i;
 
 	i = 0;
-	while (i < c.set[NUM])
+	while (i < c->set[NUM])
 	{
-		c.mind[i].whoami = i;
-		c.mind[i].inspec = c.inspec + i;
-		c.mind[i].r_fork = c.fork + i;
-		c.mind[i].meals = 0;
-		c.mind[i].last_meal = 0;
-		c.mind[i].set = c.set;
+		c->mind[i].whoami = i;
+		c->mind[i].inspec = c->inspec + i;
+		c->mind[i].r_fork = c->fork + i;
+		c->mind[i].meals = 0;
+		c->mind[i].last_meal = 0;
+		c->mind[i].set = c->set;
 		if (i == 0)
-			c.mind[i].l_fork = &c.fork[c.set[NUM] - 1];
+			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
 		else
-			c.mind[i].l_fork = &c.fork[i - 1];
+			c->mind[i].l_fork = &c->fork[i - 1];
 		i++;
 	}
 	i = 0;
-	c.start = get_start();
-	while (i < c.set[NUM])
+	c->start = get_start();
+	while (i < c->set[NUM])
 	{
-		c.mind[i].start = c.start;
+		c->mind[i].start = c->start;
 		i++;
 	}
 }
@@ -63,13 +63,15 @@ bool	init_sim(t_context c)
 
 	c.mind = mind;
 	i = 0;
-	give_free_will(c);
+	give_free_will(&c);
 	while (i < c.set[NUM])
 	{
 		if (pthread_create(c.philo + i, NULL, daily, mind + i) != OK)
 			return (false);
 		i++;
 	}
+	if (init_monitor(c) == false)
+		return (false);
 	i = 0;
 	while (i < c.set[NUM])
 	{
@@ -104,6 +106,15 @@ void	destroy_mutx(mut_t *fork, mut_t *inspec, long *info)
 		i++;
 	}
 	ft_putstr_fd("SEEMS FINE\n", 2);
+}
+
+bool	init_monitor(t_context c)
+{
+	pthread_t	determinism;
+
+	pthread_create(&determinism, NULL, fate, &c);
+	pthread_join(determinism, NULL);
+	return (true);
 }
 
 bool	init(t_context c)

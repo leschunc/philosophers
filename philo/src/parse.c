@@ -10,6 +10,7 @@ void	atoiv(t_context c)
 		c.set[i] = ft_atoi(c.argv[i + 1]);
 		i++;
 	}
+	// set set[arrlen] = 0?
 }
 
 void	disp_args(t_context c)

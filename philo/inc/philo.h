@@ -72,7 +72,8 @@ void					disp_args(t_context c);
 /* init */
 bool					init(t_context c);
 bool					init_fork(t_context *c);
-bool					init_sim(t_context c);	
+bool					init_sim(t_context c);
+bool					init_monitor(t_context c);
 
 /* philos */
 bool					grab(t_mind *m);
@@ -80,12 +81,12 @@ void					drop(t_mind m);
 void					*daily(void *ref);
 
 /* monitor */
+void					*fate(void *ref);
 
 /* clock */
 void					fast_wait(long wait);
 suseconds_t				get_time(suseconds_t start);
 suseconds_t				get_start(void);
-
 
 /* utils */
 void					safe_free(char **ptr);
