@@ -70,10 +70,10 @@ void					atoiv(t_context c);
 void					disp_args(t_context c);
 
 /* init */
-bool					init(t_context c);
+bool					init(t_context *c);
 bool					init_fork(t_context *c);
-bool					init_sim(t_context c);
-bool					init_monitor(t_context c);
+bool					init_sim(t_context *c);
+bool					init_monitor(t_context *c);
 
 /* philos */
 bool					grab(t_mind *m);

@@ -18,7 +18,7 @@ int	main(int argc, char const *argv[])
 	// 	return (ERR);
 	// }
 	// test();
-	if (init(c) != OK)
+	if (init(&c) != OK)
 		return (OK);
 	// run_simulation();
 	return (ERR);

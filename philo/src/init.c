@@ -14,14 +14,14 @@ bool	init_fork(t_context *c)
 	return (true);
 }
 
-bool	inspec_init(t_context c)
+bool	inspec_init(t_context *c)
 {
 	int	i;
 
 	i = 0;
-	while (i < c.set[NUM])
+	while (i < c->set[NUM])
 	{
-		if (pthread_mutex_init(c.inspec + i, NULL) != OK)
+		if (pthread_mutex_init(c->inspec + i, NULL) != OK)
 			return (false);
 		i++;
 	}
@@ -56,26 +56,26 @@ void	give_free_will(t_context *c)
 	}
 }
 
-bool	init_sim(t_context c)
+bool	init_sim(t_context *c)
 {
 	int		i;
-	t_mind	mind[c.set[NUM]];
+	t_mind	mind[c->set[NUM]];
 
-	c.mind = mind;
+	c->mind = mind;
 	i = 0;
-	give_free_will(&c);
-	while (i < c.set[NUM])
+	give_free_will(c);
+	while (i < c->set[NUM])
 	{
-		if (pthread_create(c.philo + i, NULL, daily, mind + i) != OK)
+		if (pthread_create(c->philo + i, NULL, daily, mind + i) != OK)
 			return (false);
 		i++;
 	}
 	if (init_monitor(c) == false)
 		return (false);
 	i = 0;
-	while (i < c.set[NUM])
+	while (i < c->set[NUM])
 	{
-		if (pthread_join(c.philo[i], NULL) != OK)
+		if (pthread_join(c->philo[i], NULL) != OK)
 			return (false);
 		i++;
 	}
@@ -108,36 +108,36 @@ void	destroy_mutx(mut_t *fork, mut_t *inspec, long *info)
 	ft_putstr_fd("SEEMS FINE\n", 2);
 }
 
-bool	init_monitor(t_context c)
+bool	init_monitor(t_context *c)
 {
 	pthread_t	determinism;
 
-	pthread_create(&determinism, NULL, fate, &c);
+	pthread_create(&determinism, NULL, fate, c);
 	pthread_join(determinism, NULL);
 	return (true);
 }
 
-bool	init(t_context c)
+bool	init(t_context *c)
 {
-	pthread_t	philo[c.set[NUM]];
-	mut_t		fork[c.set[NUM]];
-	mut_t		inspec[c.set[NUM]];
+	pthread_t	philo[c->set[NUM]];
+	mut_t		fork[c->set[NUM]];
+	mut_t		inspec[c->set[NUM]];
 
 	// what if its zero
-	// memset(fork, 0, sizeof(mut_t) * c.set[NUM]);
-	// memset(philo, 0, sizeof(pthread_t) * c.set[NUM]);
-	c.philo = philo;
-	c.fork = fork;
-	c.inspec = inspec;
-	// c.meals = meals;
-	// memset(inspec, 0, sizeof(mut_t) * c.set[NUM]);
-	if (init_fork(&c) == false)
+	// memset(fork, 0, sizeof(mut_t) * c->set[NUM]);
+	// memset(philo, 0, sizeof(pthread_t) * c->set[NUM]);
+	c->philo = philo;
+	c->fork = fork;
+	c->inspec = inspec;
+	// c->meals = meals;
+	// memset(inspec, 0, sizeof(mut_t) * c->set[NUM]);
+	if (init_fork(c) == false)
 		return (false);
 	if (inspec_init(c) == false)
 		return (false);
 	if (init_sim(c) == false)
 		return (false);
 	// memset0 mutx and then destroy all that are nonzero
-	destroy_mutx(fork, inspec, c.set);
+	destroy_mutx(fork, inspec, c->set);
 	return (true);
 }
