@@ -91,7 +91,7 @@ void	destroy_mutx(t_mut *fork, t_mut *inspec, long *info)
 	{
 		if (pthread_mutex_destroy(fork + i) == EBUSY)
 			// this is not gonna happen
-			ft_putstr_fd("EBUSY\n", 2);
+			ft_putstr_fd("EBUSY fork\n", 2);
 		i++;
 	}
 	i = 0;
@@ -102,7 +102,7 @@ void	destroy_mutx(t_mut *fork, t_mut *inspec, long *info)
 		// pthread_mutex_unlock(inspec + i);
 		if (pthread_mutex_destroy(inspec + i) == EBUSY)
 			// this is not gonna happen
-			ft_putstr_fd("EBUSY\n", 2);
+			ft_putstr_fd("EBUSY inspec\n", 2);
 		i++;
 	}
 }

@@ -73,7 +73,7 @@ typedef struct s_context
 
 /* parse */
 void					atoiv(t_context *c);
-void					disp_args(t_context *c);
+// void					disp_args(t_context *c);
 
 /* init */
 bool					init(t_context *c);

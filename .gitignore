@@ -1,2 +1,5 @@
 philo/philo
 *.o
+log
+file
+test

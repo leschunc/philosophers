@@ -61,8 +61,8 @@ C	= 5 800 200 200 7 # No philosopher should die
 D	= 4 410 200 200 # No philosopher should die.
 E	= 4 310 200 100 # One philosopher should die.
 # F	= 5 800 200 200
-TEST	= 5 200 60 100 5
-INPUT	= $(C)
+TEST	= 5 1000 1 1 11
+INPUT	= $(TEST)
 
 r: all
 	@./$(NAME) $(INPUT)

@@ -41,12 +41,14 @@ bool	set_last_meal(t_mind *m)
 	}
 	m->last_meal = now;
 	m->meals++;
-	pthread_mutex_unlock(m->inspec);
 	if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
+	{
+		pthread_mutex_unlock(m->inspec);
 		return (false);
+	}
+	pthread_mutex_unlock(m->inspec);
 	return (true);
 }
-
 
 void	eat_lr(t_mind *m)
 {
@@ -70,7 +72,7 @@ void	eat_rl(t_mind *m)
 
 bool	grab(t_mind *m)
 {
-	if (m->whoami % 2 != 0)
+	if (m->whoami % 2 == 0)
 	{
 		eat_lr(m);
 		printf(EATS, fast_ms(m->start), m->whoami);
@@ -80,7 +82,7 @@ bool	grab(t_mind *m)
 	}
 	else
 	{
-		usleep(100);
+		usleep(1000);
 		eat_rl(m);
 		printf(EATS, fast_ms(m->start), m->whoami);
 		if (set_last_meal(m) == false)
