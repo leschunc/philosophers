@@ -63,7 +63,7 @@ E	= 4 310 200 100 # One philosopher should die.
 # F	= 5 800 200 200
 
 r: all
-	@./$(NAME) $(B)
+	@./$(NAME) $(E)
 # 	@./$(NAME) $(B)
 
 s:
