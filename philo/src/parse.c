@@ -1,28 +1,28 @@
 #include "philo.h"
 
-void	atoiv(t_context c)
+void	atoiv(t_context *c)
 {
 	int	i;
 
 	i = 0;
-	while (i < c.arr_len)
+	while (i < c->arr_len)
 	{
-		c.set[i] = ft_atoi(c.argv[i + 1]);
+		c->set[i] = ft_atoi(c->argv[i + 1]);
 		i++;
 	}
 	// set set[arrlen] = 0?
 }
 
-void	disp_args(t_context c)
+void	disp_args(t_context *c)
 {
 	static char	*disp[] = (char *[]){S_NUM, S_DIE, S_EAT, S_REST, S_CYCLE,
 			NULL};
 	int			i;
 
 	i = 0;
-	while (i < c.arr_len)
+	while (i < c->arr_len)
 	{
-		ft_printf("[%ld]\t[%s]\n", c.set[i], disp[i]);
+		ft_printf("[%ld]\t[%s]\n", c->set[i], disp[i]);
 		i++;
 	}
 }

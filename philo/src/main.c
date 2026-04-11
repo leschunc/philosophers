@@ -10,7 +10,7 @@ int	main(int argc, char const *argv[])
 	c.arr_len = argc - 1;
 	c.argv = argv;
 	c.set = set;
-	atoiv(c);
+	atoiv(&c);
 	// if (c.set[NUM] == 1)
 	// {
 	// 	// dont protect explicitly
