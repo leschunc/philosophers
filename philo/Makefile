@@ -72,7 +72,7 @@ F = 4000 4000 $(EAT) $(RST) $(LEN)
 G = 3999 4000 $(EAT) $(RST) $(LEN)
 
 TEST	= 3 410 200 200
-INPUT	= $(TEST)
+INPUT	= $(G)
 
 r: all
 	@./$(NAME) $(INPUT)
