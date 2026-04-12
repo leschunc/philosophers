@@ -14,22 +14,32 @@
 # define OK 0
 # define SIM_SIZE 4000
 
-# define FORK "%5ld\t%3d\thas taken a fork\n"
-# define EATS "%5ld\t%3d\tis eating\n"
-# define NAPS "%5ld\t%3d\tis sleeping\n"
-# define THNK "%5ld\t%3d\tis thinking\n"
-# define DIED "%5ld\t%3d\thas died\n"
+# define MSG1 "%5ld\t%3d\thas taken a fork\n"
+# define MSG2 "%5ld\t%3d\tis eating\n"
+# define MSG3 "%5ld\t%3d\tis sleeping\n"
+# define MSG4 "%5ld\t%3d\tis thinking\n"
+# define MSG5 "%5ld\t%3d\thas died\n"
+# define ERR1 "\033[31mCAPTCHA\033[0m: name all %ld philosophers\n"
+# define ERR2 "%5ld 0 has died \033[31mbecause of YOU\033[0m\n"
 
-# define SHAME "%5ld 0 has died \033[31mbecause of YOU\033[0m\n"
-# define STOP "\033[31mCAPTCHA\033[0m: name all %ld philosophers\n"
+enum					e_print
+{
+	M1,
+	M2,
+	M3,
+	M4,
+	M5,
+	E1,
+	E2,
+};
 
 enum					e_attr
 {
 	NUM,
 	DIE,
 	EAT,
-	REST,
-	CYCLE
+	SLP,
+	CYC,
 };
 
 typedef pthread_mutex_t	t_mut;
@@ -86,5 +96,6 @@ suseconds_t				get_time(suseconds_t start);
 void					safe_free(char **ptr);
 void					lock(t_mut *mut);
 void					unlock(t_mut *mut);
+void					msg(int num, t_mind *m, t_context *c, int i);
 
 #endif

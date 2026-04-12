@@ -13,13 +13,13 @@ void	atoiv(t_context *c)
 	if (c->set[NUM] == 1)
 	{
 		suseconds_t start = get_start();
-		usleep(c->set[REST] * 1000);
-		printf(SHAME, get_time(start));
+		usleep(c->set[SLP] * 1000);
+		printf(ERR2, get_time(start));
 		exit (ERR);
 	}
 	if (c->set[NUM] > 4000)
 	{
-		printf(STOP, c->set[NUM]);
+		printf(ERR1, c->set[NUM]);
 		exit (ERR);
 	}
 	// set set[arrlen] = 0?

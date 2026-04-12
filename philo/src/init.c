@@ -95,7 +95,7 @@ void	destroy_mutx(t_mut *fork, t_mut *inspec, long *info)
 		i++;
 	}
 	i = 0;
-	if (info[CYCLE] == 0)
+	if (info[CYC] == 0)
 		return ;
 	while (i < info[NUM])
 	{

@@ -31,7 +31,7 @@ bool	set_last_meal(t_mind *m)
 		return (false);
 	}
 	m->meals++;
-	if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
+	if (m->set[CYC] != 0 && m->meals == m->set[CYC])
 	{
 		unlock(m->inspec);
 		return (false);
@@ -45,15 +45,15 @@ bool	eat_lr(t_mind *m)
 	if (i_am_dead(m) == true)
 		return (false);
 	lock(m->l_fork);
-	printf(FORK, get_time(m->start), m->whoami);
+	msg(M1, m, 0, 0);
 	if (i_am_dead(m) == true)
 	{
 		unlock(m->l_fork);
 		return (false);
 	}
 	lock(m->r_fork);
-	printf(FORK, get_time(m->start), m->whoami);
-	printf(EATS, get_time(m->start), m->whoami);
+	msg(M1, m, 0, 0);
+	msg(M2, m, 0, 0);
 	if (set_last_meal(m) == false)
 		return (false);
 	if (am_i_dead_wait(m, m->set[EAT] * 1000))
@@ -72,15 +72,15 @@ bool	eat_rl(t_mind *m)
 	if (i_am_dead(m) == true)
 		return (false);
 	lock(m->r_fork);
-	printf(FORK, get_time(m->start), m->whoami);
+	msg(M1, m, 0, 0);
 	if (i_am_dead(m) == true)
 	{
 		unlock(m->r_fork);
 		return (false);
 	}
 	lock(m->l_fork);
-	printf(FORK, get_time(m->start), m->whoami);
-	printf(EATS, get_time(m->start), m->whoami);
+	msg(M1, m, 0, 0);
+	msg(M2, m, 0, 0);
 	if (set_last_meal(m) == false)
 		return (false);
 	if (am_i_dead_wait(m, m->set[EAT] * 1e3))
@@ -132,18 +132,18 @@ void	*daily(void *ref)
 	{
 		// if (i_am_dead == true)
 		// 	return ((void *)false);
-		printf(THNK, get_time(m->start), m->whoami);
+		msg(M4, m, 0, 0);
 		if (grab(m) == false)
 			return ((void *)false);
 		if (i_am_dead(m) == true)
 			return ((void *)false);
-		printf(NAPS, get_time(m->start), m->whoami);
+		msg(M3, m, 0, 0);
 		if (m->whoami % 2)
 		{
-			if (am_i_dead_wait(m, m->set[REST] * 1e3))
+			if (am_i_dead_wait(m, m->set[SLP] * 1e3))
 				return ((void *)false);
 		}
-		else if (am_i_dead_wait(m, m->set[REST] * 1e3 + 100))
+		else if (am_i_dead_wait(m, m->set[SLP] * 1e3 + 100))
 			return ((void *)false);
 	}
 	return ((void *)false);

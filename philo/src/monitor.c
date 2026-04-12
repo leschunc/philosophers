@@ -21,7 +21,7 @@ bool	safe_inspec(t_context *c, int i)
 
 	now = get_time(c->start);
 	lock(c->inspec + i);
-	if (c->mind[i].meals > 0 && c->set[CYCLE] == c->mind[i].meals)
+	if (c->mind[i].meals > 0 && c->set[CYC] == c->mind[i].meals)
 	{
 		finished++;
 		if (finished == c->set[NUM])
@@ -32,7 +32,7 @@ bool	safe_inspec(t_context *c, int i)
 	}
 	else if (now - c->mind[i].last_meal >= c->set[DIE])
 	{
-		printf(DIED, get_time(c->mind[i].start), c->mind[i].whoami);
+		msg(M5, 0, c, i);
 		unlock(c->inspec + i);
 		turn_minds_off(c);
 		return (false);
