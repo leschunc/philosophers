@@ -22,7 +22,14 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, ERR1, ERR2};
 
 	if (m)
-		printf(msgs[num], get_time(m->start), m->whoami);
+	{
+		// lock(m->inspec);
+		if (killed(m) == false)
+			printf(msgs[num], get_time(m->start), m->whoami);
+		// unlock(m->inspec);
+	}
 	else
+	{
 		printf(msgs[num], get_time(c->start), i);
+	}
 }
