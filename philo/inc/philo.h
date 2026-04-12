@@ -3,13 +3,11 @@
 
 // remove libft
 # include "libft.h"
-
-# include <pthread.h>
-# include <sys/time.h>
-# include <stdio.h>
-
 # include <errno.h>
+# include <pthread.h>
 # include <stdbool.h>
+# include <stdio.h>
+# include <sys/time.h>
 
 # define EMPTY '\0'
 # define ERR 1
@@ -86,5 +84,7 @@ suseconds_t				get_time(suseconds_t start);
 
 /* utils */
 void					safe_free(char **ptr);
+void					lock(t_mut *mut);
+void					unlock(t_mut *mut);
 
 #endif
