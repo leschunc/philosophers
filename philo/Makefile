@@ -53,28 +53,41 @@ CFLAGS		+= -fsanitize=thread
 # Test 
 # Test 
 
-A	= 1 800 200 200 # The philosopher should not eat and should die.
-B	= 3 601 200 1 # No philosopher should die.
-C	= 5 800 200 200 7 # No philosopher should die 
-#	and the simulation should stop when every philosopher
-#	has eaten at least 7 times.
-D	= 4 410 200 200 # No philosopher should die.
-E	= 4 310 200 100 # One philosopher should die.
-# F	= 5 800 200 200
-MAX = 4000 1000 1 1
-MAX1 = 3999 1000 1 1
+# Test 1 800 200 200. The philosopher should not eat and should die.
+# Test 5 800 200 200. No philosopher should die.
+# Test 5 800 200 200 7. No philosopher should die and the simulation should stop when every philosopher has eaten at least 7 times.
+# Test 4 410 200 200. No philosopher should die.
+# Test 4 310 200 100. One philosopher should die.
+
+LEN = 20
+EAT = 200
+RST = 200
+
+A = 1 800 $(EAT) $(RST) $(LEN)
+B = 5 800 $(EAT) $(RST) $(LEN)
+C = 5 800 $(EAT) $(RST) $(LEN)
+D = 4 410 $(EAT) $(RST) $(LEN)
+E = 4 310 $(EAT) 100 $(LEN)
+F = 4000 4000 $(EAT) $(RST) $(LEN)
+G = 3999 4000 $(EAT) $(RST) $(LEN)
 
 TEST	= 3 410 200 200
 INPUT	= $(TEST)
 
 r: all
 	@./$(NAME) $(INPUT)
-# 	@./$(NAME) $(B)
+
+t: all
+	@./$(NAME) $(B)
+	@./$(NAME) $(C)
+	@./$(NAME) $(D)
+	@./$(NAME) $(E)
+	@./$(NAME) $(F)
+	@./$(NAME) $(G)
+	@./$(NAME) $(A)
 
 s:
 	setarch -R make r
-
-# LOG			= > log 2> errlog
 
 v: all
 	valgrind $(VFLAG) ./$(NAME) $(INPUT) $(LOG)

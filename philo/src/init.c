@@ -59,7 +59,7 @@ void	give_free_will(t_context *c)
 bool	init_sim(t_context *c)
 {
 	int		i;
-	t_mind	mind[S_SIZE];
+	t_mind	mind[SIM_SIZE];
 
 	c->mind = mind;
 	i = 0;
@@ -118,9 +118,9 @@ bool	init_monitor(t_context *c)
 
 bool	init(t_context *c)
 {
-	pthread_t	philo[S_SIZE];
-	t_mut		fork[S_SIZE];
-	t_mut		inspec[S_SIZE];
+	pthread_t	philo[SIM_SIZE];
+	t_mut		fork[SIM_SIZE];
+	t_mut		inspec[SIM_SIZE];
 
 	c->philo = philo;
 	c->fork = fork;

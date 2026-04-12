@@ -1,38 +1,29 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-// self explanatory review to remove functions that are forbidden
+// remove libft
 # include "libft.h"
-// for the main thread functions
-# include <pthread.h>
-// for true and false
-# include <stdbool.h>
-// for memset
-# include <string.h>
-// for gettimeofday
-# include <sys/time.h>
-// for EBUSY for example
-# include <errno.h>
 
-// for printf remove this to deliver
+# include <pthread.h>
+# include <sys/time.h>
 # include <stdio.h>
+
+# include <errno.h>
+# include <stdbool.h>
 
 # define EMPTY '\0'
 # define ERR 1
 # define OK 0
-# define S_SIZE 4000
-// # define NOT_OK !
-// # define S_NUM "number_of_philosophers"
-// # define S_DIE "time_to_die"
-// # define S_EAT "time_to_eat"
-// # define S_REST "time_to_sleep"
-// # define S_CYCLE "number_of_times_each_philosopher_must_eat"
+# define SIM_SIZE 4000
 
 # define FORK "%5ld\t%3d\thas taken a fork\n"
 # define EATS "%5ld\t%3d\tis eating\n"
 # define NAPS "%5ld\t%3d\tis sleeping\n"
 # define THNK "%5ld\t%3d\tis thinking\n"
 # define DIED "%5ld\t%3d\thas died\n"
+
+# define SHAME "%6ld 0 has died \033[31mbecause of YOU\033[0m\n"
+# define STOP "\033[31mCAPTCHA\033[0m: name all %ld philosophers\n"
 
 enum					e_attr
 {
@@ -52,7 +43,6 @@ typedef struct s_mind
 	long				meals;
 	t_mut				*inspec;
 	suseconds_t			start;
-	// int				mode;
 	long				last_meal;
 	t_mut				*r_fork;
 	t_mut				*l_fork;
@@ -60,7 +50,6 @@ typedef struct s_mind
 
 typedef struct s_context
 {
-	// int				mode;
 	long				*set;
 	suseconds_t			start;
 	pthread_t			*philo;
@@ -74,7 +63,6 @@ typedef struct s_context
 
 /* parse */
 void					atoiv(t_context *c);
-// void					disp_args(t_context *c);
 
 /* init */
 bool					init(t_context *c);
