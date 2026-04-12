@@ -2,7 +2,8 @@
 
 void	atoiv(t_context *c)
 {
-	int	i;
+	int			i;
+	suseconds_t	start;
 
 	i = 0;
 	while (i < c->arr_len)
@@ -12,15 +13,15 @@ void	atoiv(t_context *c)
 	}
 	if (c->set[NUM] == 1)
 	{
-		suseconds_t start = get_start();
-		usleep(c->set[SLP] * 1000);
+		start = get_start();
+		usleep(c->set[DIE] * 1000);
 		printf(ERR2, get_time(start));
-		exit (ERR);
+		exit(ERR);
 	}
 	if (c->set[NUM] > 4000)
 	{
 		printf(ERR1, c->set[NUM]);
-		exit (ERR);
+		exit(ERR);
 	}
 	// set set[arrlen] = 0?
 }

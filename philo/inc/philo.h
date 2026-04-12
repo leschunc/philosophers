@@ -69,24 +69,18 @@ typedef struct s_context
 	int					ite;
 }						t_context;
 
-/* parse */
 void					atoiv(t_context *c);
 
-/* init */
 bool					init(t_context *c);
 bool					init_fork(t_context *c);
 bool					init_sim(t_context *c);
-bool					init_monitor(t_context *c);
 
-/* philos */
 bool					grab(t_mind *m);
 void					*daily(void *ref);
 bool					killed(t_mind *m);
 
-/* monitor */
 void					*fate(void *ref);
 
-/* clock */
 bool					am_i_dead_wait(t_mind *m, long wait);
 suseconds_t				get_time(suseconds_t start);
 suseconds_t				get_start(void);

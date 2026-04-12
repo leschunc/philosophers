@@ -41,6 +41,7 @@ void	give_free_will(t_context *c)
 		c->mind[i].meals = 0;
 		c->mind[i].last_meal = 0;
 		c->mind[i].set = c->set;
+		// c->mind[i].broadcast = c->broadcast;
 		if (i == 0)
 			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
 		else
@@ -65,6 +66,7 @@ bool	init_sim(t_context *c)
 	c->mind = mind;
 	i = 0;
 	give_free_will(c);
+	// pthread_mutex_init(c->broadcast, NULL);
 	pthread_create(&determinism, NULL, fate, c);
 	while (i < c->set[NUM])
 	{
@@ -83,27 +85,23 @@ bool	init_sim(t_context *c)
 	return (true);
 }
 
-void	destroy_mutx(t_mut *fork, t_mut *inspec, long *info)
+void	destroy_mutx(t_context *c)
 {
 	int	i;
 
 	i = 0;
-	while (i < info[NUM])
+	// pthread_mutex_destroy(c->broadcast);
+	while (i < c->set[NUM])
 	{
-		if (pthread_mutex_destroy(fork + i) == EBUSY)
-			// this is not gonna happen
-			ft_putstr_fd("EBUSY fork\n", 2);
+		pthread_mutex_destroy(c->fork + i);
 		i++;
 	}
 	i = 0;
-	if (info[CYC] == 0)
+	if (c->set[CYC] == 0)
 		return ;
-	while (i < info[NUM])
+	while (i < c->set[NUM])
 	{
-		// unlock(inspec + i);
-		if (pthread_mutex_destroy(inspec + i) == EBUSY)
-			// this is not gonna happen
-			ft_putstr_fd("EBUSY inspec\n", 2);
+		pthread_mutex_destroy(c->inspec + i);
 		i++;
 	}
 }
@@ -123,6 +121,6 @@ bool	init(t_context *c)
 		return (false);
 	if (init_sim(c) == false)
 		return (false);
-	destroy_mutx(fork, inspec, c->set);
+	destroy_mutx(c);
 	return (true);
 }

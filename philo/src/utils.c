@@ -23,10 +23,11 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 
 	if (m)
 	{
-		// lock(m->inspec);
+		usleep(3e3);
 		if (killed(m) == false)
+		{
 			printf(msgs[num], get_time(m->start), m->whoami);
-		// unlock(m->inspec);
+		}
 	}
 	else
 	{

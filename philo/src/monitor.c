@@ -54,8 +54,7 @@ void	*fate(void *ref)
 		{
 			if (safe_inspec(c, i) == false)
 				return (NULL);
-			// adjust
-			usleep(5000 / c->set[NUM]);
+			usleep(0);
 			i++;
 		}
 	}

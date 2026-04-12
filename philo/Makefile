@@ -71,12 +71,12 @@ E = 4 300 $(EAT) 100
 F = 4000 4000 $(EAT) $(RST) $(CYC)
 G = 3999 4000 $(EAT) $(RST) $(CYC)
 
-TEST	= 3 599 200 200
+TEST	= 199 199 100 100
 # philos are thinking before the end of the simulation, is that right?
 INPUT	= $(TEST)
 
 r: all
-	@./$(NAME) $(INPUT)
+	@./$(NAME) $(TEST)
 
 t: all
 	@./$(NAME) $(B)
