@@ -22,7 +22,7 @@
 # define THNK "%5ld\t%3d\tis thinking\n"
 # define DIED "%5ld\t%3d\thas died\n"
 
-# define SHAME "%6ld 0 has died \033[31mbecause of YOU\033[0m\n"
+# define SHAME "%5ld 0 has died \033[31mbecause of YOU\033[0m\n"
 # define STOP "\033[31mCAPTCHA\033[0m: name all %ld philosophers\n"
 
 enum					e_attr

@@ -24,14 +24,12 @@ bool	set_last_meal(t_mind *m)
 
 	now = get_time(m->start);
 	pthread_mutex_lock(m->inspec);
-	// if (m->last_meal == -1)
-	// {
-	// 	pthread_mutex_unlock(m->inspec);
-	// 	// printf("i was killed by monitor\n");
-	// 	return (false);
-	// 	// return (false);
-	// }
 	m->last_meal = now;
+	if (m->meals == -1)
+	{
+		pthread_mutex_unlock(m->inspec);
+		return (false);
+	}
 	m->meals++;
 	if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
 	{
@@ -47,20 +45,23 @@ bool	eat_lr(t_mind *m)
 	if (i_am_dead(m) == true)
 		return (false);
 	pthread_mutex_lock(m->l_fork);
+	printf(FORK, get_time(m->start), m->whoami);
 	if (i_am_dead(m) == true)
 	{
 		pthread_mutex_unlock(m->l_fork);
 		return (false);
 	}
-	printf(FORK, get_time(m->start), m->whoami);
 	pthread_mutex_lock(m->r_fork);
-	if (i_am_dead(m) == true)
+	printf(FORK, get_time(m->start), m->whoami);
+	printf(EATS, get_time(m->start), m->whoami);
+	if (set_last_meal(m) == false)
+		return (false);
+	if (am_i_dead_wait(m, m->set[EAT] * 1000))
 	{
 		pthread_mutex_unlock(m->r_fork);
 		pthread_mutex_unlock(m->l_fork);
 		return (false);
 	}
-	printf(FORK, get_time(m->start), m->whoami);
 	pthread_mutex_unlock(m->l_fork);
 	pthread_mutex_unlock(m->r_fork);
 	return (true);
@@ -71,20 +72,23 @@ bool	eat_rl(t_mind *m)
 	if (i_am_dead(m) == true)
 		return (false);
 	pthread_mutex_lock(m->r_fork);
+	printf(FORK, get_time(m->start), m->whoami);
 	if (i_am_dead(m) == true)
 	{
 		pthread_mutex_unlock(m->r_fork);
 		return (false);
 	}
-	printf(FORK, get_time(m->start), m->whoami);
 	pthread_mutex_lock(m->l_fork);
-	if (i_am_dead(m) == true)
+	printf(FORK, get_time(m->start), m->whoami);
+	printf(EATS, get_time(m->start), m->whoami);
+	if (set_last_meal(m) == false)
+		return (false);
+	if (am_i_dead_wait(m, m->set[EAT] * 1e3))
 	{
 		pthread_mutex_unlock(m->l_fork);
 		pthread_mutex_unlock(m->r_fork);
 		return (false);
 	}
-	printf(FORK, get_time(m->start), m->whoami);
 	pthread_mutex_unlock(m->r_fork);
 	pthread_mutex_unlock(m->l_fork);
 	return (true);
@@ -96,20 +100,13 @@ bool	grab(t_mind *m)
 	{
 		if (eat_lr(m) == false)
 			return (false);
-		printf(EATS, get_time(m->start), m->whoami);
-		if (set_last_meal(m) == false)
-			return (false);
-		usleep(m->set[EAT] * 1000);
 	}
 	else
 	{
-		usleep(1000);
+		if (am_i_dead_wait(m, 1e3))
+			return (false);
 		if (eat_rl(m) == false)
 			return (false);
-		printf(EATS, get_time(m->start), m->whoami);
-		if (set_last_meal(m) == false)
-			return (false);
-		usleep(m->set[EAT] * 1000);
 	}
 	return (true);
 }
@@ -144,16 +141,10 @@ void	*daily(void *ref)
 		if (m->whoami % 2)
 		{
 			if (am_i_dead_wait(m, m->set[REST] * 1e3))
-			{
-				// printf(DIED, get_time(m->start), m->whoami);
 				return ((void *)false);
-			}
 		}
 		else if (am_i_dead_wait(m, m->set[REST] * 1e3 + 100))
-		{
-			// printf(DIED, get_time(m->start), m->whoami);
 			return ((void *)false);
-		}
 	}
 	return ((void *)false);
 }

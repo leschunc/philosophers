@@ -21,7 +21,7 @@ bool	safe_inspec(t_context *c, int i)
 
 	now = get_time(c->start);
 	pthread_mutex_lock(c->inspec + i);
-	if (c->set[CYCLE] == c->mind[i].meals)
+	if (c->mind[i].meals && c->set[CYCLE] == c->mind[i].meals)
 	{
 		finished++;
 		if (finished == c->set[NUM])
@@ -32,7 +32,7 @@ bool	safe_inspec(t_context *c, int i)
 	}
 	else if (now - c->mind[i].last_meal >= c->set[DIE])
 	{
-		// printf(DIED, get_time(c->mind[i].start), c->mind[i].whoami);
+		printf(DIED, get_time(c->mind[i].start), c->mind[i].whoami);
 		pthread_mutex_unlock(c->inspec + i);
 		turn_minds_off(c);
 		return (false);
@@ -54,7 +54,8 @@ void	*fate(void *ref)
 		{
 			if (safe_inspec(c, i) == false)
 				return (NULL);
-			usleep(10);
+			if (1000 / c->set[NUM])
+				usleep(1000 / c->set[NUM]);
 			i++;
 		}
 		else

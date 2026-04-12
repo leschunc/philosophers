@@ -59,7 +59,7 @@ CFLAGS		+= -fsanitize=thread
 # Test 4 410 200 200. No philosopher should die.
 # Test 4 310 200 100. One philosopher should die.
 
-CYC = 3
+CYC = 20
 EAT = 200
 RST = 200
 
@@ -67,11 +67,11 @@ A = 1 800 $(EAT) $(RST) $(CYC)
 B = 5 800 $(EAT) $(RST) $(CYC)
 C = 5 800 $(EAT) $(RST) $(CYC)
 D = 4 410 $(EAT) $(RST) $(CYC)
-E = 4 310 $(EAT) 100 $(CYC)
+E = 4 300 $(EAT) 100
 F = 4000 4000 $(EAT) $(RST) $(CYC)
-G = 3999 4000 $(EAT) $(RST) $(CYC)
+G = 3999 200 $(EAT) $(RST) $(CYC)
 
-TEST	= 200 400 200 200 3
+TEST	= 3 599 200 200
 # philos are thinking before the end of the simulation, is that right?
 INPUT	= $(TEST)
 
