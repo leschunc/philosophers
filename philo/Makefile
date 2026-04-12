@@ -4,7 +4,6 @@ CFLAGS		= -Wall -Werror -Wextra -Iinc -Ilibft
 LDFLAGS		= -Llibft -lft
 MAKE		+= --no-print-directory
 
-# Directories
 SRC_DIR		= src
 OBJ_DIR		= obj
 LIBFT_DIR	= libft
@@ -16,12 +15,9 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
-# 1. Compile libft by calling its own Makefile
-# 2. Link the objects with libft.a
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
-# Ensure libft is built
 $(LIBFT):
 	@$(MAKE) -C $(LIBFT_DIR)
 
@@ -40,8 +36,6 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
-# Helpers
 
 CFLAGS		+= -fsanitize=thread
 # VFLAG		= --tool=helgrind -s
@@ -72,7 +66,6 @@ F = 4000 4000 $(EAT) $(RST) $(CYC)
 G = 3999 4000 $(EAT) $(RST) $(CYC)
 
 TEST	= 199 199 100 100
-# philos are thinking before the end of the simulation, is that right?
 INPUT	= $(TEST)
 
 r: all
