@@ -23,20 +23,20 @@ bool	set_last_meal(t_mind *m)
 	suseconds_t	now;
 
 	now = get_time(m->start);
-	pthread_mutex_lock(m->inspec);
+	lock(m->inspec);
 	m->last_meal = now;
 	if (m->meals == -1)
 	{
-		pthread_mutex_unlock(m->inspec);
+		unlock(m->inspec);
 		return (false);
 	}
 	m->meals++;
 	if (m->set[CYCLE] != 0 && m->meals == m->set[CYCLE])
 	{
-		pthread_mutex_unlock(m->inspec);
+		unlock(m->inspec);
 		return (false);
 	}
-	pthread_mutex_unlock(m->inspec);
+	unlock(m->inspec);
 	return (true);
 }
 
@@ -44,26 +44,26 @@ bool	eat_lr(t_mind *m)
 {
 	if (i_am_dead(m) == true)
 		return (false);
-	pthread_mutex_lock(m->l_fork);
+	lock(m->l_fork);
 	printf(FORK, get_time(m->start), m->whoami);
 	if (i_am_dead(m) == true)
 	{
-		pthread_mutex_unlock(m->l_fork);
+		unlock(m->l_fork);
 		return (false);
 	}
-	pthread_mutex_lock(m->r_fork);
+	lock(m->r_fork);
 	printf(FORK, get_time(m->start), m->whoami);
 	printf(EATS, get_time(m->start), m->whoami);
 	if (set_last_meal(m) == false)
 		return (false);
 	if (am_i_dead_wait(m, m->set[EAT] * 1000))
 	{
-		pthread_mutex_unlock(m->r_fork);
-		pthread_mutex_unlock(m->l_fork);
+		unlock(m->r_fork);
+		unlock(m->l_fork);
 		return (false);
 	}
-	pthread_mutex_unlock(m->l_fork);
-	pthread_mutex_unlock(m->r_fork);
+	unlock(m->l_fork);
+	unlock(m->r_fork);
 	return (true);
 }
 
@@ -71,26 +71,26 @@ bool	eat_rl(t_mind *m)
 {
 	if (i_am_dead(m) == true)
 		return (false);
-	pthread_mutex_lock(m->r_fork);
+	lock(m->r_fork);
 	printf(FORK, get_time(m->start), m->whoami);
 	if (i_am_dead(m) == true)
 	{
-		pthread_mutex_unlock(m->r_fork);
+		unlock(m->r_fork);
 		return (false);
 	}
-	pthread_mutex_lock(m->l_fork);
+	lock(m->l_fork);
 	printf(FORK, get_time(m->start), m->whoami);
 	printf(EATS, get_time(m->start), m->whoami);
 	if (set_last_meal(m) == false)
 		return (false);
 	if (am_i_dead_wait(m, m->set[EAT] * 1e3))
 	{
-		pthread_mutex_unlock(m->l_fork);
-		pthread_mutex_unlock(m->r_fork);
+		unlock(m->l_fork);
+		unlock(m->r_fork);
 		return (false);
 	}
-	pthread_mutex_unlock(m->r_fork);
-	pthread_mutex_unlock(m->l_fork);
+	unlock(m->r_fork);
+	unlock(m->l_fork);
 	return (true);
 }
 
@@ -113,13 +113,13 @@ bool	grab(t_mind *m)
 
 bool	i_am_dead(t_mind *m)
 {
-	pthread_mutex_lock(m->inspec);
+	lock(m->inspec);
 	if (m->last_meal == -1)
 	{
-		pthread_mutex_unlock(m->inspec);
+		unlock(m->inspec);
 		return (true);
 	}
-	pthread_mutex_unlock(m->inspec);
+	unlock(m->inspec);
 	return (false);
 }
 

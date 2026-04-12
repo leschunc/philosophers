@@ -99,7 +99,7 @@ void	destroy_mutx(t_mut *fork, t_mut *inspec, long *info)
 		return ;
 	while (i < info[NUM])
 	{
-		// pthread_mutex_unlock(inspec + i);
+		// unlock(inspec + i);
 		if (pthread_mutex_destroy(inspec + i) == EBUSY)
 			// this is not gonna happen
 			ft_putstr_fd("EBUSY inspec\n", 2);
