@@ -3,13 +3,13 @@
 void	turn_minds_off(t_context *c)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < c->set[NUM])
 	{
 		lock(c->inspec + i);
 		c->mind[i].last_meal = -1;
-		unlock(c->inspec + i);
+		unlock(c->inspec + i); 
 		i++;
 	}
 }
@@ -47,10 +47,10 @@ void	*fate(void *ref)
 	int			i;
 
 	c = ref;
-	i = 0;
 	while (1)
 	{
-		if (i < c->set[NUM])
+		i = 0;
+		while (i < c->set[NUM])
 		{
 			if (safe_inspec(c, i) == false)
 				return (NULL);
@@ -58,8 +58,6 @@ void	*fate(void *ref)
 			usleep(5000 / c->set[NUM]);
 			i++;
 		}
-		else
-			i = 0;
 	}
 	return (NULL);
 }
