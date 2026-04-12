@@ -59,7 +59,7 @@ CFLAGS		+= -fsanitize=thread
 # Test 4 410 200 200. No philosopher should die.
 # Test 4 310 200 100. One philosopher should die.
 
-LEN = 20
+LEN = 3
 EAT = 200
 RST = 200
 
@@ -72,7 +72,8 @@ F = 4000 4000 $(EAT) $(RST) $(LEN)
 G = 3999 4000 $(EAT) $(RST) $(LEN)
 
 TEST	= 3 410 200 200
-INPUT	= $(G)
+# philos are thinking before the end of the simulation, is that right?
+INPUT	= $(B)
 
 r: all
 	@./$(NAME) $(INPUT)
