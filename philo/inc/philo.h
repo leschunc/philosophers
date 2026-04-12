@@ -24,13 +24,13 @@
 
 enum					e_print
 {
-	M1,
-	M2,
-	M3,
-	M4,
-	M5,
-	E1,
-	E2,
+	HASFORK,
+	EATS,
+	SLEEPS,
+	THINKS,
+	DIED,
+	TOOMANY,
+	YOUKILLED,
 };
 
 enum					e_attr
@@ -81,7 +81,7 @@ bool					init_monitor(t_context *c);
 /* philos */
 bool					grab(t_mind *m);
 void					*daily(void *ref);
-bool					i_am_dead(t_mind *m);
+bool					killed(t_mind *m);
 
 /* monitor */
 void					*fate(void *ref);

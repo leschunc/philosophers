@@ -42,18 +42,18 @@ bool	set_last_meal(t_mind *m)
 
 bool	eat_lr(t_mind *m)
 {
-	if (i_am_dead(m) == true)
+	if (killed(m) == true)
 		return (false);
 	lock(m->l_fork);
-	msg(M1, m, 0, 0);
-	if (i_am_dead(m) == true)
+	msg(HASFORK, m, 0, 0);
+	if (killed(m) == true)
 	{
 		unlock(m->l_fork);
 		return (false);
 	}
 	lock(m->r_fork);
-	msg(M1, m, 0, 0);
-	msg(M2, m, 0, 0);
+	msg(HASFORK, m, 0, 0);
+	msg(EATS, m, 0, 0);
 	if (set_last_meal(m) == false)
 		return (false);
 	if (am_i_dead_wait(m, m->set[EAT] * 1000))
@@ -69,18 +69,18 @@ bool	eat_lr(t_mind *m)
 
 bool	eat_rl(t_mind *m)
 {
-	if (i_am_dead(m) == true)
+	if (killed(m) == true)
 		return (false);
 	lock(m->r_fork);
-	msg(M1, m, 0, 0);
-	if (i_am_dead(m) == true)
+	msg(HASFORK, m, 0, 0);
+	if (killed(m) == true)
 	{
 		unlock(m->r_fork);
 		return (false);
 	}
 	lock(m->l_fork);
-	msg(M1, m, 0, 0);
-	msg(M2, m, 0, 0);
+	msg(HASFORK, m, 0, 0);
+	msg(EATS, m, 0, 0);
 	if (set_last_meal(m) == false)
 		return (false);
 	if (am_i_dead_wait(m, m->set[EAT] * 1e3))
@@ -111,7 +111,7 @@ bool	grab(t_mind *m)
 	return (true);
 }
 
-bool	i_am_dead(t_mind *m)
+bool	killed(t_mind *m)
 {
 	lock(m->inspec);
 	if (m->last_meal == -1)
@@ -130,14 +130,14 @@ void	*daily(void *ref)
 	m = (t_mind *)ref;
 	while (1)
 	{
-		// if (i_am_dead == true)
+		// if (killed == true)
 		// 	return ((void *)false);
-		msg(M4, m, 0, 0);
+		msg(THINKS, m, 0, 0);
 		if (grab(m) == false)
 			return ((void *)false);
-		if (i_am_dead(m) == true)
+		if (killed(m) == true)
 			return ((void *)false);
-		msg(M3, m, 0, 0);
+		msg(SLEEPS, m, 0, 0);
 		if (m->whoami % 2)
 		{
 			if (am_i_dead_wait(m, m->set[SLP] * 1e3))

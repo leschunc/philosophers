@@ -3,7 +3,7 @@
 void	turn_minds_off(t_context *c)
 {
 	int	i;
-
+	
 	i = 0;
 	while (i < c->set[NUM])
 	{
@@ -32,7 +32,7 @@ bool	safe_inspec(t_context *c, int i)
 	}
 	else if (now - c->mind[i].last_meal >= c->set[DIE])
 	{
-		msg(M5, 0, c, i);
+		msg(DIED, NULL, c, i);
 		unlock(c->inspec + i);
 		turn_minds_off(c);
 		return (false);

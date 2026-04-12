@@ -10,7 +10,7 @@ bool	am_i_dead_wait(t_mind *m, long wait)
 	while (1)
 	{
 		gettimeofday(&now, NULL);
-		if (i_am_dead(m))
+		if (killed(m))
 			return (true);
 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
 			break ;
