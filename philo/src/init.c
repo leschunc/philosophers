@@ -58,20 +58,21 @@ void	give_free_will(t_context *c)
 
 bool	init_sim(t_context *c)
 {
-	int		i;
-	t_mind	mind[SIM_SIZE];
+	int			i;
+	t_mind		mind[SIM_SIZE];
+	pthread_t	determinism;
 
 	c->mind = mind;
 	i = 0;
 	give_free_will(c);
+	pthread_create(&determinism, NULL, fate, c);
 	while (i < c->set[NUM])
 	{
 		if (pthread_create(c->philo + i, NULL, daily, mind + i) != OK)
 			return (false);
 		i++;
 	}
-	if (init_monitor(c) == false)
-		return (false);
+	pthread_join(determinism, NULL);
 	i = 0;
 	while (i < c->set[NUM])
 	{
@@ -105,15 +106,6 @@ void	destroy_mutx(t_mut *fork, t_mut *inspec, long *info)
 			ft_putstr_fd("EBUSY inspec\n", 2);
 		i++;
 	}
-}
-
-bool	init_monitor(t_context *c)
-{
-	pthread_t	determinism;
-
-	pthread_create(&determinism, NULL, fate, c);
-	pthread_join(determinism, NULL);
-	return (true);
 }
 
 bool	init(t_context *c)

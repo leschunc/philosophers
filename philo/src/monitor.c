@@ -9,7 +9,7 @@ void	turn_minds_off(t_context *c)
 	{
 		lock(c->inspec + i);
 		c->mind[i].last_meal = -1;
-		unlock(c->inspec + i); 
+		unlock(c->inspec + i);
 		i++;
 	}
 }

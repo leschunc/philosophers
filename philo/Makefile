@@ -69,7 +69,7 @@ C = 5 800 $(EAT) $(RST) $(CYC)
 D = 4 410 $(EAT) $(RST) $(CYC)
 E = 4 300 $(EAT) 100
 F = 4000 4000 $(EAT) $(RST) $(CYC)
-G = 3999 200 $(EAT) $(RST) $(CYC)
+G = 3999 4000 $(EAT) $(RST) $(CYC)
 
 TEST	= 3 599 200 200
 # philos are thinking before the end of the simulation, is that right?
