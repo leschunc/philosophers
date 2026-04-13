@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitor.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
+/*   Updated: 2026/04/13 23:49:28 by leschunc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	turn_minds_off(t_context *c)
@@ -62,4 +74,50 @@ void	*fate(void *ref)
 		}
 	}
 	return (NULL);
+}
+
+
+void	give_free_will(t_context *c)
+{
+	int	i;
+
+	i = 0;
+	while (i < c->set[NUM])
+	{
+		c->mind[i].whoami = i;
+		c->mind[i].inspec = c->inspec + i;
+		c->mind[i].r_fork = c->fork + i;
+		c->mind[i].meals = 0;
+		c->mind[i].last_meal = 0;
+		c->mind[i].set = c->set;
+		c->mind[i].broadcast = c->broadcast;
+		c->mind[i].simulation = c->simulation;
+		c->mind[i].start = c->start;
+		if (i == 0)
+			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
+		else
+			c->mind[i].l_fork = &c->fork[i - 1];
+		i++;
+	}
+	c->start[0] = get_start();
+}
+
+void	destroy_mutx(t_context *c)
+{
+	int i;
+
+	i = 0;
+	while (i < c->set[NUM])
+	{
+		pthread_mutex_destroy(c->fork + i);
+		i++;
+	}
+	i = 0;
+	if (c->set[CYC] == 0)
+		return ;
+	while (i < c->set[NUM])
+	{
+		pthread_mutex_destroy(c->inspec + i);
+		i++;
+	}
 }

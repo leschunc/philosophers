@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/13 23:38:25 by leschunc          #+#    #+#             */
+/*   Updated: 2026/04/14 00:08:02 by leschunc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	safe_free(char **ptr)
@@ -38,45 +50,4 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 		printf(msgs[num], get_time(c->start[0]), i + 1);
 		unlock(c->broadcast);
 	}
-}
-
-int	ft_isspace(char c)
-{
-	if (((c >= 9) && (c <= 13)) || (c == ' '))
-	{
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_isdigit(char c)
-{
-	if ((c >= '0') && (c <= '9'))
-		return (1);
-	return (0);
-}
-
-int	atonum(const char *nptr)
-{
-	char	*ptr;
-	int		result;
-	int		sl;
-
-	result = 0;
-	sl = 1;
-	ptr = (char *)nptr;
-	while (ft_isspace(*ptr))
-		ptr++;
-	if (*ptr == '-' || *ptr == '+')
-	{
-		if (*ptr == '-')
-			sl = -1;
-		ptr++;
-	}
-	while (ft_isdigit(*ptr))
-	{
-		result = (result * 10) + (*ptr - '0');
-		ptr++;
-	}
-	return (result * sl);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
+/*   Updated: 2026/04/14 00:09:28 by leschunc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -73,29 +85,20 @@ typedef struct s_context
 	int					ite;
 }						t_context;
 
-bool					atoiv(t_context *c);
-int						atonum(const char *nptr);
-int						ft_isdigit(char c);
-
-bool					init(t_context *c);
-bool					init_fork(t_context *c);
-bool					init_sim(t_context *c);
-void					destroy_mutx(t_context *c);
-
-bool					grab(t_mind *m);
-void					*daily(void *ref);
-bool					killed(t_mind *m);
-
-void					*fate(void *ref);
-
-bool					am_i_dead_wait(t_mind *m, long wait);
-suseconds_t				get_time(suseconds_t start);
-suseconds_t				get_start(void);
-suseconds_t				get_time(suseconds_t start);
-
-void					safe_free(char **ptr);
 void					lock(t_mut *mut);
 void					unlock(t_mut *mut);
+void					*fate(void *ref);
+void					*daily(void *ref);
+bool					atoiv(t_context *c);
+void					give_free_will(t_context *c);
+int						ft_isdigit(char c);
+int						atonum(const char *nptr);
+suseconds_t				get_time(suseconds_t start);
+suseconds_t				get_start(void);
+bool					am_i_dead_wait(t_mind *m, long wait);
+bool					killed(t_mind *m);
+long					pos(long num);
+
 void					msg(int num, t_mind *m, t_context *c, int i);
 
 #endif

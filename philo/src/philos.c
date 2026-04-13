@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philos.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
+/*   Updated: 2026/04/14 00:03:06 by leschunc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 bool	set_last_meal(t_mind *m)
@@ -83,25 +95,6 @@ bool	grab(t_mind *m)
 			return (false);
 	}
 	return (true);
-}
-
-bool	killed(t_mind *m)
-{
-	lock(m->inspec);
-	if (m->last_meal == -1)
-	{
-		unlock(m->inspec);
-		return (true);
-	}
-	unlock(m->inspec);
-	return (false);
-}
-
-long	pos(long num)
-{
-	if (num < 0)
-		return (-num);
-	return (num);
 }
 
 void	*daily(void *ref)
