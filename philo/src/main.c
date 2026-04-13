@@ -10,12 +10,13 @@ int	main(int argc, char const *argv[])
 	c.arr_len = argc - 1;
 	c.argv = argv;
 	c.set = set;
-	atoiv(&c);
+	if (atoiv(&c) == ERR)
+		return (ERR);
 	if (init(&c) == true)
 	{
-		destroy_mutx(&c);
+		// destroy_mutx(&c);
 		return (OK);
 	}
-	destroy_mutx(&c);
+	// destroy_mutx(&c);
 	return (ERR);
 }

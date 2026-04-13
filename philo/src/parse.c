@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void	atoiv(t_context *c)
+bool	atoiv(t_context *c)
 {
 	int			i;
 	suseconds_t	start;
@@ -16,13 +16,14 @@ void	atoiv(t_context *c)
 		start = get_start();
 		usleep(c->set[DIE] * 1000);
 		printf(ERR2, get_time(start));
-		exit(ERR);
+		return(ERR);
 	}
 	if (c->set[NUM] > 4000)
 	{
 		printf(ERR1, c->set[NUM]);
-		exit(ERR);
+		return(ERR);
 	}
+	return (OK);
 }
 
 // void	disp_args(t_context *c)

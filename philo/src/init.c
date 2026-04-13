@@ -114,10 +114,10 @@ bool	init(t_context *c)
 	c->fork = fork;
 	c->inspec = inspec;
 	if (init_fork(c) == false)
-		return (false);
+		return (destroy_mutx(c), false);
 	if (inspec_init(c) == false)
-		return (false);
+		return (destroy_mutx(c), false);
 	if (init_sim(c) == false)
-		return (false);
-	return (true);
+		return (destroy_mutx(c), false);
+	return (destroy_mutx(c), true);
 }

@@ -28,13 +28,53 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 		now = get_time(c->start);
 	if (m)
 	{
-		
 		if (killed(m) == false)
-			printf(msgs[num], now, m->whoami);
+			printf(msgs[num], now, m->whoami + 1);
 	}
 	else
 	{
 		usleep(3e3);
-		printf(msgs[num], now, i);
+		printf(msgs[num], now, i + 1);
 	}
+}
+
+int	ft_isspace(char c)
+{
+	if (((c >= 9) && (c <= 13)) || (c == ' '))
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_isdigit(char c)
+{
+	if ((c >= '0') && (c <= '9'))
+		return (1);
+	return (0);
+}
+
+int	ft_atoi(const char *nptr)
+{
+	char	*ptr;
+	int		result;
+	int		sl;
+
+	result = 0;
+	sl = 1;
+	ptr = (char *)nptr;
+	while (ft_isspace(*ptr))
+		ptr++;
+	if (*ptr == '-' || *ptr == '+')
+	{
+		if (*ptr == '-')
+			sl = -1;
+		ptr++;
+	}
+	while (ft_isdigit(*ptr))
+	{
+		result = (result * 10) + (*ptr - '0');
+		ptr++;
+	}
+	return (result * sl);
 }

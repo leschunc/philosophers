@@ -1,11 +1,11 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-// remove libft
-# include "libft.h"
 # include <errno.h>
 # include <pthread.h>
+# include <stdlib.h>
 # include <stdbool.h>
+# include <unistd.h>
 # include <stdio.h>
 # include <sys/time.h>
 
@@ -69,7 +69,8 @@ typedef struct s_context
 	int					ite;
 }						t_context;
 
-void					atoiv(t_context *c);
+bool					atoiv(t_context *c);
+int						ft_atoi(const char *nptr);
 
 bool					init(t_context *c);
 bool					init_fork(t_context *c);

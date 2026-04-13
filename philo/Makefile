@@ -1,13 +1,13 @@
 NAME		= philo
 CC			= cc
 CFLAGS		= -Wall -Werror -Wextra -Iinc -Ilibft
-LDFLAGS		= -Llibft -lft
+# LDFLAGS		= -Llibft -lft
 MAKE		+= --no-print-directory
 
 SRC_DIR		= src
 OBJ_DIR		= obj
-LIBFT_DIR	= libft
-LIBFT		= $(LIBFT_DIR)/libft.a
+# LIBFT_DIR	= libft
+# LIBFT		= $(LIBFT_DIR)/libft.a
 
 # Files
 SRCS		= $(addprefix $(SRC_DIR)/, main.c parse.c init.c philos.c monitor.c clock.c utils.c)
@@ -18,8 +18,8 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 
-$(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+# $(LIBFT):
+# 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
@@ -65,7 +65,7 @@ E = 4 300 $(EAT) 100
 F = 4000 4000 $(EAT) $(RST) $(CYC)
 G = 3999 4000 $(EAT) $(RST) $(CYC)
 
-TEST	= 1 10400 200 200
+TEST	= 1 400 200 200
 INPUT	= $(TEST)
 
 r: all
