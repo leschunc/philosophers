@@ -115,6 +115,13 @@ bool	killed(t_mind *m)
 	return (false);
 }
 
+long	pos(long num)
+{
+	if (num < 0)
+		return (-num);
+	return (num);
+}
+
 void	*daily(void *ref)
 {
 	t_mind	*m;
@@ -125,6 +132,9 @@ void	*daily(void *ref)
 		if (killed(m) == true)
 			return ((void *)false);
 		msg(THINKS, m, 0, 0);
+		if (!m->whoami % 2)
+			if (am_i_dead_wait(m, pos(2 * m->set[EAT] - m->set[SLP])))
+				return ((void *)false);
 		if (grab(m) == false)
 			return ((void *)false);
 		if (killed(m) == true)

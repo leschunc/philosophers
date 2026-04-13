@@ -14,7 +14,7 @@ bool	am_i_dead_wait(t_mind *m, long wait)
 			return (true);
 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
 			break ;
-		usleep(1000);
+		usleep(100);
 	}
 	return (false);
 }

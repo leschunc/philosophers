@@ -53,7 +53,7 @@ CFLAGS		+= -fsanitize=thread
 # Test 4 410 200 200. No philosopher should die.
 # Test 4 310 200 100. One philosopher should die.
 
-CYC = 20
+CYC = 3
 EAT = 200
 RST = 200
 
@@ -65,7 +65,7 @@ E = 4 300 $(EAT) 100
 F = 4000 4000 $(EAT) $(RST) $(CYC)
 G = 3999 4000 $(EAT) $(RST) $(CYC)
 
-TEST	= 199 199 100 100
+TEST	= 1 10400 200 200
 INPUT	= $(TEST)
 
 r: all

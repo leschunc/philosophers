@@ -20,17 +20,21 @@ void	lock(t_mut *mut)
 void	msg(int num, t_mind *m, t_context *c, int i)
 {
 	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, ERR1, ERR2};
+	suseconds_t	now;
 
 	if (m)
+		now = get_time(m->start);
+	else
+		now = get_time(c->start);
+	if (m)
 	{
-		usleep(3e3);
+		
 		if (killed(m) == false)
-		{
-			printf(msgs[num], get_time(m->start), m->whoami);
-		}
+			printf(msgs[num], now, m->whoami);
 	}
 	else
 	{
-		printf(msgs[num], get_time(c->start), i);
+		usleep(3e3);
+		printf(msgs[num], now, i);
 	}
 }
