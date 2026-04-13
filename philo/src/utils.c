@@ -56,7 +56,7 @@ int	ft_isdigit(char c)
 	return (0);
 }
 
-int	ft_atoi(const char *nptr)
+int	atonum(const char *nptr)
 {
 	char	*ptr;
 	int		result;

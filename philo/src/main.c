@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int	main(int argc, char const *argv[])
+int	main(int argc, char *argv[])
 {
 	t_context	c;
 	static long	set[5];

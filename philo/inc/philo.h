@@ -69,12 +69,13 @@ typedef struct s_context
 	t_mut				*inspec;
 	t_mut				broadcast[1];
 	int					arr_len;
-	char const			**argv;
+	char				**argv;
 	int					ite;
 }						t_context;
 
 bool					atoiv(t_context *c);
-int						ft_atoi(const char *nptr);
+int						atonum(const char *nptr);
+int						ft_isdigit(char c);
 
 bool					init(t_context *c);
 bool					init_fork(t_context *c);
