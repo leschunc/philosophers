@@ -65,7 +65,7 @@ bool	init_sim(t_context *c)
 	c->mind = mind;
 	i = 0;
 	give_free_will(c);
-	if (pthread_create(&determinism, NULL, fate, c); != OK)
+	if (pthread_create(&determinism, NULL, fate, c) != OK)
 		return (false);
 	while (i < c->set[NUM])
 	{
