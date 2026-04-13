@@ -41,6 +41,8 @@ void	give_free_will(t_context *c)
 		c->mind[i].meals = 0;
 		c->mind[i].last_meal = 0;
 		c->mind[i].set = c->set;
+		c->mind[i].broadcast = c->broadcast;
+		c->mind[i].simulation = c->simulation;
 		if (i == 0)
 			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
 		else
@@ -113,6 +115,9 @@ bool	init(t_context *c)
 	c->philo = philo;
 	c->fork = fork;
 	c->inspec = inspec;
+	c->simulation[0] = true;
+	if (pthread_mutex_init(c->broadcast, NULL) != OK)
+		return (false);
 	if (init_fork(c) == false)
 		return (false);
 	if (inspec_init(c) == false)

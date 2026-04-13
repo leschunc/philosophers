@@ -11,7 +11,7 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
-# CFLAGS		+= -fsanitize=thread
+CFLAGS		+= -fsanitize=thread
 
 $(NAME):  $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)

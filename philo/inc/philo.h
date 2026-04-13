@@ -3,16 +3,16 @@
 
 # include <errno.h>
 # include <pthread.h>
-# include <stdlib.h>
 # include <stdbool.h>
-# include <unistd.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <sys/time.h>
+# include <unistd.h>
 
 # define EMPTY '\0'
 # define ERR 1
 # define OK 0
-# define SIM_SIZE 4000
+# define SIM_SIZE 2000
 
 # define MSG1 "%5ld\t%3d\thas taken a fork\n"
 # define MSG2 "%5ld\t%3d\tis eating\n"
@@ -47,6 +47,7 @@ typedef pthread_mutex_t	t_mut;
 typedef struct s_mind
 {
 	int					whoami;
+	bool				*simulation;
 	long				*set;
 	long				meals;
 	t_mut				*inspec;
@@ -54,16 +55,19 @@ typedef struct s_mind
 	long				last_meal;
 	t_mut				*r_fork;
 	t_mut				*l_fork;
+	t_mut				*broadcast;
 }						t_mind;
 
 typedef struct s_context
 {
 	long				*set;
+	bool				simulation[1];
 	suseconds_t			start;
 	pthread_t			*philo;
 	t_mind				*mind;
 	t_mut				*fork;
 	t_mut				*inspec;
+	t_mut				broadcast[1];
 	int					arr_len;
 	char const			**argv;
 	int					ite;
