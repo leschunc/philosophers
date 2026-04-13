@@ -30,7 +30,16 @@ fclean: clean
 
 re: fclean all
 
-s:
-	setarch -R make r
+# sanitize fix
+############
+# setarch -R
+
+# ignore
+#############
+# philo/philo
+# *.o
+# log
+# file
+# test
 
 .PHONY: all clean fclean re
