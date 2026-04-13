@@ -138,9 +138,7 @@ void	*daily(void *ref)
 		if (grab(m) == false)
 			return ((void *)false);
 		if (killed(m) == true)
-		{
 			return ((void *)false);
-		}
 		msg(SLEEPS, m, 0, 0);
 		if (m->whoami % 2)
 		{

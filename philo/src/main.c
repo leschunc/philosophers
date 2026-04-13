@@ -13,10 +13,6 @@ int	main(int argc, char const *argv[])
 	if (atoiv(&c) == ERR)
 		return (ERR);
 	if (init(&c) == true)
-	{
-		// destroy_mutx(&c);
 		return (OK);
-	}
-	// destroy_mutx(&c);
 	return (ERR);
 }

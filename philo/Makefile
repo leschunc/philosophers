@@ -15,10 +15,13 @@ OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
+CFLAGS		+= -fsanitize=thread
 
-# $(LIBFT):
+
+$(NAME):  $(OBJS)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+# :
 # 	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
@@ -28,7 +31,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
 clean:
-# 	@rm $(LIBFT)
+# 	@rm 
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
@@ -37,7 +40,6 @@ fclean: clean
 
 re: fclean all
 
-CFLAGS		+= -fsanitize=thread
 # VFLAG		= --tool=helgrind -s
 # VFLAG		= --tool=drd
 # VFLAG		+= --free-is-write=yes --track-lockorders=no --history-level=approx

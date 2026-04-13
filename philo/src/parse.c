@@ -16,12 +16,12 @@ bool	atoiv(t_context *c)
 		start = get_start();
 		usleep(c->set[DIE] * 1000);
 		printf(ERR2, get_time(start));
-		return(ERR);
+		return (ERR);
 	}
 	if (c->set[NUM] > 4000)
 	{
 		printf(ERR1, c->set[NUM]);
-		return(ERR);
+		return (ERR);
 	}
 	return (OK);
 }
