@@ -65,7 +65,8 @@ bool	init_sim(t_context *c)
 	c->mind = mind;
 	i = 0;
 	give_free_will(c);
-	pthread_create(&determinism, NULL, fate, c);
+	if (pthread_create(&determinism, NULL, fate, c); != OK)
+		return (false);
 	while (i < c->set[NUM])
 	{
 		if (pthread_create(c->philo + i, NULL, daily, mind + i) != OK)
@@ -118,6 +119,5 @@ bool	init(t_context *c)
 		return (false);
 	if (init_sim(c) == false)
 		return (false);
-	destroy_mutx(c);
 	return (true);
 }

@@ -12,6 +12,10 @@ int	main(int argc, char const *argv[])
 	c.set = set;
 	atoiv(&c);
 	if (init(&c) == true)
+	{
+		destroy_mutx(&c);
 		return (OK);
+	}
+	destroy_mutx(&c);
 	return (ERR);
 }
