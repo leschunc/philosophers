@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/13 23:49:28 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/14 00:14:18 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ void	*fate(void *ref)
 	return (NULL);
 }
 
-
 void	give_free_will(t_context *c)
 {
 	int	i;
@@ -104,7 +103,7 @@ void	give_free_will(t_context *c)
 
 void	destroy_mutx(t_context *c)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < c->set[NUM])
