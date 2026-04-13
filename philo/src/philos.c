@@ -1,28 +1,10 @@
 #include "philo.h"
 
-// static inline void	hi_res_wait(long wait)
-// {
-// 	struct timeval	now;
-// 	long			init;
-
-// 	gettimeofday(&now, NULL);
-// 	init = now.tv_sec * 1000000 + now.tv_usec;
-// 	while (1)
-// 	{
-// 		gettimeofday(&now, NULL);
-// 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
-// 			break ;
-// 		usleep(wait / 3);
-// 		// magic number for luck
-// 		// usleep(set[NUM] / 3);
-// 	}
-// }
-
 bool	set_last_meal(t_mind *m)
 {
 	suseconds_t	now;
 
-	now = get_time(m->start);
+	now = get_time(m->start[0]);
 	lock(m->inspec);
 	if (m->last_meal == -1)
 	{

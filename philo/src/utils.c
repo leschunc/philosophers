@@ -21,7 +21,6 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 {
 	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, ERR1, ERR2};
 
-	// suseconds_t	now;
 	if (m)
 	{
 		if (killed(m) == false)
@@ -29,15 +28,14 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 			usleep(1e3);
 			lock(m->broadcast);
 			if (m->simulation[0] == true)
-				printf(msgs[num], get_time(m->start), m->whoami + 1);
+				printf(msgs[num], get_time(m->start[0]), m->whoami + 1);
 			unlock(m->broadcast);
 		}
 	}
 	else
 	{
-		// usleep(5e3);
 		lock(c->broadcast);
-		printf(msgs[num], get_time(c->start), i + 1);
+		printf(msgs[num], get_time(c->start[0]), i + 1);
 		unlock(c->broadcast);
 	}
 }

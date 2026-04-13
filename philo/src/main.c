@@ -10,8 +10,6 @@ int	main(int argc, char const *argv[])
 	c.arr_len = argc - 1;
 	c.argv = argv;
 	c.set = set;
-	// remove
-	// printf("hello\n");
 	if (atoiv(&c) == ERR)
 		return (ERR);
 	if (init(&c) == true)

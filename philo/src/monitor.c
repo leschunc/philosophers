@@ -22,7 +22,7 @@ bool	safe_inspec(t_context *c, int i)
 	static int	finished = 0;
 	suseconds_t	now;
 
-	now = get_time(c->start);
+	now = get_time(c->start[0]);
 	lock(c->inspec + i);
 	if (c->mind[i].meals > 0 && c->set[CYC] == c->mind[i].meals)
 	{

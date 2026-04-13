@@ -43,19 +43,14 @@ void	give_free_will(t_context *c)
 		c->mind[i].set = c->set;
 		c->mind[i].broadcast = c->broadcast;
 		c->mind[i].simulation = c->simulation;
+		c->mind[i].start = c->start;
 		if (i == 0)
 			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
 		else
 			c->mind[i].l_fork = &c->fork[i - 1];
 		i++;
 	}
-	i = 0;
-	c->start = get_start();
-	while (i < c->set[NUM])
-	{
-		c->mind[i].start = c->start;
-		i++;
-	}
+	c->start[0] = get_start();
 }
 
 bool	init_sim(t_context *c)

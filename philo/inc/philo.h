@@ -51,7 +51,7 @@ typedef struct s_mind
 	long				*set;
 	long				meals;
 	t_mut				*inspec;
-	suseconds_t			start;
+	suseconds_t			*start;
 	long				last_meal;
 	t_mut				*r_fork;
 	t_mut				*l_fork;
@@ -62,7 +62,7 @@ typedef struct s_context
 {
 	long				*set;
 	bool				simulation[1];
-	suseconds_t			start;
+	suseconds_t			start[1];
 	pthread_t			*philo;
 	t_mind				*mind;
 	t_mut				*fork;
