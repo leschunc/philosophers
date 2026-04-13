@@ -23,7 +23,6 @@ void	atoiv(t_context *c)
 		printf(ERR1, c->set[NUM]);
 		exit(ERR);
 	}
-	// set set[arrlen] = 0?
 }
 
 // void	disp_args(t_context *c)

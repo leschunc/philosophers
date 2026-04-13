@@ -41,7 +41,6 @@ void	give_free_will(t_context *c)
 		c->mind[i].meals = 0;
 		c->mind[i].last_meal = 0;
 		c->mind[i].set = c->set;
-		// c->mind[i].broadcast = c->broadcast;
 		if (i == 0)
 			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
 		else
@@ -66,7 +65,6 @@ bool	init_sim(t_context *c)
 	c->mind = mind;
 	i = 0;
 	give_free_will(c);
-	// pthread_mutex_init(c->broadcast, NULL);
 	pthread_create(&determinism, NULL, fate, c);
 	while (i < c->set[NUM])
 	{
@@ -90,7 +88,6 @@ void	destroy_mutx(t_context *c)
 	int	i;
 
 	i = 0;
-	// pthread_mutex_destroy(c->broadcast);
 	while (i < c->set[NUM])
 	{
 		pthread_mutex_destroy(c->fork + i);

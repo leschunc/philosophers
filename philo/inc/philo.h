@@ -74,6 +74,7 @@ void					atoiv(t_context *c);
 bool					init(t_context *c);
 bool					init_fork(t_context *c);
 bool					init_sim(t_context *c);
+void					destroy_mutx(t_context *c);
 
 bool					grab(t_mind *m);
 void					*daily(void *ref);
@@ -86,7 +87,6 @@ suseconds_t				get_time(suseconds_t start);
 suseconds_t				get_start(void);
 suseconds_t				get_time(suseconds_t start);
 
-/* utils */
 void					safe_free(char **ptr);
 void					lock(t_mut *mut);
 void					unlock(t_mut *mut);
