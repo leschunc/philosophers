@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 00:03:06 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/14 03:12:03 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,7 @@ bool	grab(t_mind *m)
 	else
 	{
 		if (am_i_dead_wait(m, 1e3))
-		{
 			return (false);
-		}
 		if (eat_rl(m) == false)
 			return (false);
 	}

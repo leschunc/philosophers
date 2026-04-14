@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 00:09:28 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/14 03:14:53 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@
 # define OK 0
 # define SIM_SIZE 2000
 
-# define MSG1 "%5ld\t%3d\thas taken a fork\n"
-# define MSG2 "%5ld\t%3d\tis eating\n"
-# define MSG3 "%5ld\t%3d\tis sleeping\n"
-# define MSG4 "%5ld\t%3d\tis thinking\n"
-# define MSG5 "%5ld\t%3d\thas died\n"
+# define MSG1 "%5ld%3d has taken a fork\n"
+# define MSG2 "%5ld%3d is eating\n"
+# define MSG3 "%5ld%3d is sleeping\n"
+# define MSG4 "%5ld%3d is thinking\n"
+# define MSG5 "%5ld%3d has died\n"
 # define ERR1 "\033[31mCAPTCHA\033[0m: name all %ld philosophers\n"
-# define ERR2 "%5ld 0 has died \033[31mbecause of YOU\033[0m\n"
+# define ERR2 "%5ld%3d has died \033[31mbecause of YOU\033[0m\n"
 
 enum					e_print
 {
@@ -98,6 +98,7 @@ suseconds_t				get_start(void);
 bool					am_i_dead_wait(t_mind *m, long wait);
 bool					killed(t_mind *m);
 long					pos(long num);
+void					*slow_death(void *ref);
 
 void					msg(int num, t_mind *m, t_context *c, int i);
 

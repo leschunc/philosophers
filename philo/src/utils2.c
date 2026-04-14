@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:53:12 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 00:07:35 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/14 02:45:14 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	ft_isspace(char c)
 {
 	if (((c >= 9) && (c <= 13)) || (c == ' '))
-	{
 		return (1);
-	}
 	return (0);
 }
 

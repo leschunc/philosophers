@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/13 23:51:29 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/14 03:13:24 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,22 @@ bool	pre_check(char *str)
 	return (true);
 }
 
+bool	one_lonely_philo(t_context *c)
+{
+	pthread_mutex_t	forkidy_dorkity;
+	pthread_t		omega;
+
+	c->fork = &forkidy_dorkity;
+	pthread_mutex_init(&forkidy_dorkity, NULL);
+	pthread_create(&omega, NULL, slow_death, c);
+	pthread_join(omega, NULL);
+	pthread_mutex_destroy(&forkidy_dorkity);
+	return (true);
+}
+
 bool	atoiv(t_context *c)
 {
 	int			i;
-	suseconds_t	start;
 
 	i = 0;
 	while (i < c->arr_len)
@@ -77,9 +89,8 @@ bool	atoiv(t_context *c)
 	}
 	if (c->set[NUM] == 1)
 	{
-		start = get_start();
-		usleep(c->set[DIE] * 1000);
-		printf(ERR2, get_time(start));
+		c->start[0] = get_start();
+		one_lonely_philo(c);
 		return (ERR);
 	}
 	if (c->set[NUM] > 2000)
