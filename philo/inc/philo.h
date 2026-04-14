@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 03:14:53 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/14 03:27:38 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,48 +58,49 @@ typedef pthread_mutex_t	t_mut;
 
 typedef struct s_mind
 {
-	int					whoami;
+	suseconds_t			*start;
 	bool				*simulation;
 	long				*set;
-	long				meals;
 	t_mut				*inspec;
-	suseconds_t			*start;
+	t_mut				*broadcast;
+	int					whoami;
+	long				meals;
 	long				last_meal;
 	t_mut				*r_fork;
 	t_mut				*l_fork;
-	t_mut				*broadcast;
 }						t_mind;
 
 typedef struct s_context
 {
-	long				*set;
-	bool				simulation[1];
 	suseconds_t			start[1];
+	bool				simulation[1];
+	long				*set;
+	t_mut				*inspec;
+	t_mut				broadcast[1];
 	pthread_t			*philo;
 	t_mind				*mind;
 	t_mut				*fork;
-	t_mut				*inspec;
-	t_mut				broadcast[1];
-	int					arr_len;
-	char				**argv;
 	int					ite;
+	char				**argv;
+	int					arr_len;
 }						t_context;
+
+void					give_free_will(t_context *c);
+void					*fate(void *ref);
+void					*daily(void *ref);
+
+bool					atoiv(t_context *c);
+int						ft_isdigit(char c);
+void					*slow_death(void *ref);
+int						atonum(const char *nptr);
+suseconds_t				get_start(void);
+suseconds_t				get_time(suseconds_t start);
 
 void					lock(t_mut *mut);
 void					unlock(t_mut *mut);
-void					*fate(void *ref);
-void					*daily(void *ref);
-bool					atoiv(t_context *c);
-void					give_free_will(t_context *c);
-int						ft_isdigit(char c);
-int						atonum(const char *nptr);
-suseconds_t				get_time(suseconds_t start);
-suseconds_t				get_start(void);
-bool					am_i_dead_wait(t_mind *m, long wait);
 bool					killed(t_mind *m);
+bool					am_i_dead_wait(t_mind *m, long wait);
 long					pos(long num);
-void					*slow_death(void *ref);
-
 void					msg(int num, t_mind *m, t_context *c, int i);
 
 #endif
