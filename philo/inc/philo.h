@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 16:38:37 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 18:26:47 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,14 @@
 # define OK 0
 # define SIM_MAX 2442
 
-# define NOCOLOR "\033[0m"
-# define CYAN "\033[36m"
-# define YELLOW "\033[33m"
-# define MAGENTA "\033[35m"
-# define BLUE "\033[34m"
-# define RED "\033[31m"
-# define GREEN "\033[32m"
-# define FORMAT "%5ld %3d "
-
-# define MSG1 BLUE FORMAT "has taken a fork\n" NOCOLOR
-# define MSG2 CYAN FORMAT "has taken a fork\n" NOCOLOR
-# define MSG3 GREEN FORMAT "is eating\n" NOCOLOR
-# define MSG4 MAGENTA FORMAT "is sleeping\n" NOCOLOR
-# define MSG5 YELLOW FORMAT "is thinking\n" NOCOLOR
-# define MSG6 RED FORMAT "has died\n" NOCOLOR
-# define ERR1 RED "CAPTCHA: name all %ld philosophers\n" NOCOLOR
-# define ERR2 RED FORMAT "has died, you starved her to death by giving her one fork\n" NOCOLOR
+# define MSG1 "\033[34m%5ld %3d has taken a fork\n\033[0m"
+# define MSG2 "\033[36m%5ld %3d has taken a fork\n\033[0m"
+# define MSG3 "\033[32m%5ld %3d is eating\n\033[0m"
+# define MSG4 "\033[35m%5ld %3d is sleeping\n\033[0m"
+# define MSG5 "\033[33m%5ld %3d is thinking\n\033[0m"
+# define MSG6 "\033[31m%5ld %3d has died\n\033[0m"
+# define ERR1 "\033[31mCAPTCHA: name all %ld philosophers\n\033[0m"
+# define ERR2 "\033[31m%5ld %3d has died, you starved her to death\n\033[0m"
 
 enum					e_print
 {

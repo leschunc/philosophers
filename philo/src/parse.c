@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 16:14:41 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 18:07:34 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,10 @@ bool	atoiv(t_context *c)
 	while (i < c->arr_len)
 	{
 		if (pre_check(c->argv[i + 1]) == false)
-		{
-			printf("Digit-only non-zero INTs allowed\n");
-			return (ERR);
-		}
+			return (printf("Digit-only non-zero INTs allowed\n"), ERR);
 		c->set[i] = atonum(c->argv[i + 1]);
 		if (c->set[i] == 0)
-		{
-			printf("Digit-only non-zero INTs allowed\n");
-			return (ERR);
-		}
+			return (printf("Digit-only non-zero INTs allowed\n"), ERR);
 		i++;
 	}
 	if (c->set[NUM] == 1)

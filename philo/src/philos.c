@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 16:39:07 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 18:31:10 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ bool	eat_lr(t_mind *m)
 bool	eat_rl(t_mind *m)
 {
 	if (killed(m) == true)
-	{
 		return (false);
-	}
 	lock(m->r_fork);
 	msg(HASFORK, m, 0, 0);
 	if (killed(m) == true)
@@ -87,7 +85,7 @@ bool	grab(t_mind *m)
 	}
 	else
 	{
-		if (am_i_dead_wait(m, 1e3))
+		if (am_i_dead_wait(m, m->set[EAT] * 1e3))
 			return (false);
 		if (eat_rl(m) == false)
 			return (false);
@@ -103,23 +101,23 @@ void	*daily(void *ref)
 	while (1)
 	{
 		if (killed(m) == true)
-			return ((void *)false);
+			return ((void *)0);
 		msg(THINKS, m, 0, 0);
 		if (m->whoami % 2 == ODD)
 			if (am_i_dead_wait(m, pos(2 * m->set[EAT] - m->set[SLP])))
-				return ((void *)false);
-		if (grab(m) == false)
-			return ((void *)false);
+				return ((void *)0);
+		if (grab(m) == 0)
+			return ((void *)0);
 		if (killed(m) == true)
-			return ((void *)false);
+			return ((void *)0);
 		msg(SLEEPS, m, 0, 0);
 		if (m->whoami % 2 == EVEN)
 		{
 			if (am_i_dead_wait(m, m->set[SLP] * 1e3))
-				return ((void *)false);
+				return ((void *)0);
 		}
 		else if (am_i_dead_wait(m, m->set[SLP] * 1e3 + 100))
-			return ((void *)false);
+			return ((void *)0);
 	}
-	return ((void *)false);
+	return ((void *)0);
 }

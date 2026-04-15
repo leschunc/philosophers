@@ -13,6 +13,9 @@ all: $(NAME)
 
 # CFLAGS		+= -fsanitize=thread
 
+# sanitize fix, run with setarch so memory is not randomized
+# meka re && setarch -R ./philo 1 1 1 1 1
+
 $(NAME):  $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
@@ -29,10 +32,6 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
-
-# sanitize fix
-############
-# setarch -R
 
 # ignore
 #############
