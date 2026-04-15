@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/13 23:42:09 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 15:11:11 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,3 +105,27 @@ int	main(int argc, char *argv[])
 		return (OK);
 	return (ERR);
 }
+
+// void	infinite_mutx_glitch()
+// {
+// 	t_mut	fork[20000];
+// 	static int		i;
+
+// 	i++;
+// 	printf("%d\n", i);
+// 	fflush(stdout);
+// 	while (i < 20000)
+// 	{
+// 		pthread_mutex_init(fork + i, 0);
+// 		i++;
+// 	}
+// }
+
+// int	main()
+// {
+// 	while (1)
+// 	{
+// 		infinite_mutx_glitch();
+// 	}
+// 	return (0);
+// }
