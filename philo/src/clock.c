@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:05 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 03:17:16 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:03:18 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,10 @@ void	*slow_death(void *ref)
 	t_context	*c;
 
 	c = ref;
-	printf(MSG4, get_time(c->start[0]), 1);
+	printf(MSG5, get_time(c->start[0]), 1);
 	lock(c->fork);
+	unlock(c->fork);
 	printf(MSG1, get_time(c->start[0]), 1);
 	usleep(c->set[DIE] * 1000);
-	printf(ERR2, get_time(c->start[0]), 1);
-	unlock(c->fork);
 	return ((void *)false);
 }

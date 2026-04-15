@@ -40,4 +40,10 @@ The last argument is optional, when not used the simulation will run indefinitel
 
 An LLM chat was widely used to ask about how these interact.
 
-**Bonus** look ``usleep(0)`` up.
+**Bonus**
+
+- Look ``usleep(0)`` up.
+
+**Challenge**
+
+- This project never uses mutex_destroy and **will** be validated, find out why this works and doesn't leak system resources. Tip: search the files for malloc.

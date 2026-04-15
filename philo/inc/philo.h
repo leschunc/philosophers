@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 15:11:05 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:38:37 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,34 @@
 # include <unistd.h>
 
 # define EMPTY '\0'
+# define ODD 1
+# define EVEN 0
 # define ERR 1
 # define OK 0
-# define SIM_SIZE 2000
+# define SIM_MAX 2442
 
-# define MSG1 "%5ld%3d has taken a fork\n"
-# define MSG2 "%5ld%3d is eating\n"
-# define MSG3 "%5ld%3d is sleeping\n"
-# define MSG4 "%5ld%3d is thinking\n"
-# define MSG5 "%5ld%3d has died\n"
-# define ERR1 "\033[31mCAPTCHA\033[0m: name all %ld philosophers\n"
-# define ERR2 "%5ld%3d has died \033[31mbecause of YOU\033[0m\n"
+# define NOCOLOR "\033[0m"
+# define CYAN "\033[36m"
+# define YELLOW "\033[33m"
+# define MAGENTA "\033[35m"
+# define BLUE "\033[34m"
+# define RED "\033[31m"
+# define GREEN "\033[32m"
+# define FORMAT "%5ld %3d "
+
+# define MSG1 BLUE FORMAT "has taken a fork\n" NOCOLOR
+# define MSG2 CYAN FORMAT "has taken a fork\n" NOCOLOR
+# define MSG3 GREEN FORMAT "is eating\n" NOCOLOR
+# define MSG4 MAGENTA FORMAT "is sleeping\n" NOCOLOR
+# define MSG5 YELLOW FORMAT "is thinking\n" NOCOLOR
+# define MSG6 RED FORMAT "has died\n" NOCOLOR
+# define ERR1 RED "CAPTCHA: name all %ld philosophers\n" NOCOLOR
+# define ERR2 RED FORMAT "has died, you starved her to death by giving her one fork\n" NOCOLOR
 
 enum					e_print
 {
 	HASFORK,
+	HASFORKS,
 	EATS,
 	SLEEPS,
 	THINKS,

@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 15:11:11 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:15:45 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	inspec_init(t_context *c)
 bool	init_sim(t_context *c)
 {
 	int			i;
-	t_mind		mind[SIM_SIZE];
+	t_mind		mind[SIM_MAX];
 	pthread_t	determinism;
 
 	c->mind = mind;
@@ -70,9 +70,9 @@ bool	init_sim(t_context *c)
 
 bool	init(t_context *c)
 {
-	pthread_t	philo[SIM_SIZE];
-	t_mut		fork[SIM_SIZE];
-	t_mut		inspec[SIM_SIZE];
+	pthread_t	philo[SIM_MAX];
+	t_mut		fork[SIM_MAX];
+	t_mut		inspec[SIM_MAX];
 
 	c->philo = philo;
 	c->fork = fork;
@@ -95,7 +95,10 @@ int	main(int argc, char *argv[])
 	static long	set[5];
 
 	if (argc != 5 && argc != 6)
+	{
+		printf("4 or 5 arguments required\n");
 		return (ERR);
+	}
 	c.arr_len = argc - 1;
 	c.argv = argv;
 	c.set = set;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:25 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 00:08:02 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:09:17 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	lock(t_mut *mut)
 
 void	msg(int num, t_mind *m, t_context *c, int i)
 {
-	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, ERR1, ERR2};
+	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, MSG6, ERR1, ERR2};
 
 	if (m)
 	{

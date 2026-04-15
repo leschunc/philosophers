@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 03:13:24 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 16:14:41 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,36 @@ bool	pre_check(char *str)
 
 bool	one_lonely_philo(t_context *c)
 {
-	pthread_mutex_t	forkidy_dorkity;
+	pthread_mutex_t	single_fork;
 	pthread_t		omega;
 
-	c->fork = &forkidy_dorkity;
-	pthread_mutex_init(&forkidy_dorkity, NULL);
+	c->fork = &single_fork;
+	pthread_mutex_init(&single_fork, NULL);
 	pthread_create(&omega, NULL, slow_death, c);
 	pthread_join(omega, NULL);
-	pthread_mutex_destroy(&forkidy_dorkity);
+	printf(ERR2, get_time(c->start[0]), 1);
+	pthread_mutex_destroy(&single_fork);
 	return (true);
 }
 
 bool	atoiv(t_context *c)
 {
-	int			i;
+	int	i;
 
 	i = 0;
 	while (i < c->arr_len)
 	{
 		if (pre_check(c->argv[i + 1]) == false)
 		{
-			printf("Digit only positive integers up to 2147483647 allowed\n");
+			printf("Digit-only non-zero INTs allowed\n");
 			return (ERR);
 		}
 		c->set[i] = atonum(c->argv[i + 1]);
+		if (c->set[i] == 0)
+		{
+			printf("Digit-only non-zero INTs allowed\n");
+			return (ERR);
+		}
 		i++;
 	}
 	if (c->set[NUM] == 1)
@@ -93,7 +99,7 @@ bool	atoiv(t_context *c)
 		one_lonely_philo(c);
 		return (ERR);
 	}
-	if (c->set[NUM] > 2000)
+	if (c->set[NUM] > SIM_MAX)
 		return (printf(ERR1, c->set[NUM]), ERR);
 	return (OK);
 }
