@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 13:03:59 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 13:06:19 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void	*daily(void *ref)
 	long	timeout;
 
 	m = (t_mind *)ref;
-	timeout = m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP] + 1e3;
+	timeout = m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP] + 100;
 	while (1)
 	{
 		if (eating(m) == false)
