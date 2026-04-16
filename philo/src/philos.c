@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 00:53:36 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 13:03:59 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	set_last_meal(t_mind *m)
 	return (unlock(m->inspec), true);
 }
 
-bool	eat_lr(t_mind *m)
+bool	left_right(t_mind *m)
 {
 	lock(m->l_fork);
 	msg(HASFORKS, m, 0, 0);
@@ -43,7 +43,7 @@ bool	eat_lr(t_mind *m)
 	return (unlock(m->r_fork), unlock(m->l_fork), true);
 }
 
-bool	eat_rl(t_mind *m)
+bool	right_left(t_mind *m)
 {
 	lock(m->r_fork);
 	msg(HASFORK, m, 0, 0);
@@ -59,70 +59,61 @@ bool	eat_rl(t_mind *m)
 	return (unlock(m->l_fork), unlock(m->r_fork), true);
 }
 
-bool	grab(t_mind *m)
+bool	eating(t_mind *m)
 {
 	if (m->whoami == 0)
 	{
-		if (eat_lr(m) == false)
+		if (left_right(m) == false)
 			return (false);
 	}
 	else
 	{
-		if (eat_rl(m) == false)
+		if (right_left(m) == false)
 			return (false);
 	}
 	return (true);
 }
 
-bool	even(t_mind *m)
-{
-	msg(THINKS, m, 0, 0);
-	if (m->whoami % 2 == ODD)
-		if (am_i_dead_wait(m, 2 * m->set[EAT] - m->set[SLP]))
-			return (false);
-	if (grab(m) == 0)
-		return (false);
-	msg(SLEEPS, m, 0, 0);
-	if (am_i_dead_wait(m, m->set[SLP] * 1e3))
-		return (false);
-	return (true);
-}
+// bool	even(t_mind *m)
+// {
+// 	long	timeout;
 
-bool	odd(t_mind *m)
-{
-	long	remainder;
+// 	timeout = m->set[EAT] - m->set[SLP];
+// 	while (1)
+// 	{
+// 		if (eating(m) == false)
+// 			return (false);
+// 		msg(SLEEPS, m, 0, 0);
+// 		if (am_i_dead_wait(m, m->set[SLP] * 1e3))
+// 			return (true);
+// 		msg(THINKS, m, 0, 0);
+// 		if (am_i_dead_wait(m, timeout))
+// 			return (true);
+// 		return (true);
+// 	}
+// }
 
-	msg(THINKS, m, 0, 0);
-	remainder = get_time(m->start[0]) - ((m->set[EAT] + m->set[SLP]));
-	if (m->whoami % 2 == ODD)
-		while (remainder < m->set[DIE] * 0.7)
-		{
-			am_i_dead_wait(m, remainder / 2);
-			remainder = get_time(m->start[0]) - ((m->set[EAT] + m->set[SLP]));
-		}
-	if (grab(m) == 0)
-		return (false);
-	msg(SLEEPS, m, 0, 0);
-	if (am_i_dead_wait(m, m->set[SLP] * 1e3))
-		return (false);
-	return (true);
-}
+// bool	odd(t_mind *m)
+// {
+// }
 
 void	*daily(void *ref)
 {
 	t_mind	*m;
+	long	timeout;
 
 	m = (t_mind *)ref;
-	if (m->set[NUM] % 2 == ODD)
+	timeout = m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP] + 1e3;
+	while (1)
 	{
-		if (odd(m) == false)
+		if (eating(m) == false)
+			return ((void *)0);
+		msg(SLEEPS, m, 0, 0);
+		if (am_i_dead_wait(m, m->set[SLP] * 1e3))
+			return ((void *)0);
+		msg(THINKS, m, 0, 0);
+		if (am_i_dead_wait(m, timeout))
 			return ((void *)0);
 	}
-	else
-		while (1)
-		{
-			if (even(m) == false)
-				break ;
-		}
-	return ((void *)0);
+	return ((void *)1);
 }

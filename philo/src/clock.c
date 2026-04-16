@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:05 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 16:03:18 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 12:16:01 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ bool	am_i_dead_wait(t_mind *m, long wait)
 	struct timeval	now;
 	long			init;
 
+	if (wait < 1)
+		return (false);
 	gettimeofday(&now, NULL);
 	init = now.tv_sec * 1000000 + now.tv_usec;
 	while (1)
