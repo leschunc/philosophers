@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 18:26:47 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 19:47:20 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void					lock(t_mut *mut);
 void					unlock(t_mut *mut);
 bool					killed(t_mind *m);
 bool					am_i_dead_wait(t_mind *m, long wait);
-long					pos(long num);
+long					mod(long num);
 void					msg(int num, t_mind *m, t_context *c, int i);
 
 #endif

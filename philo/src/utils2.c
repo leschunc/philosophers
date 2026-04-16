@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:53:12 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/14 02:45:14 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/15 19:47:20 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ bool	killed(t_mind *m)
 	return (false);
 }
 
-long	pos(long num)
+long	mod(long num)
 {
 	if (num < 0)
 		return (-num);
