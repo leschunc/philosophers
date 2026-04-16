@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 13:09:17 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:37:09 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ void	turn_minds_off(t_context *c)
 	int	i;
 
 	i = 0;
-	lock(c->broadcast);
-	c->simulation[0] = false;
-	unlock(c->broadcast);
 	while (i < c->set[NUM])
 	{
 		lock(c->inspec + i);
@@ -48,6 +45,9 @@ bool	safe_inspec(t_context *c, int i)
 	else if (now - c->mind[i].last_meal > c->set[DIE])
 	{
 		unlock(c->inspec + i);
+		lock(c->broadcast);
+		c->simulation[0] = false;
+		unlock(c->broadcast);
 		msg(DIED, NULL, c, i);
 		turn_minds_off(c);
 		return (false);

@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:05 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 12:16:01 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:17:28 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	am_i_dead_wait(t_mind *m, long wait)
 			return (true);
 		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
 			break ;
-		usleep(100);
+		usleep(0);
 	}
 	return (false);
 }
