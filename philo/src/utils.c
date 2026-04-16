@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:25 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 16:09:17 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 18:02:21 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 	{
 		if (killed(m) == false)
 		{
-			usleep(1e3);
 			lock(m->broadcast);
 			if (m->simulation[0] == true)
 				printf(msgs[num], get_time(m->start[0]), m->whoami + 1);

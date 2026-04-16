@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 15:37:09 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 18:34:54 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ bool	safe_inspec(t_context *c, int i)
 		c->simulation[0] = false;
 		unlock(c->broadcast);
 		msg(DIED, NULL, c, i);
-		turn_minds_off(c);
-		return (false);
+		return (turn_minds_off(c), false);
 	}
 	unlock(c->inspec + i);
 	return (true);

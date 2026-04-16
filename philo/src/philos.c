@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 15:33:50 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/16 18:35:16 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	set_last_meal(t_mind *m)
 {
-		lock(m->inspec);
+	lock(m->inspec);
 	if (m->last_meal == -1)
 		return (unlock(m->inspec), false);
 	m->last_meal = get_time(m->start[0]);
@@ -112,7 +112,7 @@ void	*daily(void *ref)
 		if (eating(m) == false)
 			return ((void *)0);
 		if (killed(m))
-			return ((void *)0); 
+			return ((void *)0);
 		msg(SLEEPS, m, 0, 0);
 		if (am_i_dead_wait(m, m->set[SLP] * 1e3))
 			return ((void *)0);
