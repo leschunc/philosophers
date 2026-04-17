@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:29:32 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:32:21 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	main(int argc, char *argv[])
 		return (ERR);
 	if (init(&c) == true)
 		return (OK);
-	return (ERR);
+	return (printf("failure on initialization\n"), ERR);
 }
 
 // void	infinite_mutx_glitch(void)
