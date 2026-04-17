@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/18 00:00:41 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/18 00:17:52 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ bool	set_last_meal(t_mind *m)
 	m->last_meal = get_time(m->start[0]);
 	m->meals++;
 	if (m->meals == m->set[CYC])
-		return (unlock(m->inspec), am_i_dead_wait(m, m->set[EAT] * 1000),  false);
+	{
+		unlock(m->inspec);
+		am_i_dead(m, m->set[EAT] * 1e3);
+		return (false);
+	}
 	return (unlock(m->inspec), true);
 }
 
@@ -104,7 +108,7 @@ void	*daily(void *ref)
 		return ((void *)0);
 	timeout = (m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP]);
 	if (m->whoami % 2)
-		if (am_i_dead(m, (1 * m->set[NUM] + timeout) * 1e3))
+		if (am_i_dead(m, (m->set[NUM] + timeout) * 1e3))
 			return ((void *)0);
 	while (1)
 	{
@@ -124,4 +128,4 @@ void	*daily(void *ref)
 
 // fix safado do gustavo
 // if (m->set[NUM] % 2 == 0 && m->whoami % 2 == 0)
-// 	am_i_dead_wait(m, m->set[SLP] * 1000);
+// 	am_i_dead(m, m->set[SLP] * 1000);
