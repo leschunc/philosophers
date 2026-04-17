@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 18:33:32 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:45:58 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ bool	init(t_context *c)
 	t_mut		fork[SIM_MAX];
 	t_mut		inspec[SIM_MAX];
 
+	if (c->set[NUM] == 1)
+		return (one_lonely_philo(c));
 	c->philo = philo;
 	c->fork = fork;
 	c->inspec = inspec;
@@ -109,7 +111,7 @@ int	main(int argc, char *argv[])
 	return (ERR);
 }
 
-// void	infinite_mutx_glitch()
+// void	infinite_mutx_glitch(void)
 // {
 // 	t_mut	fork[20000];
 // 	static int		i;
@@ -124,7 +126,7 @@ int	main(int argc, char *argv[])
 // 	}
 // }
 
-// int	main()
+// int	main(void)
 // {
 // 	while (1)
 // 	{

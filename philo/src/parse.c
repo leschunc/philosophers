@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 02:09:25 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:46:21 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ bool	one_lonely_philo(t_context *c)
 
 	c->fork = &single_fork;
 	pthread_mutex_init(&single_fork, NULL);
-	pthread_create(&omega, NULL, slow_death, c);
+	c->start[0] = get_start();
+	if (pthread_create(&omega, NULL, slow_death, c))
+		return (pthread_join(omega, NULL), false);
 	pthread_join(omega, NULL);
 	printf(ERR2, get_time(c->start[0]), 1);
-	pthread_mutex_destroy(&single_fork);
 	return (true);
 }
 
@@ -85,12 +86,6 @@ bool	atoiv(t_context *c)
 		if (c->set[i] == 0)
 			return (printf("Digit-only non-zero INTs allowed\n"), ERR);
 		i++;
-	}
-	if (c->set[NUM] == 1)
-	{
-		c->start[0] = get_start();
-		one_lonely_philo(c);
-		return (ERR);
 	}
 	if (c->set[NUM] > SIM_MAX)
 		return (printf(ERR1, c->set[NUM]), ERR);

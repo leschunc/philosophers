@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 18:25:40 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:43:50 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_context
 	int					arr_len;
 }						t_context;
 
+bool					one_lonely_philo(t_context *c);
 void					give_free_will(t_context *c);
 void					*fate(void *ref);
 void					*daily(void *ref);
