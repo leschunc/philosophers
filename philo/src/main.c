@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 14:12:26 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:20:06 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ bool	init(t_context *c)
 	t_mut		inspec[SIM_MAX];
 
 	if (c->set[NUM] == 1)
-		return (one_lonely_philo(c), false);
+		return (one_lonely_philo(c));
 	c->philo = philo;
 	c->fork = fork;
 	c->inspec = inspec;
