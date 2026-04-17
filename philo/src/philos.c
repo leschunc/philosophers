@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:20:35 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:38:17 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,6 @@ bool	eating(t_mind *m)
 // 		return (true);
 // 	}
 // }
-
-bool	safe_daily(t_mind *m)
-{
-	lock(m->broadcast);
-	if (*m->simulation == false)
-		return (unlock(m->broadcast), false);
-	return (unlock(m->broadcast), true);
-}
 
 void	*daily(void *ref)
 {

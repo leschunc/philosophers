@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:30:34 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:38:28 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,6 @@ void					msg(int num, t_mind *m, t_context *c, int i);
 
 void					join_abort(t_context *c, int limit);
 void					join_exit(t_context *c);
+bool					safe_daily(t_mind *m);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/17 18:29:41 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:30:28 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:38:21 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,12 @@ void	join_exit(t_context *c)
 		pthread_join(c->philo[i], 0);
 		i++;
 	}
+}
+
+bool	safe_daily(t_mind *m)
+{
+	lock(m->broadcast);
+	if (*m->simulation == false)
+		return (unlock(m->broadcast), false);
+	return (unlock(m->broadcast), true);
 }
