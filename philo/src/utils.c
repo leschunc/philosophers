@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:25 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:55:23 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:07:26 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	lock(t_mut *mut)
 
 void	msg(int num, t_mind *m, t_context *c, int i)
 {
-	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, MSG6, ERR1, ERR2};
+	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, MSG6, ER_MANY, ER_MURDERED};
 
 	if (m)
 	{

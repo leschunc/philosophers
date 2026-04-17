@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:59:26 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:08:10 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ bool	one_lonely_philo(t_context *c)
 	if (pthread_create(&omega, NULL, slow_death, c))
 		return (pthread_join(omega, NULL), false);
 	pthread_join(omega, NULL);
-	printf(ERR2, get_time(c->start), 1);
+	printf(ER_MURDERED, get_time(c->start), 1);
 	return (true);
 }
 
@@ -83,13 +83,13 @@ bool	atoiv(t_context *c)
 	while (i < c->arr_len)
 	{
 		if (pre_check(c->argv[i + 1]) == false)
-			return (printf("Range: 1 - 2147483647\n"), ERR);
+			return (printf(ER_RANGE), ERR);
 		c->set[i] = atonum(c->argv[i + 1]);
 		if (c->set[i] == 0)
-			return (printf("Digit-only non-zero INTs allowed\n"), ERR);
+			return (printf(ER_INT), ERR);
 		i++;
 	}
 	if (c->set[NUM] > SIM_MAX)
-		return (printf(ERR1, c->set[NUM]), ERR);
+		return (printf(ER_MANY, c->set[NUM]), ERR);
 	return (OK);
 }
