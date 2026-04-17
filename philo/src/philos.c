@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 14:45:54 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 15:58:11 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,9 @@ void	*daily(void *ref)
 	m = (t_mind *)ref;
 	lock(m->broadcast);
 	unlock(m->broadcast);
-	timeout = m->set[EAT] * (m->set[NUM] % 2 + 1);
-	timeout += -m->set[SLP] + (25 * m->set[NUM]);
+	timeout = (m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP]);
 	if (m->whoami % 2)
-		if (am_i_dead_wait(m, timeout))
+		if (am_i_dead_wait(m, timeout * 1e3))
 			return ((void *)0);
 	while (1)
 	{
@@ -117,7 +116,7 @@ void	*daily(void *ref)
 		if (am_i_dead_wait(m, m->set[SLP] * 1e3))
 			return ((void *)0);
 		msg(THINKS, m, 0, 0);
-		if (am_i_dead_wait(m, timeout))
+		if (am_i_dead_wait(m, timeout * 1e3))
 			return ((void *)0);
 	}
 	return ((void *)1);

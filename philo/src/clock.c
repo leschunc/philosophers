@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:05 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:48:47 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 16:01:53 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ bool	am_i_dead_wait(t_mind *m, long wait)
 	if (wait < 1)
 		return (false);
 	gettimeofday(&now, NULL);
-	init = now.tv_sec * 1000000 + now.tv_usec;
+	init = now.tv_sec * 1e6 + now.tv_usec;
 	while (1)
 	{
-		gettimeofday(&now, NULL);
 		if (killed(m))
 			return (true);
-		if (now.tv_sec * 1000000 + now.tv_usec - init >= wait)
+		gettimeofday(&now, NULL);
+		if (now.tv_sec * 1e6 + now.tv_usec - init >= wait)
 			break ;
 		usleep(0);
 	}
@@ -38,7 +38,7 @@ suseconds_t	get_time(suseconds_t start)
 	struct timeval	now;
 
 	gettimeofday(&now, NULL);
-	return ((now.tv_sec * 1000000 + now.tv_usec - start) / 1000);
+	return ((now.tv_sec * 1e6 + now.tv_usec - start) / 1e3);
 }
 
 suseconds_t	get_start(void)
@@ -46,7 +46,7 @@ suseconds_t	get_start(void)
 	struct timeval	now;
 
 	gettimeofday(&now, NULL);
-	return (now.tv_sec * 1000000 + now.tv_usec);
+	return (now.tv_sec * 1e6 + now.tv_usec);
 }
 
 void	*slow_death(void *ref)
@@ -58,6 +58,6 @@ void	*slow_death(void *ref)
 	lock(c->fork);
 	unlock(c->fork);
 	printf(MSG1, get_time(c->start), 1);
-	usleep(c->set[DIE] * 1000);
+	usleep(c->set[DIE] * 1e3);
 	return ((void *)false);
 }
