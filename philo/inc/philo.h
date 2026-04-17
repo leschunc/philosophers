@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:52:16 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:54:28 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ typedef struct s_context
 	bool				simulation;
 	long				*set;	
 	t_mut				*inspec;
-	t_mut				broadcast[1];
+	t_mut				broadcast;
 	pthread_t			*philo;
 	t_mind				*mind;
 	t_mut				*fork;

@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:53:33 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:54:56 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ bool	init(t_context *c)
 	c->fork = fork;
 	c->inspec = inspec;
 	c->simulation = true;
-	if (pthread_mutex_init(c->broadcast, NULL) != OK)
+	if (pthread_mutex_init(&c->broadcast, NULL) != OK)
 		return (false);
 	if (init_fork(c) == false)
 		return (false);

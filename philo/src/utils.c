@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:25 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:48:47 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:55:23 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	msg(int num, t_mind *m, t_context *c, int i)
 	}
 	else
 	{
-		lock(c->broadcast);
+		lock(&c->broadcast);
 		printf(msgs[num], get_time(c->start), i + 1);
-		unlock(c->broadcast);
+		unlock(&c->broadcast);
 	}
 }
