@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:54:56 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:02:07 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ bool	init(t_context *c)
 int	main(int argc, char *argv[])
 {
 	t_context	c;
-	static long	set[5];
+	static int	set[5];
 
 	if (argc != 5 && argc != 6)
 	{

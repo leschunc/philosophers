@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:58:03 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:03:41 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define MSG4 "\033[35m%5ld %3d is sleeping\n\033[0m"
 # define MSG5 "\033[33m%5ld %3d is thinking\n\033[0m"
 # define MSG6 "\033[31m%5ld %3d has died\n\033[0m"
-# define ERR1 "\033[31mCAPTCHA: name all %ld philosophers\n\033[0m"
+# define ERR1 "\033[31mCAPTCHA: name all %d philosophers\n\033[0m"
 # define ERR2 "\033[31m%5ld %3d has died, you starved her to death\n\033[0m"
 
 enum					e_print
@@ -64,7 +64,7 @@ typedef struct s_mind
 {
 	suseconds_t			*start;
 	bool				*simulation;
-	long				*set;
+	int					*set;
 	t_mut				*inspec;
 	t_mut				*broadcast;
 	int					whoami;
@@ -78,7 +78,7 @@ typedef struct s_context
 {
 	suseconds_t			start;
 	bool				simulation;
-	long				*set;
+	int					*set;
 	t_mut				*inspec;
 	t_mut				broadcast;
 	pthread_t			*philo;
