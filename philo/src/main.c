@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 17:01:21 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:01:08 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	free_loop(t_context *c, int limit)
 	i = 0;
 	while (i < limit)
 	{
-		pthread_join(*c->philo + i, 0);
+		pthread_detach(*c->philo + i);
 		i++;
 	}
 }
@@ -74,9 +74,12 @@ bool	init_sim(t_context *c)
 	c->start = get_start();
 	(unlock(&c->broadcast), pthread_join(determinism, NULL));
 	i = 0;
-	while (i++ < c->set[NUM])
+	while (i < c->set[NUM])
+	{
 		if (pthread_join(c->philo[i], NULL) != OK)
 			return (false);
+		i++;
+	}
 	return (true);
 }
 
