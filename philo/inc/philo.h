@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 14:19:52 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:30:34 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,8 @@ bool					killed(t_mind *m);
 bool					am_i_dead_wait(t_mind *m, long wait);
 long					mod(long num);
 void					msg(int num, t_mind *m, t_context *c, int i);
+
+void					join_abort(t_context *c, int limit);
+void					join_exit(t_context *c);
 
 #endif

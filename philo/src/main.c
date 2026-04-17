@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:24:53 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:29:32 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,6 @@ bool	inspec_init(t_context *c)
 	return (true);
 }
 
-void	join_exit(t_context *c, int limit)
-{
-	int	i;
-
-	i = 0;
-	c->simulation = false;
-	unlock(&c->broadcast);
-	while (i < limit)
-	{
-		pthread_join(*(c->philo + i), 0);
-		i++;
-	}
-}
-
 bool	init_sim(t_context *c)
 {
 	int			i;
@@ -63,25 +49,19 @@ bool	init_sim(t_context *c)
 	c->mind = mind;
 	i = 0;
 	(give_free_will(c), lock(&c->broadcast));
-	while (i < c->set[NUM] / 2)
+	while (i < c->set[NUM])
 	{
 		if (pthread_create(c->philo + i, NULL, daily, mind + i) != OK)
 			break ;
 		i++;
 	}
 	if (i < c->set[NUM])
-		return (join_exit(c, i), false);
+		return (join_abort(c, i), false);
 	if (pthread_create(&determinism, NULL, fate, c) != OK)
-		return (pthread_join(determinism, 0), false);
+		return (join_abort(c, i), pthread_join(determinism, 0), false);
 	c->start = get_start();
 	(unlock(&c->broadcast), pthread_join(determinism, NULL));
-	i = 0;
-	while (i < c->set[NUM])
-	{
-		if (pthread_join(c->philo[i], NULL) != OK)
-			return (false);
-		i++;
-	}
+	join_exit(c);
 	return (true);
 }
 
