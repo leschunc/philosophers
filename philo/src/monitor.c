@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/16 18:34:54 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:50:29 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	safe_inspec(t_context *c, int i)
 	static int	finished = 0;
 	suseconds_t	now;
 
-	now = get_time(c->start[0]);
+	now = get_time(c->start);
 	lock(c->inspec + i);
 	if (c->mind[i].meals > 0 && c->set[CYC] == c->mind[i].meals)
 	{
@@ -90,14 +90,13 @@ void	give_free_will(t_context *c)
 		c->mind[i].set = c->set;
 		c->mind[i].broadcast = c->broadcast;
 		c->mind[i].simulation = c->simulation;
-		c->mind[i].start = c->start;
+		c->mind[i].start = &c->start;
 		if (i == 0)
 			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
 		else
 			c->mind[i].l_fork = &c->fork[i - 1];
 		i++;
 	}
-	c->start[0] = get_start();
 }
 
 void	destroy_mutx(t_context *c)

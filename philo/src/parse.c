@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:46:21 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:48:47 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ bool	one_lonely_philo(t_context *c)
 
 	c->fork = &single_fork;
 	pthread_mutex_init(&single_fork, NULL);
-	c->start[0] = get_start();
+	c->start = get_start();
 	if (pthread_create(&omega, NULL, slow_death, c))
 		return (pthread_join(omega, NULL), false);
 	pthread_join(omega, NULL);
-	printf(ERR2, get_time(c->start[0]), 1);
+	printf(ERR2, get_time(c->start), 1);
 	return (true);
 }
 
