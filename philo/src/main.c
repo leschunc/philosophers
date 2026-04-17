@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 14:44:53 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 17:01:21 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,18 @@ bool	inspec_init(t_context *c)
 	return (true);
 }
 
+void	free_loop(t_context *c, int limit)
+{
+	int	i;
+
+	i = 0;
+	while (i < limit)
+	{
+		pthread_join(*c->philo + i, 0);
+		i++;
+	}
+}
+
 bool	init_sim(t_context *c)
 {
 	int			i;
@@ -52,20 +64,19 @@ bool	init_sim(t_context *c)
 	while (i < c->set[NUM])
 	{
 		if (pthread_create(c->philo + i, NULL, daily, mind + i) != OK)
-			return (false);
+			break ;
 		i++;
 	}
+	if (i < c->set[NUM])
+		return (free_loop(c, i), false);
 	if (pthread_create(&determinism, NULL, fate, c) != OK)
-		return (false);
+		return (pthread_join(determinism, 0), false);
 	c->start = get_start();
 	(unlock(&c->broadcast), pthread_join(determinism, NULL));
 	i = 0;
-	while (i < c->set[NUM])
-	{
+	while (i++ < c->set[NUM])
 		if (pthread_join(c->philo[i], NULL) != OK)
 			return (false);
-		i++;
-	}
 	return (true);
 }
 

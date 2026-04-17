@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:05 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 16:01:53 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 16:47:22 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ bool	am_i_dead_wait(t_mind *m, long wait)
 		gettimeofday(&now, NULL);
 		if (now.tv_sec * 1e6 + now.tv_usec - init >= wait)
 			break ;
-		usleep(0);
+		// usleep(0);
 	}
 	return (false);
 }
