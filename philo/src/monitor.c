@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 17:03:39 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 23:55:43 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	*fate(void *ref)
 		{
 			if (safe_inspec(c, i) == false)
 				return (NULL);
-			usleep(0);
 			i++;
 		}
+		usleep(1000 / c->set[NUM]);
 	}
 	return (NULL);
 }

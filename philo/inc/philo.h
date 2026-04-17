@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:38:28 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 23:49:37 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ suseconds_t				get_time(suseconds_t start);
 void					lock(t_mut *mut);
 void					unlock(t_mut *mut);
 bool					killed(t_mind *m);
-bool					am_i_dead_wait(t_mind *m, long wait);
+bool					am_i_dead(t_mind *m, long wait);
 long					mod(long num);
 void					msg(int num, t_mind *m, t_context *c, int i);
 

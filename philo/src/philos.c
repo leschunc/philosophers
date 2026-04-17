@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:38:17 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 23:49:37 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ bool	left_right(t_mind *m)
 	msg(EATS, m, 0, 0);
 	if (set_last_meal(m) == false)
 		return (unlock(m->l_fork), unlock(m->r_fork), false);
-	if (am_i_dead_wait(m, m->set[EAT] * 1e3))
+	if (am_i_dead(m, m->set[EAT] * 1e3))
 		return (unlock(m->l_fork), unlock(m->r_fork), false);
 	return (unlock(m->r_fork), unlock(m->l_fork), true);
 }
@@ -55,7 +55,7 @@ bool	right_left(t_mind *m)
 	msg(EATS, m, 0, 0);
 	if (set_last_meal(m) == false)
 		return (unlock(m->r_fork), unlock(m->l_fork), false);
-	if (am_i_dead_wait(m, m->set[EAT] * 1e3))
+	if (am_i_dead(m, m->set[EAT] * 1e3))
 		return (unlock(m->r_fork), unlock(m->l_fork), false);
 	return (unlock(m->l_fork), unlock(m->r_fork), true);
 }
@@ -85,10 +85,10 @@ bool	eating(t_mind *m)
 // 		if (eating(m) == false)
 // 			return (false);
 // 		msg(SLEEPS, m, 0, 0);
-// 		if (am_i_dead_wait(m, m->set[SLP] * 1e3))
+// 		if (am_i_dead(m, m->set[SLP] * 1e3))
 // 			return (true);
 // 		msg(THINKS, m, 0, 0);
-// 		if (am_i_dead_wait(m, timeout))
+// 		if (am_i_dead(m, timeout))
 // 			return (true);
 // 		return (true);
 // 	}
@@ -104,7 +104,7 @@ void	*daily(void *ref)
 		return ((void *)0);
 	timeout = (m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP]);
 	if (m->whoami % 2)
-		if (am_i_dead_wait(m, (1 * m->set[NUM] + timeout) * 1e3))
+		if (am_i_dead(m, (1 * m->set[NUM] + timeout) * 1e3))
 			return ((void *)0);
 	while (1)
 	{
@@ -113,10 +113,10 @@ void	*daily(void *ref)
 		if (killed(m))
 			return ((void *)0);
 		msg(SLEEPS, m, 0, 0);
-		if (am_i_dead_wait(m, m->set[SLP] * 1e3))
+		if (am_i_dead(m, m->set[SLP] * 1e3))
 			return ((void *)0);
 		msg(THINKS, m, 0, 0);
-		if (am_i_dead_wait(m, timeout * 1e3))
+		if (am_i_dead(m, timeout * 1e3))
 			return ((void *)0);
 	}
 	return ((void *)1);

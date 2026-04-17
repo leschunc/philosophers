@@ -6,13 +6,13 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:05 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 17:04:06 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 23:49:37 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	am_i_dead_wait(t_mind *m, long wait)
+bool	am_i_dead(t_mind *m, long wait)
 {
 	struct timeval	now;
 	long			init;
@@ -28,7 +28,7 @@ bool	am_i_dead_wait(t_mind *m, long wait)
 		gettimeofday(&now, NULL);
 		if (now.tv_sec * 1e6 + now.tv_usec - init >= wait)
 			break ;
-		usleep(0);
+		usleep(1000 / 3);
 	}
 	return (false);
 }
