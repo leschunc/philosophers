@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 02:00:21 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 02:16:11 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	*daily(void *ref)
 	m = (t_mind *)ref;
 	timeout = m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP] + 1000;
 	if (m->whoami % 2)
-		usleep(5000);
+		if (am_i_dead_wait(m, timeout))
+			return ((void *)0);
 	while (1)
 	{
 		if (eating(m) == false)

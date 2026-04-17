@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/15 18:07:34 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 02:09:25 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,14 @@ bool	pre_check(char *str)
 	i = 0;
 	if (str)
 	{
+		if (*str == '+')
+			str++;
 		if (ft_strlen(str) > 10)
 			return (false);
 		if (ft_strlen(str) == 10)
 		{
 			if (cmp(str, "2147483647") > 0)
-			{
-				printf("hi\n");
 				return (false);
-			}
 		}
 		while (str[i])
 		{
@@ -81,7 +80,7 @@ bool	atoiv(t_context *c)
 	while (i < c->arr_len)
 	{
 		if (pre_check(c->argv[i + 1]) == false)
-			return (printf("Digit-only non-zero INTs allowed\n"), ERR);
+			return (printf("Range: 1 - 2147483647\n"), ERR);
 		c->set[i] = atonum(c->argv[i + 1]);
 		if (c->set[i] == 0)
 			return (printf("Digit-only non-zero INTs allowed\n"), ERR);
