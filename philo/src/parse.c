@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:37:56 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:48:47 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:59:26 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ bool	pre_check(char *str)
 	if (str)
 	{
 		if (*str == '+')
+			str++;
+		while (*str == '0')
 			str++;
 		if (ft_strlen(str) > 10)
 			return (false);

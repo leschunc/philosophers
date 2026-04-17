@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:54:28 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:58:03 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_context
 {
 	suseconds_t			start;
 	bool				simulation;
-	long				*set;	
+	long				*set;
 	t_mut				*inspec;
 	t_mut				broadcast;
 	pthread_t			*philo;
