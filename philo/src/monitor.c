@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:50:29 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 13:53:55 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	safe_inspec(t_context *c, int i)
 	{
 		unlock(c->inspec + i);
 		lock(c->broadcast);
-		c->simulation[0] = false;
+		c->simulation = false;
 		unlock(c->broadcast);
 		msg(DIED, NULL, c, i);
 		return (turn_minds_off(c), false);
@@ -89,7 +89,7 @@ void	give_free_will(t_context *c)
 		c->mind[i].last_meal = 0;
 		c->mind[i].set = c->set;
 		c->mind[i].broadcast = c->broadcast;
-		c->mind[i].simulation = c->simulation;
+		c->mind[i].simulation = &c->simulation;
 		c->mind[i].start = &c->start;
 		if (i == 0)
 			c->mind[i].l_fork = &c->fork[c->set[NUM] - 1];
