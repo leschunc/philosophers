@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 11:29:23 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:22:47 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	*daily(void *ref)
 	long	timeout;
 
 	m = (t_mind *)ref;
+	lock(m->broadcast);
+	unlock(m->broadcast);
 	timeout = m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP] + 1000;
 	if (m->whoami % 2)
 		if (am_i_dead_wait(m, timeout))

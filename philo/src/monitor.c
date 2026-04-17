@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 13:55:51 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:28:12 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	*fate(void *ref)
 	int			i;
 
 	c = ref;
+	lock(&c->broadcast);
+	unlock(&c->broadcast);
 	while (1)
 	{
 		i = 0;

@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 14:20:06 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 14:26:47 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,18 @@ bool	init_sim(t_context *c)
 	c->mind = mind;
 	i = 0;
 	give_free_will(c);
-	if (pthread_create(&determinism, NULL, fate, c) != OK)
-		return (false);
-	c->start = get_start();
+	lock(&c->broadcast);
 	while (i < c->set[NUM])
 	{
 		if (pthread_create(c->philo + i, NULL, daily, mind + i) != OK)
 			return (false);
 		i++;
 	}
+	if (pthread_create(&determinism, NULL, fate, c) != OK)
+		return (false);
+	c->start = get_start();
+	unlock(&c->broadcast);
+	
 	pthread_join(determinism, NULL);
 	i = 0;
 	while (i < c->set[NUM])
