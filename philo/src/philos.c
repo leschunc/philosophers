@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 02:16:11 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 11:29:23 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ bool	right_left(t_mind *m)
 		return (unlock(m->r_fork), unlock(m->l_fork), false);
 	msg(HASFORKS, m, 0, 0);
 	msg(EATS, m, 0, 0);
-	if (set_last_meal(m) == false)
-		return (unlock(m->r_fork), unlock(m->l_fork), false);
 	if (am_i_dead_wait(m, m->set[EAT] * 1e3))
+		return (unlock(m->r_fork), unlock(m->l_fork), false);
+	if (set_last_meal(m) == false)
 		return (unlock(m->r_fork), unlock(m->l_fork), false);
 	return (unlock(m->l_fork), unlock(m->r_fork), true);
 }
@@ -92,10 +92,6 @@ bool	eating(t_mind *m)
 // 			return (true);
 // 		return (true);
 // 	}
-// }
-
-// bool	odd(t_mind *m)
-// {
 // }
 
 void	*daily(void *ref)
