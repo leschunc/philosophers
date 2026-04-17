@@ -2,7 +2,7 @@ NAME		= philo
 CC			= cc
 MAKE		+= --no-print-directory
 CFLAGS		= -Wall -Werror -Wextra -Iinc
-# CFLAGS		+= -fsanitize=thread
+CFLAGS		+= -fsanitize=thread
 # sanitize fix, run with setarch so memory is not randomized
 # make re && setarch -R ./philo 1 1 1 1
 
