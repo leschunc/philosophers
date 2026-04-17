@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:15 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 18:01:08 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:24:53 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,16 @@ bool	inspec_init(t_context *c)
 	return (true);
 }
 
-void	free_loop(t_context *c, int limit)
+void	join_exit(t_context *c, int limit)
 {
 	int	i;
 
 	i = 0;
+	c->simulation = false;
+	unlock(&c->broadcast);
 	while (i < limit)
 	{
-		pthread_detach(*c->philo + i);
+		pthread_join(*(c->philo + i), 0);
 		i++;
 	}
 }
@@ -61,14 +63,14 @@ bool	init_sim(t_context *c)
 	c->mind = mind;
 	i = 0;
 	(give_free_will(c), lock(&c->broadcast));
-	while (i < c->set[NUM])
+	while (i < c->set[NUM] / 2)
 	{
 		if (pthread_create(c->philo + i, NULL, daily, mind + i) != OK)
 			break ;
 		i++;
 	}
 	if (i < c->set[NUM])
-		return (free_loop(c, i), false);
+		return (join_exit(c, i), false);
 	if (pthread_create(&determinism, NULL, fate, c) != OK)
 		return (pthread_join(determinism, 0), false);
 	c->start = get_start();

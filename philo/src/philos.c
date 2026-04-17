@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 16:20:43 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/17 18:20:35 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,22 @@ bool	eating(t_mind *m)
 // 	}
 // }
 
+bool	safe_daily(t_mind *m)
+{
+	lock(m->broadcast);
+	if (*m->simulation == false)
+		return (unlock(m->broadcast), false);
+	return (unlock(m->broadcast), true);
+}
+
 void	*daily(void *ref)
 {
 	t_mind	*m;
 	long	timeout;
 
 	m = (t_mind *)ref;
-	lock(m->broadcast);
-	unlock(m->broadcast);
+	if (safe_daily(m) == false)
+		return ((void *)0);
 	timeout = (m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP]);
 	if (m->whoami % 2)
 		if (am_i_dead_wait(m, (1 * m->set[NUM] + timeout) * 1e3))
