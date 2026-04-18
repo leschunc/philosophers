@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:25 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/18 14:46:33 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/18 14:57:29 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,6 @@ void	lock(t_mut *mut)
 {
 	pthread_mutex_lock(mut);
 }
-
-// int	ft_strlen(char *str)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (str)
-// 		while (str[i])
-// 			i++;
-// 	return (i);
-// }
 
 int	ft_putstr(char *str)
 {

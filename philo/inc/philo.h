@@ -6,7 +6,7 @@
 /*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/18 14:47:21 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/18 14:56:42 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,6 @@
 # define ERR 1
 # define OK 0
 # define SIM_MAX 2442
-
-# define BLANK "\033[0m"
-# define BLUE "\033[34m"
-# define CYAN "\033[36m"
-# define GREEN "\033[32m"
-# define PURPLE "\033[35m"
-# define YELLOW "\033[33m"
-# define RED "\033[31m"
 
 # define FORMAT "%5ld %3d "
 
