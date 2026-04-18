@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:25 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 14:14:37 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/18 14:46:33 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,48 @@ void	lock(t_mut *mut)
 	pthread_mutex_lock(mut);
 }
 
-void	msg(int num, t_mind *m, t_context *c, int i)
-{
-	static char	*msgs[] = {MSG1, MSG2, MSG3, MSG4, MSG5, MSG6, E_MANY, E_MURD};
+// int	ft_strlen(char *str)
+// {
+// 	int	i;
 
-	if (m)
+// 	i = 0;
+// 	if (str)
+// 		while (str[i])
+// 			i++;
+// 	return (i);
+// }
+
+int	ft_putstr(char *str)
+{
+	if (str)
+		return (write(1, str, ft_strlen(str)));
+	return (-1);
+}
+
+void	putn_buf(int num)
+{
+	char	buf[10];
+	int		size;
+	int		ref;
+
+	if (num == 0)
 	{
-		if (killed(m) == false)
-		{
-			lock(m->broadcast);
-			if (m->simulation[0] == true)
-				printf(msgs[num], get_time(m->start[0]), m->whoami + 1);
-			unlock(m->broadcast);
-		}
+		write(1, "0", 1);
+		return ;
 	}
-	else
+	size = 0;
+	ref = num;
+	while (ref > 0)
 	{
-		lock(&c->broadcast);
-		printf(msgs[num], get_time(c->start), i + 1);
-		unlock(&c->broadcast);
+		ref /= 10;
+		size++;
 	}
+	ref = size;
+	while (num > 0)
+	{
+		buf[ref - 1] = (num % 10) + '0';
+		num /= 10;
+		ref--;
+	}
+	write(1, buf, size);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:33 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/17 23:49:37 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/18 14:47:21 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,22 @@
 # define OK 0
 # define SIM_MAX 2442
 
-# define MSG1 "\033[34m%5ld %3d has taken a fork\n\033[0m"
-# define MSG2 "\033[36m%5ld %3d has taken a fork\n\033[0m"
-# define MSG3 "\033[32m%5ld %3d is eating\n\033[0m"
-# define MSG4 "\033[35m%5ld %3d is sleeping\n\033[0m"
-# define MSG5 "\033[33m%5ld %3d is thinking\n\033[0m"
-# define MSG6 "\033[31m%5ld %3d has died\n\033[0m"
+# define BLANK "\033[0m"
+# define BLUE "\033[34m"
+# define CYAN "\033[36m"
+# define GREEN "\033[32m"
+# define PURPLE "\033[35m"
+# define YELLOW "\033[33m"
+# define RED "\033[31m"
+
+# define FORMAT "%5ld %3d "
+
+# define MSG1 "has taken a fork\n"
+# define MSG2 "has taken a fork\n"
+# define MSG3 "is eating\n"
+# define MSG4 "is sleeping\n"
+# define MSG5 "is thinking\n"
+# define MSG6 "has died\n"
 
 # define E_MANY "\033[31mCAPTCHA: name all %d philosophers\n\033[0m"
 # define E_MURD "\033[31m%5ld %3d has died, you starved her to death\n\033[0m"
@@ -114,5 +124,8 @@ void					msg(int num, t_mind *m, t_context *c, int i);
 void					join_abort(t_context *c, int limit);
 void					join_exit(t_context *c);
 bool					safe_daily(t_mind *m);
+int						ft_strlen(char *str);
+void					putn_buf(int num);
+int						ft_putstr(char *str);
 
 #endif

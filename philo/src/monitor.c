@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:18 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/18 00:01:25 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/18 14:49:09 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*fate(void *ref)
 				return (NULL);
 			i++;
 		}
-		usleep(1000 / c->set[NUM]);
+		usleep(5000 / c->set[NUM]);
 	}
 	return (NULL);
 }
