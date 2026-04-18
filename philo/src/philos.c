@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philos.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: leschunc <leschunc@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: leschunc <leschunc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 23:38:22 by leschunc          #+#    #+#             */
-/*   Updated: 2026/04/18 00:17:52 by leschunc         ###   ########.fr       */
+/*   Updated: 2026/04/18 02:35:21 by leschunc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ bool	right_left(t_mind *m)
 
 bool	eating(t_mind *m)
 {
-	if (m->whoami == 0)
+	if (m->whoami % 2)
 	{
 		if (left_right(m) == false)
 			return (false);
@@ -105,25 +105,25 @@ void	*daily(void *ref)
 
 	m = (t_mind *)ref;
 	if (safe_daily(m) == false)
-		return ((void *)0);
+		return (NULL);
 	timeout = (m->set[EAT] * (m->set[NUM] % 2 + 1) - m->set[SLP]);
 	if (m->whoami % 2)
-		if (am_i_dead(m, (m->set[NUM] + timeout) * 1e3))
-			return ((void *)0);
+		if (am_i_dead(m, m->set[EAT] * 1e3))
+			return (NULL);
 	while (1)
 	{
 		if (eating(m) == false)
-			return ((void *)0);
+			return (NULL);
 		if (killed(m))
-			return ((void *)0);
+			return (NULL);
 		msg(SLEEPS, m, 0, 0);
 		if (am_i_dead(m, m->set[SLP] * 1e3))
-			return ((void *)0);
+			return (NULL);
 		msg(THINKS, m, 0, 0);
 		if (am_i_dead(m, timeout * 1e3))
-			return ((void *)0);
+			return (NULL);
 	}
-	return ((void *)1);
+	return (NULL);
 }
 
 // fix safado do gustavo
